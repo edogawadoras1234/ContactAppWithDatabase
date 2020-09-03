@@ -82,15 +82,14 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ColorGenerator generator = ColorGenerator.MATERIAL;
             TextDrawable drawable = TextDrawable.builder().buildRound(String.valueOf(contactList.get(position).getName()
                     .charAt(0)),generator.getRandomColor());
-
-            //contactViewHolder.imgAvatar.setImageDrawable(drawable);
+            //TextDrawable avatar2 = TextDrawable.builder().buildRound(String.valueOf(contactListfull.get(position).getAvatar().charAt(0)),generator.getRandomColor());
             Glide.with(context.getApplicationContext()).load(avatar)
                     .placeholder(drawable).into(contactViewHolder.imgAvatar);
             contactViewHolder.btngoi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_DIAL);
+                    intent.setAction(Intent.ACTION_CALL);
                     intent.setData(Uri.parse("tel: " + contactList.get(position).getPhone()));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
@@ -130,8 +129,8 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     btncancle.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                           // dialog.dismiss();
-                            Toast.makeText(context,"viewtype "+ contactList.get(position).getViewType() + "avata " + avatar +"id " + id+ " " + name + phone,Toast.LENGTH_SHORT).show();
+                           dialog.dismiss();
+
                         }
                     });
                     btnaccept.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +139,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             if (edtphone.length() == 0) {
                                 Toast.makeText(context, "Không được bỏ trống số điện thoại", Toast.LENGTH_SHORT).show();
                             } else {
-                                database.UpdateData(edtname.getText().toString(), edtphone.getText().toString(), edtavatar.getText().toString(), id);
+                                database.UpdateData(edtname.getText().toString(), edtphone.getText().toString(), edtavatar.getText().toString(),-1, id);
                                 Toast.makeText(context, "Đã thay đổi thành công", Toast.LENGTH_SHORT).show();
                                 Contact contact = new Contact(id,
                                         edtname.getText().toString(),

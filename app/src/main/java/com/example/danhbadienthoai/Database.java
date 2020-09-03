@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 public class Database extends SQLiteOpenHelper {
 
     private Context context;
-    private static final  String DATABASE_NAME = "DanhBaDienThoai.db";
+    private static final  String DATABASE_NAME = "ContactDatabase.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "DanhBa";
@@ -35,10 +35,6 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         return database.delete(TABLE_NAME,"Id =?",new String[]{id});
     }
-    public Integer DeleteDataName(String name){
-        SQLiteDatabase database = this.getWritableDatabase();
-        return database.delete(TABLE_NAME,"Name =?",new String[]{name});
-    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -46,8 +42,8 @@ public class Database extends SQLiteOpenHelper {
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_PHONE + " TEXT, " +
-                COLUMN_VIEWTYPE + " INTEGER, " +
-                COLUMN_AVATAR + " TEXT)";
+                COLUMN_AVATAR + " TEXT, " +
+                COLUMN_VIEWTYPE + " INTEGER)";
         db.execSQL(query);
     }
 
@@ -68,10 +64,10 @@ public class Database extends SQLiteOpenHelper {
         long  result = db.insert(TABLE_NAME, null, cv);
     }
 
-    void UpdateData(String name, String phone, String avatar,String id){
+    void UpdateData(String name, String phone, String avatar,int viewtype,String id){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_NAME + " SET Name= '" + name
-                +"', Phone = '"+ phone + "', Avatar = '" + avatar + "' Where Id = '" + id + "'";
+                +"', Phone = '"+ phone + "', Avatar = '" + avatar + "', ViewType = '"+ viewtype + "' Where Id = '" + id + "'";
         db.execSQL(query);
 
 

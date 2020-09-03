@@ -43,9 +43,12 @@ public class add_phone_number extends AppCompatActivity implements View.OnClickL
             } else {
                 database.addData(null, edtname.getText().toString(), edtphone.getText().toString(), edtavatar.getText().toString(), -1);
                 Toast.makeText(this, "Add Success", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this,danhba.class);
+                startActivity(intent);
             }
         } else if (view.getId() == R.id.btncancle) {
-            System.exit(1);
+            Intent intent = new Intent(this,danhba.class);
+            startActivity(intent);
         }
     }
 }

@@ -60,7 +60,7 @@ public class danhba extends AppCompatActivity {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         if (response.getPermissionName().equals(READ_CONTACTS)) {
-                            //addContact();
+                            addContact();
                         }
                     }
 
