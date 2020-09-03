@@ -1,10 +1,12 @@
 package com.example.danhbadienthoai;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,23 +22,26 @@ import android.widget.Toast;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.bumptech.glide.Glide;
-import com.zhukic.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.Manifest.permission.CALL_PHONE;
 
 public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
     Context context;
     List<Contact> contactList;
     List<Contact> contactListfull;
     Database database;
-
+    final int MY_PERMISSIONS_REQUEST_CALL_PHONE=1000;
    public ContactAdapter (Context context, List<Contact> contactList){
         this.context = context;
         this.contactList = contactList;
@@ -74,7 +79,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof ContactViewHolder){
-            ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
+            final ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
             contactViewHolder.txt_name.setText(contactList.get(position).getName());
             contactViewHolder.txt_phone.setText(contactList.get(position).getPhone());
             String avatar = contactList.get(position).getAvatar();
@@ -86,15 +91,33 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Glide.with(context.getApplicationContext()).load(avatar)
                     .placeholder(drawable).into(contactViewHolder.imgAvatar);
             contactViewHolder.btngoi.setOnClickListener(new View.OnClickListener() {
+
+
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_CALL);
                     intent.setData(Uri.parse("tel: " + contactList.get(position).getPhone()));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+
+                    if (ContextCompat.checkSelfPermission(context,
+                            Manifest.permission.CALL_PHONE)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE},
+                                MY_PERMISSIONS_REQUEST_CALL_PHONE);
+
+                    } else {
+                        try {
+                            context.startActivity(intent);
+                        } catch (SecurityException e) {
+                            e.printStackTrace();
+
+                        }
+                    }
                 }
             });
+
             contactViewHolder.btnxoa.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
