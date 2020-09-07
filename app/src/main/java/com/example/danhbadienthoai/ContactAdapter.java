@@ -7,7 +7,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +43,11 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     Context context;
     List<Contact> contactList;
     List<Contact> contactListfull;
-    Database database;
+    danhba danhba;
+    public static final String ID = "ID";
+    public static final String NAME = "NAME";
+    public static final String PHONE = "PHONE";
+    public static final String AVATAR = "AVATAR";
     final int MY_PERMISSIONS_REQUEST_CALL_PHONE=1000;
    public ContactAdapter (Context context, List<Contact> contactList){
         this.context = context;
@@ -82,14 +89,18 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             final ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
             contactViewHolder.txt_name.setText(contactList.get(position).getName());
             contactViewHolder.txt_phone.setText(contactList.get(position).getPhone());
-            String avatar = contactList.get(position).getAvatar();
+            final String avatar = contactList.get(position).getAvatar();
 
             ColorGenerator generator = ColorGenerator.MATERIAL;
             TextDrawable drawable = TextDrawable.builder().buildRound(String.valueOf(contactList.get(position).getName()
                     .charAt(0)),generator.getRandomColor());
-            //TextDrawable avatar2 = TextDrawable.builder().buildRound(String.valueOf(contactListfull.get(position).getAvatar().charAt(0)),generator.getRandomColor());
-            Glide.with(context.getApplicationContext()).load(avatar)
-                    .placeholder(drawable).into(contactViewHolder.imgAvatar);
+
+            TextDrawable avatar2 = TextDrawable.builder().buildRound(String.valueOf(contactListfull.get(position).getAvatar()),generator.getRandomColor());
+
+             // contactViewHolder.imgAvatar.setImageDrawable(drawable);
+                Glide.with(context.getApplicationContext()).load(avatar)
+                  .placeholder(drawable).into(contactViewHolder.imgAvatar);
+
             contactViewHolder.btngoi.setOnClickListener(new View.OnClickListener() {
 
 
@@ -118,64 +129,15 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
 
-            contactViewHolder.btnxoa.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    database = new Database(context);
-                    Toast.makeText(context, "Delete Success: " + contactList.get(position).getId(), Toast.LENGTH_SHORT).show();
-                    database.DeleteData(contactList.get(position).getId());
-                    remove(position);
-                }
-            });
             contactViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    database = new Database(context);
-                    final Dialog dialog = new Dialog(context);
-                    dialog.setContentView(R.layout.dialog_edit_phone);
-                    final EditText edtname, edtphone, edtavatar;
-                    Button btnaccept, btncancle;
-                    edtname = dialog.findViewById(R.id.editName_dialog);
-                    edtphone = dialog.findViewById(R.id.editPhone_dialog);
-                    edtavatar = dialog.findViewById(R.id.editAvatar_dialog);
-                    final String id = contactList.get(position).getId();
-                    final String name  = contactList.get(position).getName();
-                    final String phone = contactList.get(position).getPhone();
-                    final String avatar = contactList.get(position).getAvatar();
-                    edtname.setText(name);
-                    edtphone.setText(phone);
-                    edtavatar.setText(avatar);
-
-                    btnaccept = dialog.findViewById(R.id.btnchange_dgl_change);
-                    btncancle = dialog.findViewById(R.id.btncl_dgl_change);
-
-                    btncancle.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                           dialog.dismiss();
-
-                        }
-                    });
-                    btnaccept.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (edtphone.length() == 0) {
-                                Toast.makeText(context, "Không được bỏ trống số điện thoại", Toast.LENGTH_SHORT).show();
-                            } else {
-                                database.UpdateData(edtname.getText().toString(), edtphone.getText().toString(), edtavatar.getText().toString(),-1, id);
-                                Toast.makeText(context, "Đã thay đổi thành công", Toast.LENGTH_SHORT).show();
-                                Contact contact = new Contact(id,
-                                        edtname.getText().toString(),
-                                        edtphone.getText().toString(),
-                                        edtavatar.getText().toString(),
-                                        -1);
-                                contactList.set(position, contact);
-                                notifyItemChanged(position);
-                            }
-
-                        }
-                    });
-                    dialog.show();
+                    Intent intent = new Intent(context, activity_change_phone.class);
+                    intent.putExtra(ID,contactList.get(position).getId());
+                    intent.putExtra(NAME,contactList.get(position).getName());
+                    intent.putExtra(PHONE,contactList.get(position).getPhone());
+                    intent.putExtra(AVATAR,contactList.get(position).getAvatar());
+                    context.startActivity(intent);
                 }
             });
         }
@@ -242,16 +204,15 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private class ContactViewHolder extends RecyclerView.ViewHolder{
         TextView txt_name, txt_phone;
         ImageView imgAvatar;
-        Button btngoi, btnxoa;
+        Button btngoi;
 
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
 
             txt_name = itemView.findViewById(R.id.txtten);
             txt_phone = itemView.findViewById(R.id.txtsdt);
-            imgAvatar = itemView.findViewById(R.id.anhdaidien);
+            imgAvatar = (ImageView) itemView.findViewById(R.id.anhdaidien);
             btngoi = itemView.findViewById(R.id.btngoidien);
-            btnxoa = itemView.findViewById(R.id.btnxoa);
         }
     }
 }

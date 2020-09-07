@@ -75,10 +75,27 @@ public class danhba extends AppCompatActivity {
                     }
                 }).check();
 
-//        createContactList();
         loaddata();
+        new ItemTouchHelper(itemtouchhelper).attachToRecyclerView(recyclerView);
     }
+    public ItemTouchHelper.SimpleCallback itemtouchhelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
 
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            database = new Database(danhba.this);
+            Toast.makeText(danhba.this, "Delete Success: " + contactList.get(viewHolder.getAdapterPosition()).getId(), Toast.LENGTH_SHORT).show();
+            database.DeleteData(contactList.get(viewHolder.getAdapterPosition()).getId());
+            remove(viewHolder.getAdapterPosition());
+        }
+    };
+    public void remove(int pos) {
+        contactList.remove(pos);
+        contactAdapter.notifyItemRemoved(pos);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -118,7 +135,6 @@ public class danhba extends AppCompatActivity {
                 Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getInt(4));
                 contactArrayList.add(contact);
             }
-            Toast.makeText(this, "LoadData", Toast.LENGTH_SHORT).show();
         }
         contactList = Common.sortList(contactArrayList);
         contactList = Common.addAlpha(contactArrayList);
@@ -153,6 +169,7 @@ public class danhba extends AppCompatActivity {
             case R.id.itemadd:
                 Intent intent = new Intent(this, add_phone_number.class);
                 startActivity(intent);
+
                 return true;
 
             case R.id.itemthoat:
