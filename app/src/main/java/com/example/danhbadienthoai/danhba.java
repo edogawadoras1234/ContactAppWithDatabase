@@ -60,7 +60,7 @@ public class danhba extends AppCompatActivity {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         if (response.getPermissionName().equals(READ_CONTACTS)) {
-                            addContact();
+                            //addContact();
                         }
                     }
 
@@ -95,17 +95,6 @@ public class danhba extends AppCompatActivity {
     public void remove(int pos) {
         contactList.remove(pos);
         contactAdapter.notifyItemRemoved(pos);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Common.RESULT_CODE) {
-            if (requestCode == Activity.RESULT_OK) {
-                String group_char_click = data.getStringExtra("result");
-                int pos = Common.findPosiWithName(group_char_click, arrayList);
-                recyclerView.smoothScrollToPosition(pos);
-            }
-        }
     }
 
     String id1, name1, phone1, avatar1;
@@ -148,6 +137,7 @@ public class danhba extends AppCompatActivity {
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setQueryHint("Search");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -157,6 +147,7 @@ public class danhba extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 contactAdapter.getFilter().filter(s);
+
                 return false;
             }
         });
@@ -169,7 +160,6 @@ public class danhba extends AppCompatActivity {
             case R.id.itemadd:
                 Intent intent = new Intent(this, add_phone_number.class);
                 startActivity(intent);
-
                 return true;
 
             case R.id.itemthoat:

@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity_change_phone"></activity>
+        <activity android:name=".activity_change_phone"
+            android:parentActivityName=".danhba"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,8 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".danhba"></activity>
-        <activity android:name=".add_phone_number"></activity>
+        <activity android:name=".danhba"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".add_phone_number"
+            android:parentActivityName=".danhba"></activity>
     </application>
 
 </manifest>

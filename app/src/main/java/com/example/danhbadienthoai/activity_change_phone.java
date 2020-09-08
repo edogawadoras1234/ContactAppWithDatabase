@@ -111,12 +111,12 @@ public class activity_change_phone extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_CAMERA & resultCode == RESULT_OK & data != null){
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             img_anhdaidien.setImageBitmap(bitmap);
-
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) img_anhdaidien.getDrawable();
-            Bitmap bitmap2 = bitmapDrawable.getBitmap();
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap2.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-            byte[] HinhAnh = byteArrayOutputStream.toByteArray();
+//
+//            BitmapDrawable bitmapDrawable = (BitmapDrawable) img_anhdaidien.getDrawable();
+//            Bitmap bitmap2 = bitmapDrawable.getBitmap();
+//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//            bitmap2.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
+//            byte[] HinhAnh = byteArrayOutputStream.toByteArray();
         }
         //Gán Image từ get file folder
         if (requestCode == REQUEST_CODE_FOLDER & resultCode == RESULT_OK & data != null){

@@ -43,7 +43,6 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     Context context;
     List<Contact> contactList;
     List<Contact> contactListfull;
-    danhba danhba;
     public static final String ID = "ID";
     public static final String NAME = "NAME";
     public static final String PHONE = "PHONE";
@@ -84,7 +83,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof ContactViewHolder){
             final ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
             contactViewHolder.txt_name.setText(contactList.get(position).getName());
@@ -95,15 +94,10 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             TextDrawable drawable = TextDrawable.builder().buildRound(String.valueOf(contactList.get(position).getName()
                     .charAt(0)),generator.getRandomColor());
 
-            TextDrawable avatar2 = TextDrawable.builder().buildRound(String.valueOf(contactListfull.get(position).getAvatar()),generator.getRandomColor());
-
-             // contactViewHolder.imgAvatar.setImageDrawable(drawable);
                 Glide.with(context.getApplicationContext()).load(avatar)
                   .placeholder(drawable).into(contactViewHolder.imgAvatar);
 
             contactViewHolder.btngoi.setOnClickListener(new View.OnClickListener() {
-
-
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent();
@@ -141,9 +135,10 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
         }
-            else if(holder instanceof GroupViewHolder){
-            GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
+        else if(holder instanceof GroupViewHolder){
+            final GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
             groupViewHolder.txt_group_title.setText(contactList.get(position).getName());
+
             groupViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -151,11 +146,9 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
         }
+
     }
-    public void remove(int pos){
-        contactList.remove(pos);
-        notifyItemRemoved(pos);
-    }
+
     @Override
     public int getItemCount() {
         return contactList.size();
@@ -163,41 +156,43 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public Filter getFilter() {
-        return filter;
-    }
-    private Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            List<Contact> listFilter = new ArrayList<>();
-            if (charSequence == null || charSequence.length() == 0){
-                listFilter.addAll(contactListfull);
-            }else{
-                String filterPatern = charSequence.toString().toLowerCase().trim();
-                for (Contact item : contactListfull){
-                    if(item.getName().toLowerCase().contains(filterPatern)){
-                        listFilter.add(item);
+        return  new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                ArrayList<Contact> listFilter = new ArrayList<>();
+                if (charSequence == null || charSequence.length() == 0){
+                    listFilter.addAll(contactListfull);
+                }else{
+                    String filterPatern = charSequence.toString().toLowerCase().trim();
+                    for (Contact item : contactListfull) {
+                        if (item.getName().toLowerCase().contains(filterPatern)) {
+                            listFilter.add(item);
+                        }
                     }
                 }
-            }
-            FilterResults results = new FilterResults();
-            results.values = listFilter;
-            return results;
-        }
+                FilterResults results = new FilterResults();
+                results.values = listFilter;
 
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults results) {
-            contactList.clear();
-            contactList.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults results) {
+                contactList.clear();
+                contactList.addAll((ArrayList) results.values);
+                notifyDataSetChanged();
+            }
+        };
+    }
 
     private class GroupViewHolder extends RecyclerView.ViewHolder{
-
-        TextView txt_group_title,txttext;
+        TextView txt_group_title;
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_group_title = itemView.findViewById(R.id.txt_group_title);
+
+//            txt_group_title.setVisibility(View.GONE);
+//            itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         }
     }
 
