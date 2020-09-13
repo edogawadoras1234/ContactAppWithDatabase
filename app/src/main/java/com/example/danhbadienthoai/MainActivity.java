@@ -8,6 +8,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -41,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         btn_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MainActivity.this, UngDungDocBao.class);
+                startActivity(intent);
             }
         });
 
