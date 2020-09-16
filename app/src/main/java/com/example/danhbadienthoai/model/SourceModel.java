@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.model;
 
 import com.google.gson.annotations.SerializedName;
 

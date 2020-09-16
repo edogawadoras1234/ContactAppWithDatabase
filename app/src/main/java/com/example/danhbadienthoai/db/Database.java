@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -56,7 +56,7 @@ public class Database extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         return database.delete(TABLE_NAME,"Name =?",new String[]{name});
     }
-    void addData(String id, String name, String phone, String avatar,int viewtype){
+    public void addData(String id, String name, String phone, String avatar,int viewtype){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_ID,id);
@@ -67,15 +67,13 @@ public class Database extends SQLiteOpenHelper {
         long  result = db.insert(TABLE_NAME, null, cv);
     }
 
-    void UpdateData(String name, String phone, String avatar,int viewtype,String id){
+    public void UpdateData(String name, String phone, String avatar,int viewtype,String id){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + TABLE_NAME + " SET Name= '" + name
                 +"', Phone = '"+ phone + "', Avatar = '" + avatar + "', ViewType = '"+ viewtype + "' Where Id = '" + id + "'";
         db.execSQL(query);
-
-
     }
-    Cursor readAllData(){
+    public Cursor readAllData(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
 

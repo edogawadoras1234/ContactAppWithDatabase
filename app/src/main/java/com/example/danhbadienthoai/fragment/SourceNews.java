@@ -1,7 +1,6 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.danhbadienthoai.network.APIClient;
+import com.example.danhbadienthoai.network.ApiInterface;
+import com.example.danhbadienthoai.model.Article;
+import com.example.danhbadienthoai.model.News;
+import com.example.danhbadienthoai.R;
+import com.example.danhbadienthoai.utils.Utils;
+import com.example.danhbadienthoai.adapter.NewsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

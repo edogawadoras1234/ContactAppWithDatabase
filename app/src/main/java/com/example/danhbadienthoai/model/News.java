@@ -1,7 +1,4 @@
-package com.example.danhbadienthoai;
-
-import android.content.Context;
-import android.widget.Toast;
+package com.example.danhbadienthoai.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -48,6 +48,12 @@
             android:parentActivityName=".UngDungDocBao">
 
         </activity>
+
+        <activity android:name=".ActivitySearchNews"
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:parentActivityName=".UngDungDocBao">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.adapter;
 
 import android.content.Context;
 
@@ -7,6 +7,14 @@ import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.example.danhbadienthoai.R;
+import com.example.danhbadienthoai.UngDungDocBao;
+import com.example.danhbadienthoai.fragment.SourceNews;
+import com.example.danhbadienthoai.fragment.CountriesNews;
+import com.example.danhbadienthoai.fragment.JapaneseNews;
+import com.example.danhbadienthoai.fragment.SportsNews;
+import com.example.danhbadienthoai.fragment.TrangChuNews;
 
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -69,4 +77,5 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return TAB_TITLES.length;
     }
+
 }

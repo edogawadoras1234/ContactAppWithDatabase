@@ -1,7 +1,6 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.danhbadienthoai.network.APIClient;
+import com.example.danhbadienthoai.network.ApiInterface;
+import com.example.danhbadienthoai.model.Article;
+import com.example.danhbadienthoai.model.News;
+import com.example.danhbadienthoai.R;
+import com.example.danhbadienthoai.adapter.NewsAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JapaneseNews extends Fragment {
+public class CountriesNews extends Fragment {
     NewsAdapter newsAdapter;
     RecyclerView recyclerView;
     private List<Article> articles = new ArrayList<>();
@@ -47,10 +53,8 @@ public class JapaneseNews extends Fragment {
     }
     private void loadJSON() {
         ApiInterface apiInterface = APIClient.getApiClient().create(ApiInterface.class);
-        String country = Utils.getCountry();
-        String language = Utils.getLanguage();
         Call<News> call;
-        call = apiInterface.getCountry("jp", API_KEY);
+        call = apiInterface.getCountry("us", API_KEY);
         call.enqueue(new Callback<News>() {
 
             @Override

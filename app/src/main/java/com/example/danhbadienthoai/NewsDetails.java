@@ -14,8 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
+import com.example.danhbadienthoai.utils.Utils;
 
 public class NewsDetails extends AppCompatActivity{
     WebView webview;
@@ -38,42 +37,43 @@ public class NewsDetails extends AppCompatActivity{
         txt_time = findViewById(R.id.txt_publishAt_details);
 
         txt_title.setText(mTitle);
-        txt_time.setText(mDate);
+        txt_time.setText(Utils.DateFormat(mDate));
         final String mimeType = "text/html";
         final String encoding = "UTF-8";
-        Log.i("AAAAAAAAAAAAAAAAAa","" + mContent);
-        webview.loadDataWithBaseURL(mUrl, mContent, mimeType, encoding, "");
+        Log.i("AAAAAAAAAAAAAAAAANewsDetail","" + mContent);
+        //webview.loadDataWithBaseURL(mUrl, mContent, mimeType, encoding, "");
 
+        setWebview();
 
     }
     @SuppressLint("ClickableViewAccessibility")
     public void setWebview(){
-        webview.loadDataWithBaseURL(mUrl, mContent, "text/html", "utf-8", "");
-//        webview.setWebViewClient(new WebViewClient());
-//        webview.loadData(mContent,"text/html","utf-8");
-//        //webview.loadUrl(mUrl);
-//        webview.getSettings().setJavaScriptEnabled(true);
-//        webview.getSettings().setLoadsImagesAutomatically(true);
-//        webview.getSettings().setDomStorageEnabled(true);
-//        webview.getSettings().setDisplayZoomControls(false);//ẩn thu phóng của trang
-//        webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        webview.setVerticalScrollBarEnabled(false);
-//        webview.setHorizontalScrollBarEnabled(false);
-//        webview.setScrollContainer(false);
-//        webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-//        webview.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-//        WebSettings webSettings = webview.getSettings();
-//        webSettings.setJavaScriptEnabled(true);
-//        webSettings.setDomStorageEnabled(true);
-//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-//        webSettings.setUseWideViewPort(true);
-//
-//                webview.setOnTouchListener(new View.OnTouchListener() {
-//               @Override
-//               public boolean onTouch(View v, MotionEvent event) {
-//             return (event.getAction() == MotionEvent.ACTION_MOVE);
-//           }
-//          });
+
+        webview.setWebViewClient(new WebViewClient());
+        webview.loadData(mContent,"text/html","utf-8");
+        webview.loadUrl(mUrl);
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings().setLoadsImagesAutomatically(true);
+        webview.getSettings().setDomStorageEnabled(true);
+        webview.getSettings().setDisplayZoomControls(false);//ẩn thu phóng của trang
+        webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        webview.setVerticalScrollBarEnabled(false);
+        webview.setHorizontalScrollBarEnabled(false);
+        webview.setScrollContainer(false);
+        webview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webview.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        WebSettings webSettings = webview.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webSettings.setUseWideViewPort(true);
+
+                webview.setOnTouchListener(new View.OnTouchListener() {
+               @Override
+               public boolean onTouch(View v, MotionEvent event) {
+             return (event.getAction() == MotionEvent.ACTION_MOVE);
+           }
+          });
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.network;
 
 import java.security.cert.CertificateException;
 

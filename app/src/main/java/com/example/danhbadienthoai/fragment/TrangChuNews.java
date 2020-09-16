@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.fragment;
 
 import android.os.Bundle;
 
@@ -7,15 +7,22 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.danhbadienthoai.network.APIClient;
+import com.example.danhbadienthoai.network.ApiInterface;
+import com.example.danhbadienthoai.model.Article;
+import com.example.danhbadienthoai.model.News;
+import com.example.danhbadienthoai.R;
+import com.example.danhbadienthoai.utils.Utils;
+import com.example.danhbadienthoai.adapter.NewsAdapter;
+
 import java.util.List;
-import java.util.Locale;
 
 import java.util.ArrayList;
 
@@ -28,7 +35,7 @@ public class TrangChuNews extends Fragment {
     RecyclerView recyclerView;
     private List<Article> articles = new ArrayList<>();
     public static final String API_KEY = "336c7a92c13b4970be0773e0b2cf5c67";
-
+    SwipeRefreshLayout swipeRefreshLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,15 +54,25 @@ public class TrangChuNews extends Fragment {
         recyclerView.setItemAnimator(itemAnimator);
        loadJSON();
 
+       swipeRefreshLayout = view.findViewById(R.id.news_swipe);
+       swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+           @Override
+           public void onRefresh() {
+               Toast.makeText(getContext(), "Refresh", Toast.LENGTH_SHORT).show();
+
+               swipeRefreshLayout.setRefreshing(false);
+           }
+       });
         //336c7a92c13b4970be0773e0b2cf5c67 API key
         return view;
     }
+
     private void loadJSON() {
         ApiInterface apiInterface = APIClient.getApiClient().create(ApiInterface.class);
         String country = Utils.getCountry();
         String language = Utils.getLanguage();
         Call<News> call;
-        call = apiInterface.getQ("bitcoin",language, "publishedAt", API_KEY);
+        call = apiInterface.getQ("money",language, "publishedAt", API_KEY);
         call.enqueue(new Callback<News>() {
 
             @Override

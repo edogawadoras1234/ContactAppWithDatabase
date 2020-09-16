@@ -1,6 +1,6 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.network;
 
-import java.util.List;
+import com.example.danhbadienthoai.model.News;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
