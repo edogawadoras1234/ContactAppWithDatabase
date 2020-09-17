@@ -23,7 +23,11 @@
             android:parentActivityName=".danhba">
 
         </activity>
+<<<<<<< HEAD
         <activity android:name=".main.MainActivity">
+=======
+        <activity android:name=".MainActivity">
+>>>>>>> e3ecb6dd02b5513675aaba5cc0f4f9756ada7bd6
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,7 +35,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".danhba"
+<<<<<<< HEAD
             android:parentActivityName=".main.MainActivity">
+=======
+            android:parentActivityName=".MainActivity">
+>>>>>>> e3ecb6dd02b5513675aaba5cc0f4f9756ada7bd6
 
         </activity>
         <activity android:name=".add_phone_number"
@@ -40,7 +48,11 @@
         </activity>
         <activity android:name=".UngDungDocBao"
             android:theme="@style/Theme.Design.NoActionBar"
+<<<<<<< HEAD
             android:parentActivityName=".main.MainActivity">
+=======
+            android:parentActivityName=".MainActivity">
+>>>>>>> e3ecb6dd02b5513675aaba5cc0f4f9756ada7bd6
 
         </activity>
         <activity android:name=".NewsDetails"

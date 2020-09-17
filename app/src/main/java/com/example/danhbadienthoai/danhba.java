@@ -59,8 +59,12 @@ public class danhba extends AppCompatActivity {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         if (response.getPermissionName().equals(READ_CONTACTS)) {
+<<<<<<< HEAD
                             addContact();
                             loaddata();
+=======
+                            //addContact();
+>>>>>>> e3ecb6dd02b5513675aaba5cc0f4f9756ada7bd6
                         }
                     }
 
@@ -75,7 +79,11 @@ public class danhba extends AppCompatActivity {
                     }
                 }).check();
 
+<<<<<<< HEAD
 
+=======
+        loaddata();
+>>>>>>> e3ecb6dd02b5513675aaba5cc0f4f9756ada7bd6
         new ItemTouchHelper(itemtouchhelper).attachToRecyclerView(recyclerView);
     }
     public ItemTouchHelper.SimpleCallback itemtouchhelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
