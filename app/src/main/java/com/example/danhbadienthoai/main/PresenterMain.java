@@ -1,15 +1,10 @@
 package com.example.danhbadienthoai.main;
 
-public class PresenterMain implements InterfaceMain{
+public class PresenterMain implements ViewMain{
 
-    ModelMain modelMain;
     ViewMain viewMain;
     public PresenterMain(ViewMain viewMain){
         this.viewMain = viewMain;
-    }
-    public  void nhantinhieu(){
-        modelMain = new ModelMain(this);
-        modelMain.handlenewintent();
     }
 
     @Override
@@ -19,6 +14,6 @@ public class PresenterMain implements InterfaceMain{
 
     @Override
     public void onBtnNews() {
-        viewMain.onBtnnews();
+        viewMain.onBtnNews();
     }
 }

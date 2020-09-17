@@ -39,9 +39,6 @@ public class activity_change_phone extends AppCompatActivity {
 
 
         database = new Database(this);
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_edit_phone);
-
 
         Button btnaccept, btncancle;
         edtname = findViewById(R.id.edt_name_change);

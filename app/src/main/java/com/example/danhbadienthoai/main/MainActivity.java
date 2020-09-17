@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onBtnnews() {
+    public void onBtnNews() {
         Intent intent = new Intent(MainActivity.this, UngDungDocBao.class);
         startActivity(intent);
     }
