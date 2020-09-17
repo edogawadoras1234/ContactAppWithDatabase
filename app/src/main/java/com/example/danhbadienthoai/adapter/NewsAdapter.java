@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -87,6 +89,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .load(hinhanh)
                     .placeholder(R.drawable.icon_newsss)
                     .into(newsAdapterViewHolderType2.img_news_type2);
+
+            Animation rotate = AnimationUtils.loadAnimation(context, R.anim.zoom_out);
+            newsAdapterViewHolderType2.img_news_type2.startAnimation(rotate);
+
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

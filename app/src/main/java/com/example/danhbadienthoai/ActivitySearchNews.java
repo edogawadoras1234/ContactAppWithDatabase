@@ -102,10 +102,7 @@ public class ActivitySearchNews extends AppCompatActivity {
                     btn_tk1.setVisibility(View.VISIBLE);
                     btn_tk2.setVisibility(View.VISIBLE);
                     btn_tk3.setVisibility(View.VISIBLE);
-<<<<<<< HEAD
                     txt_loi.setVisibility(View.GONE);
-=======
->>>>>>> e3ecb6dd02b5513675aaba5cc0f4f9756ada7bd6
                     articles.clear();
                     Toast.makeText(ActivitySearchNews.this, "Nhập từ khoá", Toast.LENGTH_SHORT).show();
                 }else {

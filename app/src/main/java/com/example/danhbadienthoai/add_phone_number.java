@@ -15,10 +15,7 @@ public class add_phone_number extends AppCompatActivity implements View.OnClickL
     Button btnadd, btncancle;
     EditText edtname, edtphone, edtavatar;
     Database database;
-<<<<<<< HEAD
-=======
 
->>>>>>> e3ecb6dd02b5513675aaba5cc0f4f9756ada7bd6
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
