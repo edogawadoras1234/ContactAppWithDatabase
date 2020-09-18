@@ -20,31 +20,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity_change_phone"
-            android:parentActivityName=".danhba">
+            android:parentActivityName=".ui.danhba.danhba">
 
         </activity>
-        <activity android:name=".main.MainActivity">
-        </activity>
+<!--        <activity android:name=".ui.main.MainActivity">-->
+<!--        </activity>-->
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                
             </intent-filter>
         </activity>
 
-        <activity android:name=".danhba">
+        <activity android:name=".ui.danhba.danhba"
+            android:parentActivityName=".ui.main.MainActivity">
 
         </activity>
 
-        <activity android:name=".addphone.add_phone_number"
-            android:parentActivityName=".danhba">
+        <activity android:name=".ui.addphone.AddPhoneActivity"
+            android:parentActivityName=".ui.danhba.danhba">
 
         </activity>
         <activity android:name=".UngDungDocBao"
             android:theme="@style/Theme.Design.NoActionBar"
-            android:parentActivityName=".main.MainActivity">
+            android:parentActivityName=".ui.main.MainActivity">
         </activity>
         <activity android:name=".NewsDetails"
             android:theme="@style/Theme.Design.NoActionBar"
