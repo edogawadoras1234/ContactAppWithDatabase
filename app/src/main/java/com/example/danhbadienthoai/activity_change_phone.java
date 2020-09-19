@@ -3,7 +3,6 @@ package com.example.danhbadienthoai;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.danhbadienthoai.adapter.ContactAdapter;
 import com.example.danhbadienthoai.db.Database;
 import com.example.danhbadienthoai.model.Contact;
+import com.example.danhbadienthoai.ui.danhba.danhba;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -39,9 +39,6 @@ public class activity_change_phone extends AppCompatActivity {
 
 
         database = new Database(this);
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_edit_phone);
-
 
         Button btnaccept, btncancle;
         edtname = findViewById(R.id.edt_name_change);

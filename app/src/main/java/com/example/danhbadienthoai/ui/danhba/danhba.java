@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.ui.danhba;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,7 +19,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.danhbadienthoai.LinearLayoutManagerSmooth;
+import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.adapter.ContactAdapter;
+import com.example.danhbadienthoai.ui.addphone.AddPhoneActivity;
 import com.example.danhbadienthoai.db.Database;
 import com.example.danhbadienthoai.model.Contact;
 import com.example.danhbadienthoai.utils.Common;
@@ -59,6 +62,9 @@ public class danhba extends AppCompatActivity {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         if (response.getPermissionName().equals(READ_CONTACTS)) {
+
+                            addContact();
+                            loaddata();
                             //addContact();
                         }
                     }
@@ -74,7 +80,6 @@ public class danhba extends AppCompatActivity {
                     }
                 }).check();
 
-        loaddata();
         new ItemTouchHelper(itemtouchhelper).attachToRecyclerView(recyclerView);
     }
     public ItemTouchHelper.SimpleCallback itemtouchhelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
@@ -157,7 +162,7 @@ public class danhba extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itemadd:
-                Intent intent = new Intent(this, add_phone_number.class);
+                Intent intent = new Intent(this, AddPhoneActivity.class);
                 startActivity(intent);
                 return true;
 
