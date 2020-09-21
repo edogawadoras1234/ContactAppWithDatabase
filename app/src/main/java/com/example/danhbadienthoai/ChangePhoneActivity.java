@@ -26,7 +26,7 @@ import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-public class activity_change_phone extends AppCompatActivity {
+public class ChangePhoneActivity extends AppCompatActivity {
     Database database;
     final int REQUEST_CODE_CAMERA = 123;
     final int REQUEST_CODE_FOLDER = 456;
@@ -57,7 +57,7 @@ public class activity_change_phone extends AppCompatActivity {
         img_anhdaidien = findViewById(R.id.img_change_avatar);
 
         Glide.with(this.getApplicationContext()).load(avatar)
-                .placeholder(R.drawable.icon_person).into(img_anhdaidien);
+                .placeholder(R.drawable.ic_person).into(img_anhdaidien);
 
 
         img_anhdaidien.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +72,7 @@ public class activity_change_phone extends AppCompatActivity {
         btncancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(activity_change_phone.this, DanhbaActivity.class);
+                Intent i = new Intent(ChangePhoneActivity.this, DanhbaActivity.class);
                 startActivity(i);
 
             }
@@ -81,16 +81,16 @@ public class activity_change_phone extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (edtphone.length() == 0) {
-                    Toast.makeText(activity_change_phone.this, "Không được bỏ trống số điện thoại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangePhoneActivity.this, "Không được bỏ trống số điện thoại", Toast.LENGTH_SHORT).show();
                 } else {
                     database.UpdateData(edtname.getText().toString(), edtphone.getText().toString(), edtavatar.getText().toString(),-1, id);
-                    Toast.makeText(activity_change_phone.this, "Đã thay đổi thành công", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangePhoneActivity.this, "Đã thay đổi thành công", Toast.LENGTH_SHORT).show();
                     Contact contact = new Contact(id,
                             edtname.getText().toString(),
                             edtphone.getText().toString(),
                             edtavatar.getText().toString(),
                             -1);
-                    Intent i = new Intent(activity_change_phone.this, DanhbaActivity.class);
+                    Intent i = new Intent(ChangePhoneActivity.this, DanhbaActivity.class);
                     startActivity(i);
                 }
 
@@ -133,7 +133,7 @@ public class activity_change_phone extends AppCompatActivity {
     }
     public void  menu_Popup(){
         PopupMenu popupMenu = new PopupMenu(this,img_anhdaidien);
-        popupMenu.getMenuInflater().inflate(R.menu.menu_popup,popupMenu.getMenu());
+        popupMenu.getMenuInflater().inflate(R.menu.activity_news_app,popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
@@ -152,7 +152,7 @@ public class activity_change_phone extends AppCompatActivity {
 
                     case R.id.menu_clear_image:
                         edtavatar.setText("");
-                        Glide.with(activity_change_phone.this).load(R.drawable.icon_person).into(img_anhdaidien);
+                        Glide.with(ChangePhoneActivity.this).load(R.drawable.ic_person).into(img_anhdaidien);
                         break;
                 }
                 return false;

@@ -10,4 +10,10 @@
     <string name="tab_text_8">Tab 7</string>
     <string name="tab_text_9">Tab 8</string>
     <string name="tab_text_10">Tab 9</string>
+    <string name="title_news_name">Title </string>
+    <string name="contact_name">Name</string>
+    <string name="contact_phone_number">Phone Number</string>
+    <string name="contact_avatar">Avatar</string>
+    <string name="contact_back">Trở lại</string>
+    <string name="contact_ok">Đồng ý</string>
 </resources>

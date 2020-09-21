@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.UngDungDocBao;
 import com.example.danhbadienthoai.fragment.SourceNews;
 import com.example.danhbadienthoai.fragment.CountriesNews;
 import com.example.danhbadienthoai.fragment.JapaneseNews;

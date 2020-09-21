@@ -15,7 +15,6 @@
           android:orientation="horizontal">
 
 
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
@@ -31,8 +30,7 @@
               android:id="@+id/btn_search_news"
               android:layout_width="50dp"
               android:layout_height="50dp"
-              android:background="@drawable/ic_search">
-          </Button>
+              android:background="@drawable/ic_search"/>
       </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -40,8 +38,7 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </androidx.viewpager.widget.ViewPager>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

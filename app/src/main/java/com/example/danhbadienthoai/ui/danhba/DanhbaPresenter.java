@@ -4,6 +4,8 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.danhbadienthoai.adapter.ContactAdapter;
 import com.example.danhbadienthoai.data.db.Database;
 import com.example.danhbadienthoai.model.Contact;
@@ -33,7 +35,7 @@ public class DanhbaPresenter implements DanhbaMvpPresenter {
     }
 
     @Override
-    public void onLoadData() {
+    public void onAddData() {
         ArrayList contactList = new ArrayList<>();
         database = new Database(danhbaActivity);
         Cursor cursor = danhbaActivity.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
@@ -50,6 +52,23 @@ public class DanhbaPresenter implements DanhbaMvpPresenter {
     }
 
     @Override
+    public void onLoadData() {
+        database = new Database(danhbaActivity);
+        ArrayList<Contact> contactArrayList;
+        contactArrayList = new ArrayList<>();
+        Cursor cursor = database.readAllData();
+        if (cursor.getCount() == 0) {
+          danhbaMvpView.showLoadDataFailed();
+        } else {
+            while (cursor.moveToNext()) {
+                Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getInt(4));
+                contactArrayList.add(contact);
+                danhbaMvpView.showLoadDataSuccessed(contactArrayList);
+            }
+        }
+    }
+
+    @Override
     public void showDiaglog() {
 
     }
@@ -58,6 +77,16 @@ public class DanhbaPresenter implements DanhbaMvpPresenter {
     public void showAddPhone() {
 
     }
+
+    @Override
+    public void showLoadDataSuccessed(ArrayList<Contact> arrayList) {
+
+    }
+    @Override
+    public void showLoadDataFailed() {
+
+    }
+
 
     @Override
     public void addData(String id, String name, String phone, String avatar) {

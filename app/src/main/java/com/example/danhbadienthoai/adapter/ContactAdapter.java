@@ -27,7 +27,7 @@ import com.bumptech.glide.Glide;
 import com.example.danhbadienthoai.utils.Common;
 import com.example.danhbadienthoai.model.Contact;
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.activity_change_phone;
+import com.example.danhbadienthoai.ChangePhoneActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,18 +52,18 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         if (viewType == Common.VIEWTYPE_GROUP) {
-            ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.group_layout, parent, false);
+            ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.item_group_layout, parent, false);
             GroupViewHolder groupViewHolder = new GroupViewHolder(viewGroup);
 
             return groupViewHolder;
         }
         else if(viewType == Common.VIEWTYPE_CONTACT) {
-            ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.contact_layout, parent, false);
+            ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.item_contact_layout, parent, false);
             ContactViewHolder contactViewHolder = new ContactViewHolder(viewGroup);
             return contactViewHolder;
         }
         else{
-            ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.group_layout, parent, false);
+            ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.item_group_layout, parent, false);
             GroupViewHolder groupViewHolder = new GroupViewHolder(viewGroup);
 
             return groupViewHolder;
@@ -119,7 +119,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             contactViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, activity_change_phone.class);
+                    Intent intent = new Intent(context, ChangePhoneActivity.class);
                     intent.putExtra(ID,contactList.get(position).getId());
                     intent.putExtra(NAME,contactList.get(position).getName());
                     intent.putExtra(PHONE,contactList.get(position).getPhone());

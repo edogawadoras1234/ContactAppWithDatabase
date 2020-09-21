@@ -16,14 +16,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.danhbadienthoai.utils.Utils;
 
-public class NewsDetails extends AppCompatActivity{
+public class NewsDetailsActivity extends AppCompatActivity{
     WebView webview;
     private String mUrl, mTitle, mDate, mAuthor, mContent;
     TextView txt_title, txt_time, txt_content;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.news_row_details);
+        setContentView(R.layout.item_news_row_details);
 
         Intent intent = getIntent();
         mUrl = intent.getStringExtra("url");

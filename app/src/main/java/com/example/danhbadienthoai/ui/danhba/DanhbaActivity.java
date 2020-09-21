@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.danhbadienthoai.LinearLayoutManagerSmooth;
 import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.adapter.ContactAdapter;
 import com.example.danhbadienthoai.ui.addphone.AddPhoneActivity;
@@ -40,7 +38,6 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
-    ArrayList<Contact> arrayList= new ArrayList<>();
     Database database;
     ArrayList<Contact> contactList;
     ContactAdapter contactAdapter;
@@ -48,11 +45,11 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.danhba);
+        setContentView(R.layout.activity_danh_ba);
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManagerSmooth(this);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
         danhbaPresenter = new DanhbaPresenter(this, this);
@@ -63,8 +60,8 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         if (response.getPermissionName().equals(READ_CONTACTS)) {
+                            danhbaPresenter.onAddData();
                             danhbaPresenter.onLoadData();
-                            loaddata();
                         }
                     }
 
@@ -100,28 +97,10 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
         contactAdapter.notifyItemRemoved(pos);
     }
 
-    public void loaddata(){
-        database = new Database(DanhbaActivity.this);
-        ArrayList<Contact> contactArrayList = new ArrayList<>();
-        contactArrayList = new ArrayList<>();
-        Cursor cursor = database.readAllData();
-        if (cursor.getCount() == 0) {
-            Toast.makeText(DanhbaActivity.this, "No Data", Toast.LENGTH_SHORT).show();
-        } else {
-            while (cursor.moveToNext()) {
-                Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getInt(4));
-                contactArrayList.add(contact);
-            }
-        }
-        contactList = Common.sortList(contactArrayList);
-        contactList = Common.addAlpha(contactArrayList);
-        contactAdapter = new ContactAdapter(DanhbaActivity.this,contactList);
-        recyclerView.setAdapter(contactAdapter);
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.activity_danh_ba, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
@@ -181,8 +160,38 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
     }
 
     @Override
+    public void showLoadDataSuccessed(ArrayList<Contact> contactList) {
+        contactList = Common.sortList(contactList);
+        contactList = Common.addAlpha(contactList);
+        contactAdapter = new ContactAdapter(this,contactList);
+        recyclerView.setAdapter(contactAdapter);
+    }
+    @Override
+    public void showLoadDataFailed() {
+        Toast.makeText(DanhbaActivity.this, "No Data", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void addData(String id, String name, String phone, String avatar) {
         database = new Database(this);
         danhbaPresenter.addData(id, name, phone, avatar);
+    }
+    public void loaddata(){
+        database = new Database(this);
+        ArrayList<Contact> contactArrayList;
+        contactArrayList = new ArrayList<>();
+        Cursor cursor = database.readAllData();
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()) {
+                Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getInt(4));
+                contactArrayList.add(contact);
+            }
+        }
+        contactList = Common.sortList(contactArrayList);
+        contactList = Common.addAlpha(contactArrayList);
+        contactAdapter = new ContactAdapter(this,contactList);
+        recyclerView.setAdapter(contactAdapter);
     }
 }

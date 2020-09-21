@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity_change_phone"
+        <activity android:name=".ChangePhoneActivity"
             android:parentActivityName=".ui.danhba.DanhbaActivity">
 
         </activity>
@@ -44,19 +44,19 @@
             android:parentActivityName=".ui.danhba.DanhbaActivity">
 
         </activity>
-        <activity android:name=".UngDungDocBao"
+        <activity android:name=".NewsAppActivity"
             android:theme="@style/Theme.Design.NoActionBar"
             android:parentActivityName=".ui.main.MainActivity">
         </activity>
-        <activity android:name=".NewsDetails"
+        <activity android:name=".NewsDetailsActivity"
             android:theme="@style/Theme.Design.NoActionBar"
-            android:parentActivityName=".UngDungDocBao">
+            android:parentActivityName=".NewsAppActivity">
 
         </activity>
 
-        <activity android:name=".ActivitySearchNews"
+        <activity android:name=".SearchNewsActivity"
             android:theme="@style/Theme.Design.NoActionBar"
-            android:parentActivityName=".UngDungDocBao">
+            android:parentActivityName=".NewsAppActivity">
 
         </activity>
     </application>

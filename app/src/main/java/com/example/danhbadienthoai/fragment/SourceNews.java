@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.danhbadienthoai.network.APIClient;
+import com.example.danhbadienthoai.network.ApiClient;
 import com.example.danhbadienthoai.network.ApiInterface;
 import com.example.danhbadienthoai.model.Article;
 import com.example.danhbadienthoai.model.News;
@@ -36,7 +36,7 @@ public class SourceNews extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //336c7a92c13b4970be0773e0b2cf5c67 API key
-        View view = inflater.inflate(R.layout.fragment_trangchu, container, false);
+        View view = inflater.inflate(R.layout.fragment_trang_chu_news, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_news);
         //Tối ưu hoá dữ liệu trong adapter
         recyclerView.setHasFixedSize(true);
@@ -53,7 +53,7 @@ public class SourceNews extends Fragment {
         return view;
     }
     private void loadJSON() {
-        ApiInterface apiInterface = APIClient.getApiClient().create(ApiInterface.class);
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         String country = Utils.getCountry();
         String language = Utils.getLanguage();
         Call<News> call;

@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.danhbadienthoai.network.APIClient;
+import com.example.danhbadienthoai.network.ApiClient;
 import com.example.danhbadienthoai.network.ApiInterface;
 import com.example.danhbadienthoai.model.Article;
 import com.example.danhbadienthoai.model.News;
@@ -39,7 +39,7 @@ public class TrangChuNews extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_trangchu, container, false);
+        View view = inflater.inflate(R.layout.fragment_trang_chu_news, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_news);
         //Tối ưu hoá dữ liệu trong adapter
         recyclerView.setHasFixedSize(true);
@@ -68,7 +68,7 @@ public class TrangChuNews extends Fragment {
     }
 
     private void loadJSON() {
-        ApiInterface apiInterface = APIClient.getApiClient().create(ApiInterface.class);
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         String country = Utils.getCountry();
         String language = Utils.getLanguage();
         Call<News> call;

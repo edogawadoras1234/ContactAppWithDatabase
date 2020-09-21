@@ -5,25 +5,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.danhbadienthoai.adapter.NewsAdapter;
 import com.example.danhbadienthoai.model.Article;
 import com.example.danhbadienthoai.model.News;
-import com.example.danhbadienthoai.network.APIClient;
+import com.example.danhbadienthoai.network.ApiClient;
 import com.example.danhbadienthoai.network.ApiInterface;
 import com.example.danhbadienthoai.utils.Utils;
 
@@ -35,7 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ActivitySearchNews extends AppCompatActivity {
+public class SearchNewsActivity extends AppCompatActivity {
     EditText edt_search;
     TextView txt_loi;
     Button btn_search, btn_close, btn_tk1, btn_tk2, btn_tk3;
@@ -43,10 +37,16 @@ public class ActivitySearchNews extends AppCompatActivity {
     RecyclerView recyclerView;
     private List<Article> articles = new ArrayList<>();
     public static final String API_KEY = "336c7a92c13b4970be0773e0b2cf5c67";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_news);
+        findViewByIds();
+
+    }
+
+    private void findViewByIds(){
         recyclerView = (RecyclerView) findViewById(R.id.rv_search_news);
         //Tối ưu hoá dữ liệu trong adapter
         recyclerView.setHasFixedSize(true);
@@ -91,7 +91,7 @@ public class ActivitySearchNews extends AppCompatActivity {
         btn_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ActivitySearchNews.this, UngDungDocBao.class);
+                Intent intent = new Intent(SearchNewsActivity.this, NewsAppActivity.class);
                 startActivity(intent);
             }
         });
@@ -104,18 +104,16 @@ public class ActivitySearchNews extends AppCompatActivity {
                     btn_tk3.setVisibility(View.VISIBLE);
                     txt_loi.setVisibility(View.GONE);
                     articles.clear();
-                    Toast.makeText(ActivitySearchNews.this, "Nhập từ khoá", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchNewsActivity.this, "Nhập từ khoá", Toast.LENGTH_SHORT).show();
                 }else {
                     loadJSON(edt_search.getText().toString());
-                    Toast.makeText(ActivitySearchNews.this, "Search", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchNewsActivity.this, "Search", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
     private void loadJSON(String keyword) {
-        ApiInterface apiInterface = APIClient.getApiClient().create(ApiInterface.class);
-        String country = Utils.getCountry();
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         String language = Utils.getLanguage();
         Call<News> call;
         call = apiInterface.getQ(keyword,language, "publishedAt", API_KEY);
@@ -134,7 +132,7 @@ public class ActivitySearchNews extends AppCompatActivity {
                         btn_tk2.setVisibility(View.GONE);
                         btn_tk3.setVisibility(View.GONE);
                         articles = response.body().getArticles();
-                        newsAdapter = new NewsAdapter(articles, ActivitySearchNews.this);
+                        newsAdapter = new NewsAdapter(articles, SearchNewsActivity.this);
                         recyclerView.setAdapter(newsAdapter);
                         newsAdapter.notifyDataSetChanged();
                     }
@@ -143,7 +141,7 @@ public class ActivitySearchNews extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<News> call, Throwable t) {
-                Toast.makeText(ActivitySearchNews.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchNewsActivity.this, "Something went wrong...", Toast.LENGTH_SHORT).show();
             }
         });
     }

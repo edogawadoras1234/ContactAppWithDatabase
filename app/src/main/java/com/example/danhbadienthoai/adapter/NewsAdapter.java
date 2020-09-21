@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.danhbadienthoai.model.Article;
-import com.example.danhbadienthoai.NewsDetails;
+import com.example.danhbadienthoai.NewsDetailsActivity;
 import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.utils.Utils;
 
@@ -36,19 +36,19 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_1) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_row, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_row, parent, false);
             NewsAdapterViewHolder viewHolder = new NewsAdapterViewHolder(view);
 
             return viewHolder;
         }
         else if(viewType == VIEW_TYPE_2) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_row_type_2, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_row_type_2, parent, false);
             NewsAdapterViewHolderType2 viewHolderType2 = new NewsAdapterViewHolderType2(view);
 
             return viewHolderType2;
         }
         else{
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_row, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_row, parent, false);
             NewsAdapterViewHolder viewHolder = new NewsAdapterViewHolder(view);
 
             return viewHolder;
@@ -65,11 +65,11 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             String hinhanh = articleList.get(position).getUrlToImage();
 
             Glide.with(holder.itemView.getContext()).load(hinhanh)
-                    .placeholder(R.drawable.icon_newsss).into(newsAdapterViewHolder.img_news);
+                    .placeholder(R.drawable.ic_newsss).into(newsAdapterViewHolder.img_news);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(holder.itemView.getContext(), NewsDetails.class);
+                    Intent intent = new Intent(holder.itemView.getContext(), NewsDetailsActivity.class);
                     intent.putExtra("url", articleList.get(position).getUrl());
                     intent.putExtra("title", articleList.get(position).getTitle());
                     intent.putExtra("img", articleList.get(position).getUrlToImage());
@@ -87,7 +87,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             Glide.with(holder.itemView.getContext())
                     .load(hinhanh)
-                    .placeholder(R.drawable.icon_newsss)
+                    .placeholder(R.drawable.ic_newsss)
                     .into(newsAdapterViewHolderType2.img_news_type2);
 
             Animation rotate = AnimationUtils.loadAnimation(context, R.anim.zoom_out);
@@ -97,7 +97,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(holder.itemView.getContext(), NewsDetails.class);
+                    Intent intent = new Intent(holder.itemView.getContext(), NewsDetailsActivity.class);
                     intent.putExtra("url", articleList.get(position).getUrl());
                     intent.putExtra("title", articleList.get(position).getTitle());
                     intent.putExtra("img", articleList.get(position).getUrlToImage());
