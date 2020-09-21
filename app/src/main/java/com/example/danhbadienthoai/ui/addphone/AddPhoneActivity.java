@@ -10,8 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.ui.danhba.danhba;
-import com.example.danhbadienthoai.db.Database;
+import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
+import com.example.danhbadienthoai.data.db.Database;
 
 public class AddPhoneActivity extends AppCompatActivity implements View.OnClickListener, AddPhoneMvpView{
     Button btnadd, btncancle;
@@ -53,7 +53,7 @@ public class AddPhoneActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void openMainActivity() {
-        Intent intent = new Intent(this,danhba.class);
+        Intent intent = new Intent(this, DanhbaActivity.class);
         startActivity(intent);
     }
 

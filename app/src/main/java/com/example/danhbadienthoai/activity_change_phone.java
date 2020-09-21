@@ -19,9 +19,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.danhbadienthoai.adapter.ContactAdapter;
-import com.example.danhbadienthoai.db.Database;
+import com.example.danhbadienthoai.data.db.Database;
 import com.example.danhbadienthoai.model.Contact;
-import com.example.danhbadienthoai.ui.danhba.danhba;
+import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -72,7 +72,7 @@ public class activity_change_phone extends AppCompatActivity {
         btncancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(activity_change_phone.this, danhba.class);
+                Intent i = new Intent(activity_change_phone.this, DanhbaActivity.class);
                 startActivity(i);
 
             }
@@ -90,7 +90,7 @@ public class activity_change_phone extends AppCompatActivity {
                             edtphone.getText().toString(),
                             edtavatar.getText().toString(),
                             -1);
-                    Intent i = new Intent(activity_change_phone.this, danhba.class);
+                    Intent i = new Intent(activity_change_phone.this, DanhbaActivity.class);
                     startActivity(i);
                 }
 

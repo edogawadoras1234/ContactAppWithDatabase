@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.UngDungDocBao;
-import com.example.danhbadienthoai.ui.danhba.danhba;
+import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
 
 public class MainActivity extends AppCompatActivity implements MainMvpView {
 
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
 
     @Override
     public void intoContact() {
-        Intent intent = new Intent(MainActivity.this, danhba.class);
+        Intent intent = new Intent(MainActivity.this, DanhbaActivity.class);
         startActivity(intent);
     }
 

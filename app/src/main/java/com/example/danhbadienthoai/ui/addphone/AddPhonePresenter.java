@@ -1,5 +1,6 @@
 package com.example.danhbadienthoai.ui.addphone;
 import android.util.Log;
+import android.widget.Toast;
 
 public class AddPhonePresenter implements AddPhoneMvpPresenter {
 
@@ -12,13 +13,14 @@ public class AddPhonePresenter implements AddPhoneMvpPresenter {
   public void onAddClick(String name, String phone, String avatar) {
 
       if (name.length() == 0 || phone.length() == 0){
+
         addPhoneMvpView.Error();
-        Log.i("aaaaaaaaaa","That bai");
 
       }else{
-        Log.i("bbbbbbbbbbbbb","Thanh cong");
+
         addPhoneMvpView.Success();
         addPhoneMvpView.openMainActivity();
+
       }
   }
 

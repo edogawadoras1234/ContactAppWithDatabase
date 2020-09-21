@@ -23,7 +23,7 @@ import com.example.danhbadienthoai.LinearLayoutManagerSmooth;
 import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.adapter.ContactAdapter;
 import com.example.danhbadienthoai.ui.addphone.AddPhoneActivity;
-import com.example.danhbadienthoai.db.Database;
+import com.example.danhbadienthoai.data.db.Database;
 import com.example.danhbadienthoai.model.Contact;
 import com.example.danhbadienthoai.utils.Common;
 import com.karumi.dexter.Dexter;
@@ -37,13 +37,14 @@ import java.util.ArrayList;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-public class danhba extends AppCompatActivity {
+public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     ArrayList<Contact> arrayList= new ArrayList<>();
     Database database;
     ArrayList<Contact> contactList;
     ContactAdapter contactAdapter;
+    DanhbaPresenter danhbaPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,7 @@ public class danhba extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManagerSmooth(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
-
+        danhbaPresenter = new DanhbaPresenter(this, this);
 
         Dexter.withActivity(this)
                 .withPermission(READ_CONTACTS)
@@ -62,16 +63,14 @@ public class danhba extends AppCompatActivity {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         if (response.getPermissionName().equals(READ_CONTACTS)) {
-
-                            addContact();
+                            danhbaPresenter.onLoadData();
                             loaddata();
-                            //addContact();
                         }
                     }
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(danhba.this, "Need Permiss", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DanhbaActivity.this, "Need Permiss", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -90,8 +89,8 @@ public class danhba extends AppCompatActivity {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            database = new Database(danhba.this);
-            Toast.makeText(danhba.this, "Delete Success: " + contactList.get(viewHolder.getAdapterPosition()).getId(), Toast.LENGTH_SHORT).show();
+            database = new Database(DanhbaActivity.this);
+            Toast.makeText(DanhbaActivity.this, "Delete Success: " + contactList.get(viewHolder.getAdapterPosition()).getId(), Toast.LENGTH_SHORT).show();
             database.DeleteData(contactList.get(viewHolder.getAdapterPosition()).getId());
             remove(viewHolder.getAdapterPosition());
         }
@@ -101,28 +100,13 @@ public class danhba extends AppCompatActivity {
         contactAdapter.notifyItemRemoved(pos);
     }
 
-    String id1, name1, phone1, avatar1;
-    private void addContact() {
-        contactList = new ArrayList<>();
-        database = new Database(this);
-        Cursor cursor2 = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
-        while (cursor2.moveToNext()) {
-            id1 = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID));
-            name1 = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            phone1 = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            avatar1 = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI));
-            Contact contact = new Contact(id1, name1, phone1, avatar1,-1);
-            database.addData(id1, name1, phone1, avatar1,-1);
-            contactList.add(contact);
-        }
-    }
     public void loaddata(){
-        database = new Database(danhba.this);
+        database = new Database(DanhbaActivity.this);
         ArrayList<Contact> contactArrayList = new ArrayList<>();
         contactArrayList = new ArrayList<>();
         Cursor cursor = database.readAllData();
         if (cursor.getCount() == 0) {
-            Toast.makeText(danhba.this, "No Data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DanhbaActivity.this, "No Data", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
                 Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getInt(4));
@@ -131,7 +115,7 @@ public class danhba extends AppCompatActivity {
         }
         contactList = Common.sortList(contactArrayList);
         contactList = Common.addAlpha(contactArrayList);
-        contactAdapter = new ContactAdapter(danhba.this,contactList);
+        contactAdapter = new ContactAdapter(DanhbaActivity.this,contactList);
         recyclerView.setAdapter(contactAdapter);
     }
     @Override
@@ -151,7 +135,6 @@ public class danhba extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 contactAdapter.getFilter().filter(s);
-
                 return false;
             }
         });
@@ -162,18 +145,18 @@ public class danhba extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itemadd:
-                Intent intent = new Intent(this, AddPhoneActivity.class);
-                startActivity(intent);
+                danhbaPresenter.onClickMenuAddPhone();
                 return true;
 
             case R.id.itemthoat:
-                DigalogThoat();
+                danhbaPresenter.onClickMenuExit();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void DigalogThoat() {
+    @Override
+    public void showDiaglog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Bạn có muốn thoát không?");
         builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
@@ -189,5 +172,17 @@ public class danhba extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    @Override
+    public void showAddPhone() {
+        Intent intent = new Intent(this, AddPhoneActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void addData(String id, String name, String phone, String avatar) {
+        database = new Database(this);
+        danhbaPresenter.addData(id, name, phone, avatar);
     }
 }

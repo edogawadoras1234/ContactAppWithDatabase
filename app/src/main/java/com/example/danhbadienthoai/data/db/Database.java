@@ -1,13 +1,10 @@
-package com.example.danhbadienthoai.db;
+package com.example.danhbadienthoai.data.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
-import android.os.Environment;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
