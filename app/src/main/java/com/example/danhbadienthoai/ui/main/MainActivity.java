@@ -11,6 +11,10 @@ import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.ui.newsapp.NewsAppActivity;
 import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity implements MainMvpView {
 
     MainPresenter mainPresenter;
@@ -19,30 +23,21 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button button = (Button) findViewById(R.id.button_app_contact);
-        Button btn_new = (Button) findViewById(R.id.button_app_news);
 
         mainPresenter = new MainPresenter(this);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainPresenter.onClickBtnContact();
-            }
-        });
-        btn_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainPresenter.onClickBtnNews();
-            }
-        });
-
-
+        ButterKnife.bind(this);
     }
 
-    @Override
-    public void openMainActivity() {
-
+    @OnClick(R.id.button_app_contact)
+    void onClickAppContact() {
+        mainPresenter.onClickBtnContact();
     }
+
+    @OnClick(R.id.button_app_news)
+    void onClickAppNews() {
+        mainPresenter.onClickBtnNews();
+    }
+
 
     @Override
     public void intoContact() {

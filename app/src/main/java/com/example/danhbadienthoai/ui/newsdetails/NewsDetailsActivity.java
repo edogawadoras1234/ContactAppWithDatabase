@@ -16,10 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.utils.NewsUtils;
 
-public class NewsDetailsActivity extends AppCompatActivity{
+public class NewsDetailsActivity extends AppCompatActivity {
     WebView webview;
-    private String mUrl, mTitle, mDate, mAuthor, mContent;
+    private String mUrl;
+    private String mContent;
     TextView txt_title, txt_time;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,10 +31,11 @@ public class NewsDetailsActivity extends AppCompatActivity{
         setWebview();
 
     }
-    @SuppressLint("ClickableViewAccessibility")
-    public void setWebview(){
+
+    @SuppressLint({"ClickableViewAccessibility", "SetJavaScriptEnabled"})
+    public void setWebview() {
         webview.setWebViewClient(new WebViewClient());
-        webview.loadData(mContent,"text/html","utf-8");
+        webview.loadData(mContent, "text/html", "utf-8");
         webview.loadUrl(mUrl);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setLoadsImagesAutomatically(true);
@@ -47,30 +50,24 @@ public class NewsDetailsActivity extends AppCompatActivity{
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webSettings.setUseWideViewPort(true);
-        webview.setOnTouchListener(new View.OnTouchListener() {
-               @Override
-               public boolean onTouch(View v, MotionEvent event) {
-             return (event.getAction() == MotionEvent.ACTION_MOVE);
-           }
-          });
+        webview.setOnTouchListener((v, event) -> (event.getAction() == MotionEvent.ACTION_MOVE));
     }
 
     @Override
     public void onBackPressed() {
-        if(webview.canGoBack()){
+        if (webview.canGoBack()) {
             webview.goBack();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
-    private void getIntentInfor(){
+
+    private void getIntentInfor() {
         Intent intent = getIntent();
         mUrl = intent.getStringExtra("url");
-        mTitle = intent.getStringExtra("title");
-        mDate = intent.getStringExtra("date");
-        mAuthor = intent.getStringExtra("author");
+        String mTitle = intent.getStringExtra("title");
+        String mDate = intent.getStringExtra("date");
         mContent = intent.getStringExtra("content");
 
         webview = findViewById(R.id.webView);
@@ -79,8 +76,5 @@ public class NewsDetailsActivity extends AppCompatActivity{
 
         txt_title.setText(mTitle);
         txt_time.setText(NewsUtils.DateFormat(mDate));
-        final String mimeType = "text/html";
-        final String encoding = "UTF-8";
-        //webview.loadDataWithBaseURL(mUrl, mContent, mimeType, encoding, "");
     }
 }

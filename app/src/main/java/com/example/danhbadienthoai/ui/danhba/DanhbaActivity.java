@@ -1,6 +1,5 @@
 package com.example.danhbadienthoai.ui.danhba;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +30,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
@@ -45,9 +45,37 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danh_ba);
-
+        recyclerView = findViewById(R.id.recycler_view);
         new ItemTouchHelper(itemtouchhelper).attachToRecyclerView(recyclerView);
-        findViewByIds();
+
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
+        danhbaPresenter = new DanhbaPresenter(this, this);
+
+        Dexter.withActivity(this)
+                .withPermission(READ_CONTACTS)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        if (response.getPermissionName().equals(READ_CONTACTS)) {
+                            danhbaPresenter.onAddData();
+                            danhbaPresenter.onLoadData();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        Toast.makeText(DanhbaActivity.this, "Need Permiss", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
 
     }
 
@@ -108,17 +136,9 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
     public void showDiaglog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Bạn có muốn thoát không?");
-        builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                System.exit(1);
-            }
-        });
-        builder.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        builder.setPositiveButton("Exit", (dialogInterface, i) -> System.exit(1));
+        builder.setNegativeButton("Cancle", (dialogInterface, i) -> {
 
-            }
         });
         builder.show();
     }
@@ -146,36 +166,5 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
     public void addData(String id, String name, String phone, String avatar) {
         database = new Database(this);
         danhbaPresenter.addData(id, name, phone, avatar);
-    }
-
-    private void findViewByIds() {
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
-        danhbaPresenter = new DanhbaPresenter(this, this);
-
-        Dexter.withActivity(this)
-                .withPermission(READ_CONTACTS)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse response) {
-                        if (response.getPermissionName().equals(READ_CONTACTS)) {
-                            danhbaPresenter.onAddData();
-                            danhbaPresenter.onLoadData();
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(DanhbaActivity.this, "Need Permiss", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
     }
 }

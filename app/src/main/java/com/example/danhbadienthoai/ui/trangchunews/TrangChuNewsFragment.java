@@ -22,6 +22,8 @@ import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.utils.NewsUtils;
 import com.example.danhbadienthoai.ui.newsapp.NewsAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import java.util.ArrayList;
@@ -36,11 +38,12 @@ public class TrangChuNewsFragment extends Fragment {
     private List<Article> articles = new ArrayList<>();
     public static final String API_KEY = "336c7a92c13b4970be0773e0b2cf5c67";
     SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trang_chu_news, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_news);
+        recyclerView = view.findViewById(R.id.rv_news);
         //Tối ưu hoá dữ liệu trong adapter
         recyclerView.setHasFixedSize(true);
 
@@ -52,31 +55,28 @@ public class TrangChuNewsFragment extends Fragment {
         recyclerView.addItemDecoration(deviderItemDecoration);
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         recyclerView.setItemAnimator(itemAnimator);
-       loadJSON();
+        loadJSON();
 
-       swipeRefreshLayout = view.findViewById(R.id.news_swipe);
-       swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-           @Override
-           public void onRefresh() {
-               Toast.makeText(getContext(), "Refresh", Toast.LENGTH_SHORT).show();
+        swipeRefreshLayout = view.findViewById(R.id.news_swipe);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            Toast.makeText(getContext(), "Refresh", Toast.LENGTH_SHORT).show();
 
-               swipeRefreshLayout.setRefreshing(false);
-           }
-       });
-        //336c7a92c13b4970be0773e0b2cf5c67 API key
+            swipeRefreshLayout.setRefreshing(false);
+        });
+
         return view;
     }
 
     private void loadJSON() {
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        String country = NewsUtils.getCountry();
         String language = NewsUtils.getLanguage();
         Call<News> call;
-        call = apiInterface.getQ("money",language, "publishedAt", API_KEY);
+        call = apiInterface.getQ("money", language, "publishedAt", API_KEY);
         call.enqueue(new Callback<News>() {
 
             @Override
-            public void onResponse(Call<News> call, Response<News> response) {
+            public void onResponse(@NotNull Call<News> call, @NotNull Response<News> response) {
+                assert response.body() != null;
                 if (response.isSuccessful() && response.body().getArticles() != null) {
 
                     if (!articles.isEmpty()) {
@@ -90,7 +90,7 @@ public class TrangChuNewsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<News> call, Throwable t) {
+            public void onFailure(@NotNull Call<News> call, @NotNull Throwable t) {
                 Toast.makeText(getActivity(), "Something went wrong...", Toast.LENGTH_SHORT).show();
             }
         });

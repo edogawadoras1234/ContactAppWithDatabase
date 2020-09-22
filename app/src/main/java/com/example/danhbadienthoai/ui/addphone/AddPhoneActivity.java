@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,11 +12,23 @@ import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
 import com.example.danhbadienthoai.data.db.Database;
 
-public class AddPhoneActivity extends AppCompatActivity implements View.OnClickListener, AddPhoneMvpView{
-    Button btnadd, btncancle;
-    EditText edtname, edtphone, edtavatar;
-    Database database;
+import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class AddPhoneActivity extends AppCompatActivity implements AddPhoneMvpView {
+    @BindView(R.id.edit_name)
+    EditText edtname;
+    @BindView(R.id.edit_phone)
+    EditText edtphone;
+    @BindView(R.id.edit_avatar)
+    EditText edtavatar;
+    @BindView(R.id.button_cancle)
+    Button btncancle;
+
+    Database database;
     AddPhonePresenter addPhonePresenter;
 
     @Override
@@ -25,30 +36,22 @@ public class AddPhoneActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_phone);
 
-        addPhonePresenter = new AddPhonePresenter(this);
-
-        findviewbyids();
-
-    }
-
-    private void findviewbyids(){
-        edtname = findViewById(R.id.edit_name);
-        edtphone = findViewById(R.id.edit_phone);
-        edtavatar = findViewById(R.id.edit_avatar);
-        btnadd = findViewById(R.id.button_add);
-        btncancle = findViewById(R.id.button_cancle);
-        btnadd.setOnClickListener(this);
-        btncancle.setOnClickListener(this);
-        getSupportActionBar().setTitle("Thêm Danh Ba");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Thêm Danh Ba");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ButterKnife.bind(this);
+        addPhonePresenter = new AddPhonePresenter(this);
     }
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.button_add) {
-            addPhonePresenter.onAddClick(edtname.getText().toString(), edtphone.getText().toString(), edtavatar.getText().toString());
-        } else if (view.getId() == R.id.button_cancle) {
-            addPhonePresenter.onCancleClick();
-        }
+
+    @OnClick(R.id.button_add)
+    void buttonAddClick() {
+        addPhonePresenter.onAddClick(edtname.getText().toString(), edtphone.getText().toString(), edtavatar.getText().toString());
+    }
+
+    @OnClick(R.id.button_cancle)
+    void
+    buttonCancleClick() {
+        addPhonePresenter.onCancleClick();
     }
 
     @Override

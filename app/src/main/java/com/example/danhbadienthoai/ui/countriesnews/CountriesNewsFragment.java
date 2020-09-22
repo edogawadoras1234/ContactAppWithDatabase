@@ -18,6 +18,8 @@ import com.example.danhbadienthoai.data.db.model.News;
 import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.ui.newsapp.NewsAdapter;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CountriesNewsFragment extends Fragment implements CountriesNewsMvpView{
+public class CountriesNewsFragment extends Fragment implements CountriesNewsMvpView {
     NewsAdapter newsAdapter;
     RecyclerView recyclerView;
     private List<Article> articles = new ArrayList<>();
@@ -37,11 +39,11 @@ public class CountriesNewsFragment extends Fragment implements CountriesNewsMvpV
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trang_chu_news, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_news);
+        recyclerView = view.findViewById(R.id.rv_news);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(container.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration deviderItemDecoration = new DividerItemDecoration(container.getContext(),layoutManager.getOrientation());
+        DividerItemDecoration deviderItemDecoration = new DividerItemDecoration(container.getContext(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(deviderItemDecoration);
 
         countriesNewsPresenter = new CountriesNewsPresenter(this);
@@ -58,7 +60,8 @@ public class CountriesNewsFragment extends Fragment implements CountriesNewsMvpV
         call.enqueue(new Callback<News>() {
 
             @Override
-            public void onResponse(Call<News> call, Response<News> response) {
+            public void onResponse(@NotNull Call<News> call, @NotNull Response<News> response) {
+                assert response.body() != null;
                 if (response.isSuccessful() && response.body().getArticles() != null) {
 
                     if (!articles.isEmpty()) {
@@ -72,7 +75,7 @@ public class CountriesNewsFragment extends Fragment implements CountriesNewsMvpV
             }
 
             @Override
-            public void onFailure(Call<News> call, Throwable t) {
+            public void onFailure(@NotNull Call<News> call, @NotNull Throwable t) {
                 Toast.makeText(getActivity(), "Something went wrong...", Toast.LENGTH_SHORT).show();
             }
         });

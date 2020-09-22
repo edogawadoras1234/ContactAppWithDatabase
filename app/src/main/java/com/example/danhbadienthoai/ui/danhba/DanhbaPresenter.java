@@ -53,10 +53,10 @@ public class DanhbaPresenter implements DanhbaMvpPresenter {
         contactArrayList = new ArrayList<>();
         Cursor cursor = database.readAllData();
         if (cursor.getCount() == 0) {
-          danhbaMvpView.showLoadDataFailed();
+            danhbaMvpView.showLoadDataFailed();
         } else {
             while (cursor.moveToNext()) {
-                Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getInt(4));
+                Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4));
                 contactArrayList.add(contact);
                 danhbaMvpView.showLoadDataSuccessed(contactArrayList);
             }
@@ -77,6 +77,7 @@ public class DanhbaPresenter implements DanhbaMvpPresenter {
     public void showLoadDataSuccessed(ArrayList<Contact> arrayList) {
 
     }
+
     @Override
     public void showLoadDataFailed() {
 

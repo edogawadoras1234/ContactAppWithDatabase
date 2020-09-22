@@ -1,10 +1,10 @@
 package com.example.danhbadienthoai.ui.main;
 
-import android.util.Log;
 
-public class MainPresenter implements MainMvpPresenter{
+public class MainPresenter implements MainMvpPresenter {
     MainMvpView mainMvpView;
-    public MainPresenter(MainMvpView mainMvpView){
+
+    public MainPresenter(MainMvpView mainMvpView) {
         this.mainMvpView = mainMvpView;
     }
 
@@ -18,10 +18,6 @@ public class MainPresenter implements MainMvpPresenter{
         mainMvpView.intoNews();
     }
 
-    @Override
-    public void openMainActivity() {
-
-    }
 
     @Override
     public void intoContact() {

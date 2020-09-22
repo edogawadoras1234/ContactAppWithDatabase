@@ -16,8 +16,9 @@ import com.example.danhbadienthoai.data.network.ApiInterface;
 import com.example.danhbadienthoai.data.db.model.Article;
 import com.example.danhbadienthoai.data.db.model.News;
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.utils.NewsUtils;
 import com.example.danhbadienthoai.ui.newsapp.NewsAdapter;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +37,11 @@ public class JapaneseNewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trang_chu_news, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_news);
-        //Tối ưu hoá dữ liệu trong adapter
+        recyclerView =  view.findViewById(R.id.rv_news);
         recyclerView.setHasFixedSize(true);
 
-        //Tạo layout
         LinearLayoutManager layoutManager = new LinearLayoutManager(container.getContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
-        //Tạo đường gạch chân giữa các row
         DividerItemDecoration deviderItemDecoration = new DividerItemDecoration(container.getContext(),layoutManager.getOrientation());
         recyclerView.addItemDecoration(deviderItemDecoration);
         loadJSON();
@@ -52,14 +50,13 @@ public class JapaneseNewsFragment extends Fragment {
     }
     private void loadJSON() {
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        String country = NewsUtils.getCountry();
-        String language = NewsUtils.getLanguage();
         Call<News> call;
         call = apiInterface.getCountry("jp", API_KEY);
         call.enqueue(new Callback<News>() {
 
             @Override
-            public void onResponse(Call<News> call, Response<News> response) {
+            public void onResponse(@NotNull Call<News> call, @NotNull Response<News> response) {
+                assert response.body() != null;
                 if (response.isSuccessful() && response.body().getArticles() != null) {
 
                     if (!articles.isEmpty()) {
@@ -73,7 +70,7 @@ public class JapaneseNewsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<News> call, Throwable t) {
+            public void onFailure(@NotNull Call<News> call, @NotNull Throwable t) {
                 Toast.makeText(getActivity(), "Something went wrong...", Toast.LENGTH_SHORT).show();
             }
         });

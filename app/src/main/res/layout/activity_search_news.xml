@@ -38,13 +38,6 @@
         </LinearLayout>
 
     </LinearLayout>
-    <TextView
-        android:id="@+id/txt_loi"
-        android:textSize="20sp"
-        android:textColor="#FFF"
-        android:text="Không tìm thấy kết quả"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:layout_height="match_parent"

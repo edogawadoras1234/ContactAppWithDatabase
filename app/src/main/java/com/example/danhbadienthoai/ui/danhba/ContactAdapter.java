@@ -40,8 +40,9 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static final String NAME = "NAME";
     public static final String PHONE = "PHONE";
     public static final String AVATAR = "AVATAR";
-    final int MY_PERMISSIONS_REQUEST_CALL_PHONE=1000;
-   public ContactAdapter (Context context, List<Contact> contactList){
+    final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1000;
+
+    public ContactAdapter(Context context, List<Contact> contactList) {
         this.context = context;
         this.contactList = contactList;
         this.contactListfull = new ArrayList<>(contactList);
@@ -56,13 +57,11 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             GroupViewHolder groupViewHolder = new GroupViewHolder(viewGroup);
 
             return groupViewHolder;
-        }
-        else if(viewType == ContactUtils.VIEWTYPE_CONTACT) {
+        } else if (viewType == ContactUtils.VIEWTYPE_CONTACT) {
             ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.item_contact_layout, parent, false);
             ContactViewHolder contactViewHolder = new ContactViewHolder(viewGroup);
             return contactViewHolder;
-        }
-        else{
+        } else {
             ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.item_group_layout, parent, false);
             GroupViewHolder groupViewHolder = new GroupViewHolder(viewGroup);
 
@@ -77,7 +76,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-        if(holder instanceof ContactViewHolder){
+        if (holder instanceof ContactViewHolder) {
             final ContactViewHolder contactViewHolder = (ContactViewHolder) holder;
             contactViewHolder.txt_name.setText(contactList.get(position).getName());
             contactViewHolder.txt_phone.setText(contactList.get(position).getPhone());
@@ -85,10 +84,10 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             ColorGenerator generator = ColorGenerator.MATERIAL;
             TextDrawable drawable = TextDrawable.builder().buildRound(String.valueOf(contactList.get(position).getName()
-                    .charAt(0)),generator.getRandomColor());
+                    .charAt(0)), generator.getRandomColor());
 
-                Glide.with(context.getApplicationContext()).load(avatar)
-                  .placeholder(drawable).into(contactViewHolder.imgAvatar);
+            Glide.with(context.getApplicationContext()).load(avatar)
+                    .placeholder(drawable).into(contactViewHolder.imgAvatar);
 
             contactViewHolder.btngoi.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,15 +119,14 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ChangePhoneActivity.class);
-                    intent.putExtra(ID,contactList.get(position).getId());
-                    intent.putExtra(NAME,contactList.get(position).getName());
-                    intent.putExtra(PHONE,contactList.get(position).getPhone());
-                    intent.putExtra(AVATAR,contactList.get(position).getAvatar());
+                    intent.putExtra(ID, contactList.get(position).getId());
+                    intent.putExtra(NAME, contactList.get(position).getName());
+                    intent.putExtra(PHONE, contactList.get(position).getPhone());
+                    intent.putExtra(AVATAR, contactList.get(position).getAvatar());
                     context.startActivity(intent);
                 }
             });
-        }
-        else if(holder instanceof GroupViewHolder){
+        } else if (holder instanceof GroupViewHolder) {
             final GroupViewHolder groupViewHolder = (GroupViewHolder) holder;
             groupViewHolder.txt_group_title.setText(contactList.get(position).getName());
 
@@ -149,13 +147,13 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public Filter getFilter() {
-        return  new Filter() {
+        return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 ArrayList<Contact> listFilter = new ArrayList<>();
-                if (charSequence == null || charSequence.length() == 0){
+                if (charSequence == null || charSequence.length() == 0) {
                     listFilter.addAll(contactListfull);
-                }else{
+                } else {
                     String filterPatern = charSequence.toString().toLowerCase().trim();
                     for (Contact item : contactListfull) {
                         if (item.getName().toLowerCase().contains(filterPatern)) {
@@ -178,8 +176,9 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         };
     }
 
-    private class GroupViewHolder extends RecyclerView.ViewHolder{
+    private class GroupViewHolder extends RecyclerView.ViewHolder {
         TextView txt_group_title;
+
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_group_title = itemView.findViewById(R.id.text_grouplayout);
@@ -189,7 +188,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    private class ContactViewHolder extends RecyclerView.ViewHolder{
+    private class ContactViewHolder extends RecyclerView.ViewHolder {
         TextView txt_name, txt_phone;
         ImageView imgAvatar;
         Button btngoi;

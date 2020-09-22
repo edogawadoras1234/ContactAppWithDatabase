@@ -24,9 +24,7 @@ public class Database extends SQLiteOpenHelper {
     public Database(@Nullable Context context) {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
         this.context = context;
-
     }
-
 
     public Integer DeleteData(String id){
         SQLiteDatabase database = this.getWritableDatabase();
