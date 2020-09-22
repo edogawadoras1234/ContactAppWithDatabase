@@ -74,8 +74,8 @@ public class NewsDetailsActivity extends AppCompatActivity{
         mContent = intent.getStringExtra("content");
 
         webview = findViewById(R.id.webView);
-        txt_title = findViewById(R.id.txt_title_details);
-        txt_time = findViewById(R.id.txt_publishAt_details);
+        txt_title = findViewById(R.id.text_title_details);
+        txt_time = findViewById(R.id.text_publishAt_details);
 
         txt_title.setText(mTitle);
         txt_time.setText(NewsUtils.DateFormat(mDate));

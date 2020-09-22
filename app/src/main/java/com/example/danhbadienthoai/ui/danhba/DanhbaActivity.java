@@ -33,13 +33,14 @@ import java.util.ArrayList;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
+public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     Database database;
     ArrayList<Contact> contactList;
     ContactAdapter contactAdapter;
     DanhbaPresenter danhbaPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +62,10 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
             database = new Database(DanhbaActivity.this);
             Toast.makeText(DanhbaActivity.this, "Delete Success: " + contactList.get(viewHolder.getAdapterPosition()).getId(), Toast.LENGTH_SHORT).show();
             database.DeleteData(contactList.get(viewHolder.getAdapterPosition()).getId());
-            remove(viewHolder.getAdapterPosition());
+            contactList.remove(viewHolder.getAdapterPosition());
+            contactAdapter.notifyDataSetChanged();
         }
     };
-    public void remove(int pos) {
-        contactList.remove(pos);
-        contactAdapter.notifyItemRemoved(pos);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -135,9 +133,10 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
     public void showLoadDataSuccessed(ArrayList<Contact> contactList) {
         contactList = ContactUtils.sortList(contactList);
         contactList = ContactUtils.addAlpha(contactList);
-        contactAdapter = new ContactAdapter(this,contactList);
+        contactAdapter = new ContactAdapter(this, contactList);
         recyclerView.setAdapter(contactAdapter);
     }
+
     @Override
     public void showLoadDataFailed() {
         Toast.makeText(DanhbaActivity.this, "No Data", Toast.LENGTH_SHORT).show();
@@ -149,7 +148,7 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
         danhbaPresenter.addData(id, name, phone, avatar);
     }
 
-    private void findViewByIds(){
+    private void findViewByIds() {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -178,6 +177,5 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
                         token.continuePermissionRequest();
                     }
                 }).check();
-
     }
 }

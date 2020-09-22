@@ -61,14 +61,14 @@ public class SearchNewsActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(deviderItemDecoration);
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         recyclerView.setItemAnimator(itemAnimator);
-        edt_search = findViewById(R.id.edt_search);
-        btn_close = findViewById(R.id.btn_activity_close);
-        btn_search = findViewById(R.id.btn_activity_search_news);
+        edt_search = findViewById(R.id.edit_search);
+        btn_close = findViewById(R.id.button_news_close);
+        btn_search = findViewById(R.id.button_search_news);
         txt_loi = findViewById(R.id.txt_loi);
         txt_loi.setVisibility(View.GONE);
-        btn_tk1 = findViewById(R.id.tukhoa_1);
-        btn_tk2 = findViewById(R.id.tukhoa_2);
-        btn_tk3 = findViewById(R.id.tukhoa_3);
+        btn_tk1 = findViewById(R.id.button_keyword_1);
+        btn_tk2 = findViewById(R.id.button_keyword_2);
+        btn_tk3 = findViewById(R.id.button_keyword_3);
 
         btn_tk1.setOnClickListener(new View.OnClickListener() {
             @Override

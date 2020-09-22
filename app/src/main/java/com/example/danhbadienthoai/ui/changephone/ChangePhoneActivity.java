@@ -56,7 +56,7 @@ public class ChangePhoneActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_FOLDER & resultCode == RESULT_OK & data != null){
             Uri uri = data.getData();
             EditText editText;
-            editText = findViewById(R.id.edt_avatar_change);
+            editText = findViewById(R.id.edit_avatar_change);
             try{
                 InputStream inputStream  = getContentResolver().openInputStream(uri);
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
@@ -105,9 +105,9 @@ public class ChangePhoneActivity extends AppCompatActivity {
         database = new Database(this);
 
         Button btnaccept, btncancle;
-        edtname = findViewById(R.id.edt_name_change);
-        edtphone = findViewById(R.id.edt_phone_change);
-        edtavatar = findViewById(R.id.edt_avatar_change);
+        edtname = findViewById(R.id.edit_name_change);
+        edtphone = findViewById(R.id.edit_phone_change);
+        edtavatar = findViewById(R.id.edit_avatar_change);
         Intent intent = getIntent();
         final String id = intent.getStringExtra(ContactAdapter.ID);
         final String name  = intent.getStringExtra(ContactAdapter.NAME);
@@ -130,7 +130,7 @@ public class ChangePhoneActivity extends AppCompatActivity {
             }
         });
         btnaccept = findViewById(R.id.btn_change_phone);
-        btncancle = findViewById(R.id.btn_cancle_change);
+        btncancle = findViewById(R.id.button_cancle_change);
 
         btncancle.setOnClickListener(new View.OnClickListener() {
             @Override

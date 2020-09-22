@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -13,22 +14,23 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <EditText
-                android:id="@+id/edt_search"
+                android:id="@+id/edit_search"
                 android:hint="Tìm kiếm"
                 android:textColorHint="#000"
                 android:layout_width="230dp"
                 android:layout_height="37dp"
-                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="#000"
-                android:background="#FFF"/>
+                android:background="#FFF"
+                tools:ignore="RtlSymmetry" />
             <Button
                 android:paddingLeft="10dp"
-                android:id="@+id/btn_activity_search_news"
+                android:id="@+id/button_search_news"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/ic_search" />
             <Button
-                android:id="@+id/btn_activity_close"
+                android:id="@+id/button_news_close"
                 android:text="Đóng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +52,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/tukhoa_1"
+            android:id="@+id/button_keyword_1"
             android:text="Jack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,13 +60,13 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"/>
         <Button
-            android:id="@+id/tukhoa_2"
+            android:id="@+id/button_keyword_2"
             android:text="Điện Thoại"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent" />
         <Button
-            android:id="@+id/tukhoa_3"
+            android:id="@+id/button_keyword_3"
             android:text="Nhật Bản"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

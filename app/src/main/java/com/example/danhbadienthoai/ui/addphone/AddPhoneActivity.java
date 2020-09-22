@@ -32,11 +32,11 @@ public class AddPhoneActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void findviewbyids(){
-        edtname = findViewById(R.id.edtname);
-        edtphone = findViewById(R.id.edtphone);
-        edtavatar = findViewById(R.id.edtavata);
-        btnadd = findViewById(R.id.btnadd);
-        btncancle = findViewById(R.id.btncancle);
+        edtname = findViewById(R.id.edit_name);
+        edtphone = findViewById(R.id.edit_phone);
+        edtavatar = findViewById(R.id.edit_avatar);
+        btnadd = findViewById(R.id.button_add);
+        btncancle = findViewById(R.id.button_cancle);
         btnadd.setOnClickListener(this);
         btncancle.setOnClickListener(this);
         getSupportActionBar().setTitle("Thêm Danh Ba");
@@ -44,9 +44,9 @@ public class AddPhoneActivity extends AppCompatActivity implements View.OnClickL
     }
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.btnadd) {
+        if (view.getId() == R.id.button_add) {
             addPhonePresenter.onAddClick(edtname.getText().toString(), edtphone.getText().toString(), edtavatar.getText().toString());
-        } else if (view.getId() == R.id.btncancle) {
+        } else if (view.getId() == R.id.button_cancle) {
             addPhonePresenter.onCancleClick();
         }
     }

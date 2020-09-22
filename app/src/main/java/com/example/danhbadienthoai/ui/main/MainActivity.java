@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button button = (Button) findViewById(R.id.btnintocontact);
-        Button btn_new = (Button) findViewById(R.id.btn_ungdung_docbao);
+        Button button = (Button) findViewById(R.id.button_app_contact);
+        Button btn_new = (Button) findViewById(R.id.button_app_news);
 
         mainPresenter = new MainPresenter(this);
         button.setOnClickListener(new View.OnClickListener() {

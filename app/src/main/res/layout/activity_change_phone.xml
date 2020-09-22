@@ -35,7 +35,7 @@
         android:orientation="vertical"
         android:gravity="center">
         <EditText
-            android:id="@+id/edt_name_change"
+            android:id="@+id/edit_name_change"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:ems="10"
@@ -44,7 +44,7 @@
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/edt_phone_change"
+            android:id="@+id/edit_phone_change"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:ems="10"
@@ -54,7 +54,7 @@
             tools:ignore="TextFields" />
 
         <EditText
-            android:id="@+id/edt_avatar_change"
+            android:id="@+id/edit_avatar_change"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:ems="10"
@@ -74,7 +74,7 @@
             tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/btn_cancle_change"
+            android:id="@+id/button_cancle_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/contact_back"

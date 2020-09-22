@@ -9,29 +9,30 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_contact_background"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="42dp"
         android:layout_marginBottom="55dp"
         android:src="@drawable/ic_contact_background"
-        app:layout_constraintBottom_toTopOf="@+id/btn_ungdung_docbao"
+        app:layout_constraintBottom_toTopOf="@+id/button_app_news"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/contact_ok" />
 
     <Button
-        android:id="@+id/btnintocontact"
+        android:id="@+id/button_app_contact"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="154dp"
         android:background="@drawable/ic_contact_background"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btn_ungdung_docbao"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_app_news"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_ungdung_docbao" />
+        app:layout_constraintStart_toEndOf="@+id/button_app_news" />
 
     <Button
-        android:id="@+id/btn_ungdung_docbao"
+        android:id="@+id/button_app_news"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="150dp"
@@ -39,9 +40,9 @@
         android:layout_marginBottom="324dp"
         android:background="@drawable/ic_news"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnintocontact"
+        app:layout_constraintEnd_toStartOf="@+id/button_app_contact"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/image_contact_background" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

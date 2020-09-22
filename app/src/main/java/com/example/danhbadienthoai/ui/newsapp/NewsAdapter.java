@@ -135,9 +135,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ImageView img_news;
         public NewsAdapterViewHolder(@NonNull final View itemview){
             super(itemview);
-            txt_author = itemview.findViewById(R.id.txt_author_news);
-            txt_title = itemview.findViewById(R.id.txt_title_news);
-            txt_publishat = itemview.findViewById(R.id.txt_publishAt);
+            txt_author = itemview.findViewById(R.id.text_author_news);
+            txt_title = itemview.findViewById(R.id.text_title_news);
+            txt_publishat = itemview.findViewById(R.id.text_publishAt);
             img_news = itemview.findViewById(R.id.img_news);
 
         }
@@ -147,9 +147,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView img_news_type2;
         public NewsAdapterViewHolderType2(@NonNull final View itemview){
             super(itemview);
-            txt_author_type2 = itemview.findViewById(R.id.txt_author_news_type_2);
-            txt_title_type2 = itemview.findViewById(R.id.txt_title_news_type_2);
-            img_news_type2 = itemview.findViewById(R.id.img_news_type_2);
+            txt_author_type2 = itemview.findViewById(R.id.text_author_news_type_2);
+            txt_title_type2 = itemview.findViewById(R.id.text_title_news_type_2);
+            img_news_type2 = itemview.findViewById(R.id.image_news_type_2);
 
         }
     }

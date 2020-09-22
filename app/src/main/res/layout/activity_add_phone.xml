@@ -8,7 +8,7 @@
 
 
     <Button
-        android:id="@+id/btncancle"
+        android:id="@+id/button_cancle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="49dp"
@@ -17,32 +17,32 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/edtphone"
+        android:id="@+id/edit_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="31dp"
         android:ems="10"
         android:hint="@string/contact_phone_number"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/edtname"
-        app:layout_constraintTop_toBottomOf="@+id/edtname"
+        app:layout_constraintStart_toStartOf="@+id/edit_name"
+        app:layout_constraintTop_toBottomOf="@+id/edit_name"
         android:importantForAutofill="no"
         tools:ignore="TextFields" />
 
     <EditText
-        android:id="@+id/edtavata"
+        android:id="@+id/edit_avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
         android:ems="10"
         android:hint="@string/contact_avatar"
-        app:layout_constraintStart_toStartOf="@+id/edtphone"
-        app:layout_constraintTop_toBottomOf="@+id/edtphone"
+        app:layout_constraintStart_toStartOf="@+id/edit_phone"
+        app:layout_constraintTop_toBottomOf="@+id/edit_phone"
         android:autofillHints=""
         android:inputType="text" />
 
     <EditText
-        android:id="@+id/edtname"
+        android:id="@+id/edit_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="74dp"
@@ -55,7 +55,7 @@
         android:autofillHints="" />
 
     <Button
-        android:id="@+id/btnadd"
+        android:id="@+id/button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
