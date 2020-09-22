@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.NewsAppActivity;
+import com.example.danhbadienthoai.ui.newsapp.NewsAppActivity;
 import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
 
 public class MainActivity extends AppCompatActivity implements MainMvpView {

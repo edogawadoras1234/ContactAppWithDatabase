@@ -18,7 +18,7 @@
                 android:layout_gravity="center">
 
                 <ImageView
-                    android:id="@+id/anhdaidien"
+                    android:id="@+id/image_anh_dai_dien"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:scaleType="centerCrop"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/txtten"
+                android:id="@+id/text_ten"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -39,14 +39,14 @@
                 android:paddingRight="10dp"/>
 
             <TextView
-                android:id="@+id/txtsdt"
+                android:id="@+id/text_sdt"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
         </LinearLayout>
         <Button
-            android:id="@+id/btngoidien"
+            android:id="@+id/button_goidien"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@drawable/ic_call"

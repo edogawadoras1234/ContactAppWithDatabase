@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai.adapter;
+package com.example.danhbadienthoai.ui.newsapp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,10 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.danhbadienthoai.model.Article;
-import com.example.danhbadienthoai.NewsDetailsActivity;
+import com.example.danhbadienthoai.data.db.model.Article;
+import com.example.danhbadienthoai.ui.newsdetails.NewsDetailsActivity;
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.utils.Utils;
+import com.example.danhbadienthoai.utils.NewsUtils;
 
 import java.util.List;
 
@@ -61,7 +61,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             NewsAdapterViewHolder newsAdapterViewHolder = (NewsAdapterViewHolder) holder;
             newsAdapterViewHolder.txt_title.setText(articleList.get(position).getTitle());
             newsAdapterViewHolder.txt_author.setText(articleList.get(position).getAuthor());
-            newsAdapterViewHolder.txt_publishat.setText(Utils.DateFormat(articleList.get(position).getPublishedAt()));
+            newsAdapterViewHolder.txt_publishat.setText(NewsUtils.DateFormat(articleList.get(position).getPublishedAt()));
             String hinhanh = articleList.get(position).getUrlToImage();
 
             Glide.with(holder.itemView.getContext()).load(hinhanh)

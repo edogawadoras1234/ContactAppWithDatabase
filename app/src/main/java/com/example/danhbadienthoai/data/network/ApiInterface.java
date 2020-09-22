@@ -1,6 +1,6 @@
-package com.example.danhbadienthoai.network;
+package com.example.danhbadienthoai.data.network;
 
-import com.example.danhbadienthoai.model.News;
+import com.example.danhbadienthoai.data.db.model.News;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

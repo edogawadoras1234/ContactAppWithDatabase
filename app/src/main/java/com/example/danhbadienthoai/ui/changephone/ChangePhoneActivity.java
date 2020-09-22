@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.ui.changephone;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +18,10 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.danhbadienthoai.adapter.ContactAdapter;
+import com.example.danhbadienthoai.R;
+import com.example.danhbadienthoai.ui.danhba.ContactAdapter;
 import com.example.danhbadienthoai.data.db.Database;
-import com.example.danhbadienthoai.model.Contact;
+import com.example.danhbadienthoai.data.db.model.Contact;
 import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
 
 import java.io.FileNotFoundException;
@@ -37,7 +38,70 @@ public class ChangePhoneActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_phone);
 
+        findViewByIds();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        ImageView img_anhdaidien;
+        img_anhdaidien = findViewById(R.id.img_change_avatar);
+
+        //gán Image thành Image mình chụp
+        if (requestCode == REQUEST_CODE_CAMERA & resultCode == RESULT_OK & data != null){
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            img_anhdaidien.setImageBitmap(bitmap);
+        }
+        //Gán Image từ get file folder
+        if (requestCode == REQUEST_CODE_FOLDER & resultCode == RESULT_OK & data != null){
+            Uri uri = data.getData();
+            EditText editText;
+            editText = findViewById(R.id.edt_avatar_change);
+            try{
+                InputStream inputStream  = getContentResolver().openInputStream(uri);
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                img_anhdaidien.setImageBitmap(bitmap);
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            editText.setText(String.valueOf(uri));
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void menuPopup(){
+        PopupMenu popupMenu = new PopupMenu(this,img_anhdaidien);
+        popupMenu.getMenuInflater().inflate(R.menu.activity_news_app,popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                switch (menuItem.getItemId()){
+                    case R.id.menu_camera:
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(intent,REQUEST_CODE_CAMERA);
+                        break;
+
+                    case R.id.menu_folder:
+                        intent = new Intent(Intent.ACTION_PICK);
+                        intent.setType("image/*");
+                        startActivityForResult(intent,REQUEST_CODE_FOLDER);
+                        break;
+
+                    case R.id.menu_clear_image:
+                        edtavatar.setText("");
+                        Glide.with(ChangePhoneActivity.this).load(R.drawable.ic_person).into(img_anhdaidien);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        popupMenu.show();
+    }
+
+    private void findViewByIds(){
         database = new Database(this);
 
         Button btnaccept, btncancle;
@@ -53,7 +117,6 @@ public class ChangePhoneActivity extends AppCompatActivity {
         edtphone.setText(phone);
         edtavatar.setText(avatar);
 
-
         img_anhdaidien = findViewById(R.id.img_change_avatar);
 
         Glide.with(this.getApplicationContext()).load(avatar)
@@ -63,7 +126,7 @@ public class ChangePhoneActivity extends AppCompatActivity {
         img_anhdaidien.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menu_Popup();
+                menuPopup();
             }
         });
         btnaccept = findViewById(R.id.btn_change_phone);
@@ -96,69 +159,5 @@ public class ChangePhoneActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        ImageView img_anhdaidien;
-        img_anhdaidien = findViewById(R.id.img_change_avatar);
-
-        //gán Image thành Image mình chụp
-        if (requestCode == REQUEST_CODE_CAMERA & resultCode == RESULT_OK & data != null){
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            img_anhdaidien.setImageBitmap(bitmap);
-//
-//            BitmapDrawable bitmapDrawable = (BitmapDrawable) img_anhdaidien.getDrawable();
-//            Bitmap bitmap2 = bitmapDrawable.getBitmap();
-//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//            bitmap2.compress(Bitmap.CompressFormat.PNG,100,byteArrayOutputStream);
-//            byte[] HinhAnh = byteArrayOutputStream.toByteArray();
-        }
-        //Gán Image từ get file folder
-        if (requestCode == REQUEST_CODE_FOLDER & resultCode == RESULT_OK & data != null){
-            Uri uri = data.getData();
-            EditText editText;
-            editText = findViewById(R.id.edt_avatar_change);
-            try{
-                InputStream inputStream  = getContentResolver().openInputStream(uri);
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                img_anhdaidien.setImageBitmap(bitmap);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            editText.setText(String.valueOf(uri));
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-    public void  menu_Popup(){
-        PopupMenu popupMenu = new PopupMenu(this,img_anhdaidien);
-        popupMenu.getMenuInflater().inflate(R.menu.activity_news_app,popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-
-                switch (menuItem.getItemId()){
-                    case R.id.menu_camera:
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(intent,REQUEST_CODE_CAMERA);
-                        break;
-
-                    case R.id.menu_folder:
-                        intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");
-                        startActivityForResult(intent,REQUEST_CODE_FOLDER);
-                        break;
-
-                    case R.id.menu_clear_image:
-                        edtavatar.setText("");
-                        Glide.with(ChangePhoneActivity.this).load(R.drawable.ic_person).into(img_anhdaidien);
-                        break;
-                }
-                return false;
-            }
-        });
-
-        popupMenu.show();
     }
 }

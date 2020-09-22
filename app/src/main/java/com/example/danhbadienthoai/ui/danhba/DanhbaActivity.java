@@ -2,7 +2,6 @@ package com.example.danhbadienthoai.ui.danhba;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,11 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.adapter.ContactAdapter;
 import com.example.danhbadienthoai.ui.addphone.AddPhoneActivity;
 import com.example.danhbadienthoai.data.db.Database;
-import com.example.danhbadienthoai.model.Contact;
-import com.example.danhbadienthoai.utils.Common;
+import com.example.danhbadienthoai.data.db.model.Contact;
+import com.example.danhbadienthoai.utils.ContactUtils;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -47,37 +45,11 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danh_ba);
 
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
-        danhbaPresenter = new DanhbaPresenter(this, this);
-
-        Dexter.withActivity(this)
-                .withPermission(READ_CONTACTS)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse response) {
-                        if (response.getPermissionName().equals(READ_CONTACTS)) {
-                            danhbaPresenter.onAddData();
-                            danhbaPresenter.onLoadData();
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toast.makeText(DanhbaActivity.this, "Need Permiss", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
-
         new ItemTouchHelper(itemtouchhelper).attachToRecyclerView(recyclerView);
+        findViewByIds();
+
     }
+
     public ItemTouchHelper.SimpleCallback itemtouchhelper = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -161,8 +133,8 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
 
     @Override
     public void showLoadDataSuccessed(ArrayList<Contact> contactList) {
-        contactList = Common.sortList(contactList);
-        contactList = Common.addAlpha(contactList);
+        contactList = ContactUtils.sortList(contactList);
+        contactList = ContactUtils.addAlpha(contactList);
         contactAdapter = new ContactAdapter(this,contactList);
         recyclerView.setAdapter(contactAdapter);
     }
@@ -176,22 +148,36 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView{
         database = new Database(this);
         danhbaPresenter.addData(id, name, phone, avatar);
     }
-    public void loaddata(){
-        database = new Database(this);
-        ArrayList<Contact> contactArrayList;
-        contactArrayList = new ArrayList<>();
-        Cursor cursor = database.readAllData();
-        if (cursor.getCount() == 0) {
-            Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
-        } else {
-            while (cursor.moveToNext()) {
-                Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getInt(4));
-                contactArrayList.add(contact);
-            }
-        }
-        contactList = Common.sortList(contactArrayList);
-        contactList = Common.addAlpha(contactArrayList);
-        contactAdapter = new ContactAdapter(this,contactList);
-        recyclerView.setAdapter(contactAdapter);
+
+    private void findViewByIds(){
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, linearLayoutManager.getOrientation()));
+        danhbaPresenter = new DanhbaPresenter(this, this);
+
+        Dexter.withActivity(this)
+                .withPermission(READ_CONTACTS)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        if (response.getPermissionName().equals(READ_CONTACTS)) {
+                            danhbaPresenter.onAddData();
+                            danhbaPresenter.onLoadData();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        Toast.makeText(DanhbaActivity.this, "Need Permiss", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+
     }
 }

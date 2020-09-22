@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.ui.newsapp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.danhbadienthoai.adapter.SectionsPagerAdapter;
+import com.example.danhbadienthoai.R;
+import com.example.danhbadienthoai.ui.searchnew.SearchNewsActivity;
 import com.google.android.material.tabs.TabLayout;
 
 public class NewsAppActivity extends AppCompatActivity {
@@ -21,9 +22,6 @@ public class NewsAppActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_news_app);
-
-//        getSupportActionBar().setTitle("Báo Mới");
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);

@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai.adapter;
+package com.example.danhbadienthoai.ui.danhba;
 
 
 import android.Manifest;
@@ -24,10 +24,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.bumptech.glide.Glide;
-import com.example.danhbadienthoai.utils.Common;
-import com.example.danhbadienthoai.model.Contact;
+import com.example.danhbadienthoai.utils.ContactUtils;
+import com.example.danhbadienthoai.data.db.model.Contact;
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.ChangePhoneActivity;
+import com.example.danhbadienthoai.ui.changephone.ChangePhoneActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,13 +51,13 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        if (viewType == Common.VIEWTYPE_GROUP) {
+        if (viewType == ContactUtils.VIEWTYPE_GROUP) {
             ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.item_group_layout, parent, false);
             GroupViewHolder groupViewHolder = new GroupViewHolder(viewGroup);
 
             return groupViewHolder;
         }
-        else if(viewType == Common.VIEWTYPE_CONTACT) {
+        else if(viewType == ContactUtils.VIEWTYPE_CONTACT) {
             ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.item_contact_layout, parent, false);
             ContactViewHolder contactViewHolder = new ContactViewHolder(viewGroup);
             return contactViewHolder;
@@ -182,7 +182,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView txt_group_title;
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);
-            txt_group_title = itemView.findViewById(R.id.txt_group_title);
+            txt_group_title = itemView.findViewById(R.id.text_grouplayout);
 
 //            txt_group_title.setVisibility(View.GONE);
 //            itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
@@ -197,10 +197,10 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            txt_name = itemView.findViewById(R.id.txtten);
-            txt_phone = itemView.findViewById(R.id.txtsdt);
-            imgAvatar = (ImageView) itemView.findViewById(R.id.anhdaidien);
-            btngoi = itemView.findViewById(R.id.btngoidien);
+            txt_name = itemView.findViewById(R.id.text_ten);
+            txt_phone = itemView.findViewById(R.id.text_sdt);
+            imgAvatar = (ImageView) itemView.findViewById(R.id.image_anh_dai_dien);
+            btngoi = itemView.findViewById(R.id.button_goidien);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai.model;
+package com.example.danhbadienthoai.data.db.model;
 
 public class Contact {
     private String id, name, phone, avatar;

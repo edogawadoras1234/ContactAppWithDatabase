@@ -1,17 +1,16 @@
 package com.example.danhbadienthoai.utils;
 
-import com.example.danhbadienthoai.model.Contact;
+import com.example.danhbadienthoai.data.db.model.Contact;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Common {
+public class ContactUtils {
     public static final int VIEWTYPE_GROUP = 0;
     public static final int VIEWTYPE_CONTACT = 1;
     public static List<String> alphabet_available =  new ArrayList<>();
-
 
     //sắp xếp list
     public static ArrayList<Contact> sortList(ArrayList<Contact> contacts){

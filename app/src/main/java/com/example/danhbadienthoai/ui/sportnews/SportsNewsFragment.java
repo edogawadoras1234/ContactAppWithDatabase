@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai.fragment;
+package com.example.danhbadienthoai.ui.sportnews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.danhbadienthoai.network.ApiClient;
-import com.example.danhbadienthoai.network.ApiInterface;
-import com.example.danhbadienthoai.model.Article;
-import com.example.danhbadienthoai.model.News;
+import com.example.danhbadienthoai.data.network.ApiClient;
+import com.example.danhbadienthoai.data.network.ApiInterface;
+import com.example.danhbadienthoai.data.db.model.Article;
+import com.example.danhbadienthoai.data.db.model.News;
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.utils.Utils;
-import com.example.danhbadienthoai.adapter.NewsAdapter;
+import com.example.danhbadienthoai.utils.NewsUtils;
+import com.example.danhbadienthoai.ui.newsapp.NewsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SportsNews extends Fragment {
+public class SportsNewsFragment extends Fragment {
     NewsAdapter newsAdapter;
     RecyclerView recyclerView;
     private List<Article> articles = new ArrayList<>();
@@ -55,8 +55,8 @@ public class SportsNews extends Fragment {
 
     private void loadJSON() {
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        String country = Utils.getCountry();
-        String language = Utils.getLanguage();
+        String country = NewsUtils.getCountry();
+        String language = NewsUtils.getLanguage();
         Call<News> call;
         call = apiInterface.getQ("sport", language, "publishedAt", API_KEY);
         call.enqueue(new Callback<News>() {

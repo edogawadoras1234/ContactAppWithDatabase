@@ -2,14 +2,9 @@ package com.example.danhbadienthoai.ui.danhba;
 
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.widget.Toast;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.danhbadienthoai.adapter.ContactAdapter;
 import com.example.danhbadienthoai.data.db.Database;
-import com.example.danhbadienthoai.model.Contact;
-import com.example.danhbadienthoai.utils.Common;
+import com.example.danhbadienthoai.data.db.model.Contact;
 
 import java.util.ArrayList;
 

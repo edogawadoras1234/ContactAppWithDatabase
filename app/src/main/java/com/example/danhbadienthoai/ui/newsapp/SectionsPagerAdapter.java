@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai.adapter;
+package com.example.danhbadienthoai.ui.newsapp;
 
 import android.content.Context;
 
@@ -9,11 +9,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.fragment.SourceNews;
-import com.example.danhbadienthoai.fragment.CountriesNews;
-import com.example.danhbadienthoai.fragment.JapaneseNews;
-import com.example.danhbadienthoai.fragment.SportsNews;
-import com.example.danhbadienthoai.fragment.TrangChuNews;
+import com.example.danhbadienthoai.ui.countriesnews.CountriesNewsFragment;
+import com.example.danhbadienthoai.ui.japanesenews.JapaneseNewsFragment;
+import com.example.danhbadienthoai.ui.sportnews.SportsNewsFragment;
+import com.example.danhbadienthoai.ui.trangchunews.TrangChuNewsFragment;
+
+import org.jetbrains.annotations.NotNull;
 
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -28,39 +29,40 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         mContext = context;
     }
 
+    @NotNull
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = new Fragment();
         switch (position) {
             case 0:
-                fragment = new TrangChuNews();
+                fragment = new TrangChuNewsFragment();
                 break;
             case 1:
-                fragment = new SportsNews();
+                fragment = new SportsNewsFragment();
                 break;
             case 2:
-                fragment = new CountriesNews();
+                fragment = new CountriesNewsFragment();
                 break;
             case 3:
-                fragment = new JapaneseNews();
+                fragment = new JapaneseNewsFragment();
                 break;
             case 4:
-                fragment = new SourceNews();
+                fragment = new JapaneseNewsFragment();
                 break;
             case 5:
-                fragment = new SportsNews();
+                fragment = new SportsNewsFragment();
                 break;
             case 6:
-                fragment = new SportsNews();
+                fragment = new SportsNewsFragment();
                 break;
             case 7:
-                fragment = new SportsNews();
+                fragment = new SportsNewsFragment();
                 break;
             case 8:
-                fragment = new SportsNews();
+                fragment = new SportsNewsFragment();
                 break;
             case 9:
-                fragment = new SportsNews();
+                fragment = new SportsNewsFragment();
                 break;
         }
         return fragment;

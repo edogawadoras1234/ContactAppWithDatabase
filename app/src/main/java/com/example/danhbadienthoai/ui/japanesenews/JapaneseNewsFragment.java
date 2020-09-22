@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai.fragment;
+package com.example.danhbadienthoai.ui.japanesenews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.danhbadienthoai.network.ApiClient;
-import com.example.danhbadienthoai.network.ApiInterface;
-import com.example.danhbadienthoai.model.Article;
-import com.example.danhbadienthoai.model.News;
+import com.example.danhbadienthoai.data.network.ApiClient;
+import com.example.danhbadienthoai.data.network.ApiInterface;
+import com.example.danhbadienthoai.data.db.model.Article;
+import com.example.danhbadienthoai.data.db.model.News;
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.utils.Utils;
-import com.example.danhbadienthoai.adapter.NewsAdapter;
+import com.example.danhbadienthoai.utils.NewsUtils;
+import com.example.danhbadienthoai.ui.newsapp.NewsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SourceNews extends Fragment {
+public class JapaneseNewsFragment extends Fragment {
     NewsAdapter newsAdapter;
     RecyclerView recyclerView;
     private List<Article> articles = new ArrayList<>();
@@ -35,7 +35,6 @@ public class SourceNews extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //336c7a92c13b4970be0773e0b2cf5c67 API key
         View view = inflater.inflate(R.layout.fragment_trang_chu_news, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_news);
         //Tối ưu hoá dữ liệu trong adapter
@@ -49,15 +48,14 @@ public class SourceNews extends Fragment {
         recyclerView.addItemDecoration(deviderItemDecoration);
         loadJSON();
 
-        //336c7a92c13b4970be0773e0b2cf5c67 API key
         return view;
     }
     private void loadJSON() {
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        String country = Utils.getCountry();
-        String language = Utils.getLanguage();
+        String country = NewsUtils.getCountry();
+        String language = NewsUtils.getLanguage();
         Call<News> call;
-        call = apiInterface.getSource("techcrunch",API_KEY);
+        call = apiInterface.getCountry("jp", API_KEY);
         call.enqueue(new Callback<News>() {
 
             @Override

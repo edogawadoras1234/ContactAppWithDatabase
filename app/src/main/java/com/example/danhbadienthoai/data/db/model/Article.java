@@ -1,6 +1,5 @@
-package com.example.danhbadienthoai.model;
+package com.example.danhbadienthoai.data.db.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Article {

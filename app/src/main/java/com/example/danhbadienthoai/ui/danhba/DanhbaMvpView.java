@@ -1,8 +1,6 @@
 package com.example.danhbadienthoai.ui.danhba;
 
-import android.database.Cursor;
-
-import com.example.danhbadienthoai.model.Contact;
+import com.example.danhbadienthoai.data.db.model.Contact;
 
 import java.util.ArrayList;
 

@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 import org.ocpsoft.prettytime.PrettyTime;
 
-public class Utils {
+public class NewsUtils {
     public static String DateToTimeFormat(String oldstringDate){
         PrettyTime p = new PrettyTime(new Locale(getCountry()));
         String isTime = null;

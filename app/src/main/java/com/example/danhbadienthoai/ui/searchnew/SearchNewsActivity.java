@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.ui.searchnew;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -14,12 +14,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.danhbadienthoai.adapter.NewsAdapter;
-import com.example.danhbadienthoai.model.Article;
-import com.example.danhbadienthoai.model.News;
-import com.example.danhbadienthoai.network.ApiClient;
-import com.example.danhbadienthoai.network.ApiInterface;
-import com.example.danhbadienthoai.utils.Utils;
+import com.example.danhbadienthoai.ui.newsapp.NewsAppActivity;
+import com.example.danhbadienthoai.R;
+import com.example.danhbadienthoai.ui.newsapp.NewsAdapter;
+import com.example.danhbadienthoai.data.db.model.Article;
+import com.example.danhbadienthoai.data.db.model.News;
+import com.example.danhbadienthoai.data.network.ApiClient;
+import com.example.danhbadienthoai.data.network.ApiInterface;
+import com.example.danhbadienthoai.utils.NewsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +116,7 @@ public class SearchNewsActivity extends AppCompatActivity {
     }
     private void loadJSON(String keyword) {
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        String language = Utils.getLanguage();
+        String language = NewsUtils.getLanguage();
         Call<News> call;
         call = apiInterface.getQ(keyword,language, "publishedAt", API_KEY);
         call.enqueue(new Callback<News>() {
