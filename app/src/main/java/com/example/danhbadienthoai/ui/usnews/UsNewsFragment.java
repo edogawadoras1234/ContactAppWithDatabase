@@ -1,4 +1,4 @@
-package com.example.danhbadienthoai.ui.sportnews;
+package com.example.danhbadienthoai.ui.usnews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,28 +17,25 @@ import com.example.danhbadienthoai.ui.newsapp.NewsAdapter;
 import java.util.List;
 
 
-public class SportsNewsFragment extends Fragment implements SportsNewsMvpView {
+public class UsNewsFragment extends Fragment implements UsNewsMvpView {
     NewsAdapter newsAdapter;
     RecyclerView recyclerView;
-   SportsNewsPresenter sportsNewsPresenter;
+    UsNewsPresenter countriesNewsPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trang_chu_news, container, false);
-        recyclerView =  view.findViewById(R.id.rv_news);
-        //Tối ưu hoá dữ liệu trong adapter
-        recyclerView.setHasFixedSize(true);
 
-        //Tạo layout
+        recyclerView = view.findViewById(R.id.rv_news);
+        recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(container.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        //Tạo đường gạch chân giữa các row
         DividerItemDecoration deviderItemDecoration = new DividerItemDecoration(container.getContext(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(deviderItemDecoration);
-       sportsNewsPresenter = new SportsNewsPresenter(this, this);
-       sportsNewsPresenter.onLoadData();
 
+        countriesNewsPresenter = new UsNewsPresenter(this, this);
+        countriesNewsPresenter.onLoadJson();
         return view;
     }
 

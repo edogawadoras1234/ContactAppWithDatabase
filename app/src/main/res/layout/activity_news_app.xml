@@ -9,29 +9,31 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-      <LinearLayout
-          android:layout_height="wrap_content"
-          android:layout_width="match_parent"
-          android:orientation="horizontal">
 
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            app:tabSelectedTextColor="@color/colorAccent"
-            app:tabMode="scrollable"
-            tools:ignore="DuplicateIds">
+            android:orientation="horizontal">
 
-        </com.google.android.material.tabs.TabLayout>
-          <Button
-              android:layout_marginStart="-50dp"
-              android:id="@+id/btn_search_news"
-              android:layout_width="50dp"
-              android:layout_height="50dp"
-              android:background="@drawable/ic_search"/>
-      </LinearLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimary"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/colorAccent"
+                tools:ignore="DuplicateIds">
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <Button
+                android:id="@+id/btn_search_news"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="-50dp"
+                android:background="@drawable/ic_search" />
+        </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

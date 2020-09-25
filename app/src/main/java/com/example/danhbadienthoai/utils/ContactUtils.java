@@ -3,14 +3,16 @@ package com.example.danhbadienthoai.utils;
 import com.example.danhbadienthoai.data.db.model.Contact;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ContactUtils {
     public static final int VIEWTYPE_GROUP = 0;
     public static final int VIEWTYPE_CONTACT = 1;
-    public static List<String> alphabet_available =  new ArrayList<>();
+    public static List<String> alphabet_available = new ArrayList<>();
 
     //sắp xếp list
     public static ArrayList<Contact> sortList(ArrayList<Contact> contacts){
@@ -24,23 +26,22 @@ public class ContactUtils {
     }
 
     //Add chữ alpha lên đầu group
-    public static ArrayList<Contact> addAlpha (ArrayList<Contact>contactArrayList){
-        int i=0;
+    public static ArrayList<Contact> addAlpha(ArrayList<Contact> contactArrayList) {
+        int i;
         ArrayList<Contact> customList = new ArrayList<>();
         Contact firstContact = new Contact();
         firstContact.setName(String.valueOf(contactArrayList.get(0).getName().charAt(0)));
         firstContact.setViewType(VIEWTYPE_GROUP);
         alphabet_available.add(String.valueOf(contactArrayList.get(0).getName().charAt(0)));
         customList.add(firstContact);
-        for (i=0; i < contactArrayList.size()-1; i++){
+        for (i = 0; i < contactArrayList.size() - 1; i++) {
             Contact contact = new Contact();
             char name1 = contactArrayList.get(i).getName().charAt(0);
-            char name2 = contactArrayList.get(i+1).getName().charAt(0);
-            if(name1 == name2){
+            char name2 = contactArrayList.get(i + 1).getName().charAt(0);
+            if (name1 == name2) {
                 contactArrayList.get(i).setViewType(VIEWTYPE_CONTACT);
                 customList.add(contactArrayList.get(i));
-            }
-            else{
+            } else {
                 contactArrayList.get(i).setViewType(VIEWTYPE_CONTACT);
                 customList.add(contactArrayList.get(i));
                 contact.setName(String.valueOf(name2));

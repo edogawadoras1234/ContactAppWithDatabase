@@ -16,26 +16,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.utils.NewsUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class NewsDetailsActivity extends AppCompatActivity {
-    WebView webview;
+//    WebView webview;
     private String mUrl;
-    private String mContent;
-    TextView txt_title, txt_time;
+
+    @BindView(R.id.webView) WebView webview;
+    @BindView(R.id.text_title_details) TextView txt_title;
+    @BindView(R.id.text_publishAt_details) TextView txt_time;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_news_row_details);
 
+        ButterKnife.bind(this);
+
         getIntentInfor();
         setWebview();
 
     }
 
+
     @SuppressLint({"ClickableViewAccessibility", "SetJavaScriptEnabled"})
     public void setWebview() {
         webview.setWebViewClient(new WebViewClient());
-        webview.loadData(mContent, "text/html", "utf-8");
         webview.loadUrl(mUrl);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setLoadsImagesAutomatically(true);
@@ -68,11 +75,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
         mUrl = intent.getStringExtra("url");
         String mTitle = intent.getStringExtra("title");
         String mDate = intent.getStringExtra("date");
-        mContent = intent.getStringExtra("content");
-
-        webview = findViewById(R.id.webView);
-        txt_title = findViewById(R.id.text_title_details);
-        txt_time = findViewById(R.id.text_publishAt_details);
 
         txt_title.setText(mTitle);
         txt_time.setText(NewsUtils.DateFormat(mDate));

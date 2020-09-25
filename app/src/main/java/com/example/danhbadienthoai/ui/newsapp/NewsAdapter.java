@@ -69,7 +69,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 intent.putExtra("img", articleList.get(position).getUrlToImage());
                 intent.putExtra("date", articleList.get(position).getPublishedAt());
                 intent.putExtra("author", articleList.get(position).getAuthor());
-                intent.putExtra("content", articleList.get(position).getContent());
                 holder.itemView.getContext().startActivity(intent);
             });
         } else if (holder instanceof NewsAdapterViewHolderType2) {
@@ -94,7 +93,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 intent.putExtra("img", articleList.get(position).getUrlToImage());
                 intent.putExtra("date", articleList.get(position).getPublishedAt());
                 intent.putExtra("author", articleList.get(position).getAuthor());
-                intent.putExtra("content", articleList.get(position).getContent());
                 holder.itemView.getContext().startActivity(intent);
             });
         }

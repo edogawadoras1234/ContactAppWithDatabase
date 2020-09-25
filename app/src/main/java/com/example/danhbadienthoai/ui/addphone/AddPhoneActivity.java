@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
-import com.example.danhbadienthoai.data.db.Database;
 
 import java.util.Objects;
 
@@ -28,7 +27,6 @@ public class AddPhoneActivity extends AppCompatActivity implements AddPhoneMvpVi
     @BindView(R.id.button_cancle)
     Button btncancle;
 
-    Database database;
     AddPhonePresenter addPhonePresenter;
 
     @Override
@@ -40,7 +38,9 @@ public class AddPhoneActivity extends AppCompatActivity implements AddPhoneMvpVi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
-        addPhonePresenter = new AddPhonePresenter(this);
+        addPhonePresenter = new AddPhonePresenter(this, this);
+
+
     }
 
     @OnClick(R.id.button_add)
@@ -62,13 +62,11 @@ public class AddPhoneActivity extends AppCompatActivity implements AddPhoneMvpVi
 
     @Override
     public void Error() {
-        Toast.makeText(this, "Khong duoc bo trong so dien thoai va ten", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Không được bỏ trống số điện thoại và tên", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void Success() {
-        Toast.makeText(this, "Them thanh cong", Toast.LENGTH_SHORT).show();
-        database = new Database(this);
-        database.addData(null, edtname.getText().toString(), edtphone.getText().toString(), edtavatar.getText().toString(), -1);
+        Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();
     }
 }

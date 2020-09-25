@@ -16,4 +16,16 @@
     <string name="contact_avatar">Avatar</string>
     <string name="contact_back">Trở lại</string>
     <string name="contact_ok">Đồng ý</string>
+    <string name="contact_change">Chỉnh sửa</string>
+    <string name="keyword_1">Jack</string>
+    <string name="keyword_2">Covid</string>
+    <string name="keyword_3">Corona</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="contact_exit">Thoát</string>
+    <string name="contact_add">Thêm</string>
+    <string name="take_piture">Chụp ảnh</string>
+    <string name="choose_folder">Chọn từ máy</string>
+    <string name="delelte_image">Xóa ảnh</string>
+
+
 </resources>

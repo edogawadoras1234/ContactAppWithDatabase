@@ -23,10 +23,10 @@
         android:layout_marginTop="31dp"
         android:ems="10"
         android:hint="@string/contact_phone_number"
+        android:importantForAutofill="no"
         android:inputType="number"
         app:layout_constraintStart_toStartOf="@+id/edit_name"
         app:layout_constraintTop_toBottomOf="@+id/edit_name"
-        android:importantForAutofill="no"
         tools:ignore="TextFields" />
 
     <EditText
@@ -34,25 +34,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/contact_avatar"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="@+id/edit_phone"
-        app:layout_constraintTop_toBottomOf="@+id/edit_phone"
-        android:autofillHints=""
-        android:inputType="text" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_phone" />
 
     <EditText
         android:id="@+id/edit_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="74dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/contact_name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:autofillHints="" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_add"

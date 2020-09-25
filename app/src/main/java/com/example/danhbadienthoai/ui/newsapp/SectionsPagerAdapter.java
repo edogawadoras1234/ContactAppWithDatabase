@@ -9,10 +9,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.ui.countriesnews.CountriesNewsFragment;
+import com.example.danhbadienthoai.ui.usnews.UsNewsFragment;
 import com.example.danhbadienthoai.ui.japanesenews.JapaneseNewsFragment;
 import com.example.danhbadienthoai.ui.sportnews.SportsNewsFragment;
-import com.example.danhbadienthoai.ui.trangchunews.TrangChuNewsFragment;
+import com.example.danhbadienthoai.ui.trangchunews.HomeNewsFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,13 +35,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = new Fragment();
         switch (position) {
             case 0:
-                fragment = new TrangChuNewsFragment();
+                fragment = new HomeNewsFragment();
                 break;
             case 1:
                 fragment = new SportsNewsFragment();
                 break;
             case 2:
-                fragment = new CountriesNewsFragment();
+                fragment = new UsNewsFragment();
                 break;
             case 3:
                 fragment = new JapaneseNewsFragment();
@@ -50,19 +50,19 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 fragment = new JapaneseNewsFragment();
                 break;
             case 5:
-                fragment = new SportsNewsFragment();
+                fragment = new JapaneseNewsFragment();
                 break;
             case 6:
-                fragment = new SportsNewsFragment();
+                fragment = new JapaneseNewsFragment();
                 break;
             case 7:
-                fragment = new SportsNewsFragment();
+                fragment = new JapaneseNewsFragment();
                 break;
             case 8:
-                fragment = new SportsNewsFragment();
+                fragment = new JapaneseNewsFragment();
                 break;
             case 9:
-                fragment = new SportsNewsFragment();
+                fragment = new JapaneseNewsFragment();
                 break;
         }
         return fragment;

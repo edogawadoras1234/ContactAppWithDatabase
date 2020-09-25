@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/itemadd"
-        android:title="Thêm"
-        app:showAsAction="never"/>
+    <item
+        android:id="@+id/item_add"
+        android:title="@string/contact_add"
+        app:showAsAction="never" />
 
-    <item android:id="@+id/itemthoat"
-        android:title="Thoát"
-        app:showAsAction="never"/>
-    <item android:id="@+id/action_search"
+    <item
+        android:id="@+id/item_thoat"
+        android:title="@string/contact_exit"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/item_search"
         android:icon="@drawable/ic_search"
-        android:title="Search"
-        app:showAsAction="ifRoom"
+        android:title="@string/search"
         app:actionViewClass="android.widget.SearchView"
-        />
+        app:showAsAction="ifRoom" />
 </menu>
