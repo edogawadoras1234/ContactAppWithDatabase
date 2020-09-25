@@ -100,8 +100,9 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
             database = new Database(DanhbaActivity.this);
             Toast.makeText(DanhbaActivity.this, "Delete Success: " + contactList.get(viewHolder.getBindingAdapterPosition()).getId(), Toast.LENGTH_SHORT).show();
             database.DeleteData(contactList.get(viewHolder.getBindingAdapterPosition()).getId());
-            contactList.remove(viewHolder.getBindingAdapterPosition());
-            contactAdapter.notifyDataSetChanged();
+            loaddata();
+//            contactList.remove(viewHolder.getBindingAdapterPosition());
+//            contactAdapter.notifyDataSetChanged();
         }
     };
 

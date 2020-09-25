@@ -57,25 +57,43 @@ public class DanhbaPresenter implements DanhbaMvpPresenter {
 
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onLoadData() {
-        contactList = new ArrayList<>();
-       danhbaMvpView.showLoadDataSuccessed(contactList);
         database = new Database(danhbaActivity);
-        ArrayList<Contact> contactArrayList = new ArrayList<>();
-        contactArrayList = new ArrayList<>();
-        Cursor cursor = database.readAllData();
-        if (cursor.getCount() == 0) {
-            danhbaMvpView.showLoadDataFailed();
-            Toast.makeText(danhbaActivity, "No Data", Toast.LENGTH_SHORT).show();
-        } else {
-            while (cursor.moveToNext()) {
-                Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4));
-                contactArrayList.add(contact);
-             danhbaMvpView.showLoadDataSuccessed(contactArrayList);
-            }
-        }
+        contactList = new ArrayList<>();
+        database.readAllData2().subscribe(new Consumer<Cursor>() {
+            @Override
+            public void accept(Cursor cursor) {
+                if (cursor.getCount() == 0) {
+                    danhbaMvpView.showLoadDataFailed();
+                } else {
+                    while (cursor.moveToNext()) {
+                        Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4));
+                        contactList.add(contact);
+                        danhbaMvpView.showLoadDataSuccessed(contactList);
+                    }
+                }
+            };
+        });
     }
+
+//        contactList = new ArrayList<>();
+//       danhbaMvpView.showLoadDataSuccessed(contactList);
+//        database = new Database(danhbaActivity);
+//        ArrayList<Contact> contactArrayList = new ArrayList<>();
+//        contactArrayList = new ArrayList<>();
+//        Cursor cursor = database.readAllData();
+//        if (cursor.getCount() == 0) {
+//            danhbaMvpView.showLoadDataFailed();
+//            Toast.makeText(danhbaActivity, "No Data", Toast.LENGTH_SHORT).show();
+//        } else {
+//            while (cursor.moveToNext()) {
+//                Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4));
+//                contactArrayList.add(contact);
+//             danhbaMvpView.showLoadDataSuccessed(contactArrayList);
+//            }
+//        }
 
     @Override
     public void showDiaglog() {

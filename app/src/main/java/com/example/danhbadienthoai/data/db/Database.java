@@ -5,17 +5,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
-import android.os.Environment;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.example.danhbadienthoai.data.db.model.Contact;
+
+import io.reactivex.Observable;
 
 
 public class Database extends SQLiteOpenHelper {
 
     private Context context;
-    private static final  String DATABASE_NAME = "Databases.db";
+    private static final  String DATABASE_NAME = "ContactData.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_NAME = "DanhBa";
@@ -24,6 +25,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_PHONE = "Phone";
     private static final String COLUMN_AVATAR = "Avatar";
     private static final String COLUMN_VIEWTYPE = "ViewType";
+
     public Database(@Nullable Context context) {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
         this.context = context;
@@ -82,6 +84,17 @@ public class Database extends SQLiteOpenHelper {
             cursor = db.rawQuery(query,null);
         }
         return cursor;
+    }
+    public Observable<Cursor> readAllData2(){
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = null;
+        if (db != null){
+            cursor = db.rawQuery(query,null);
+        }
+
+        return Observable.just(cursor);
     }
 
 }
