@@ -4,4 +4,8 @@ public interface MainMvpView {
     void intoContact();
 
     void intoNews();
+
+    void languageVietnamese();
+
+    void languageJapanese();
 }

@@ -18,13 +18,9 @@ public class AddPhonePresenter implements AddPhoneMvpPresenter {
     @Override
     public void onAddClick(String name, String phone, String avatar) {
 
-
         if (name.length() == 0 || phone.length() == 0) {
-
             addPhoneMvpView.Error();
-
         } else {
-
             database = new Database(addPhoneActivity);
             database.addData(null, name, phone, avatar, -1);
             addPhoneMvpView.Success();

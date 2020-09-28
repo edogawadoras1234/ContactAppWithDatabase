@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">電話帳</string>
+    <string name="tab_text_1">ホーム</string>
+    <string name="tab_text_2">スポーツ</string>
+    <string name="tab_text_3">アメリカの新聞</string>
+    <string name="tab_text_4">日本の新聞</string>
+    <string name="tab_text_5">Tab 4</string>
+    <string name="tab_text_6">Tab 5</string>
+    <string name="tab_text_7">Tab 6</string>
+    <string name="tab_text_8">Tab 7</string>
+    <string name="tab_text_9">Tab 8</string>
+    <string name="tab_text_10">Tab 9</string>
+    <string name="title_news_name">タイトル</string>
+    <string name="contact_name">名前</string>
+    <string name="contact_phone_number">電話番号</string>
+    <string name="contact_avatar">アバター</string>
+    <string name="contact_back">バック</string>
+    <string name="contact_ok">OK</string>
+    <string name="contact_change">変更</string>
+    <string name="keyword_1">ジャック</string>
+    <string name="keyword_2">COVID19ウイルス</string>
+    <string name="keyword_3">コロナ</string>
+    <string name="search">サーチ</string>
+    <string name="contact_exit">出口</string>
+    <string name="contact_add">追加</string>
+    <string name="take_piture">写真を撮る</string>
+    <string name="choose_folder">ディレクトリから選択</string>
+    <string name="delelte_image">写真を削除する</string>
+    <string name="choose_language">言語を選択する</string>
+</resources>

@@ -39,8 +39,6 @@ public class AddPhoneActivity extends AppCompatActivity implements AddPhoneMvpVi
 
         ButterKnife.bind(this);
         addPhonePresenter = new AddPhonePresenter(this, this);
-
-
     }
 
     @OnClick(R.id.button_add)

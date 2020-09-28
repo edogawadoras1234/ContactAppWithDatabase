@@ -54,10 +54,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
-    public Integer DeleteDataName(String name){
-        SQLiteDatabase database = this.getWritableDatabase();
-        return database.delete(TABLE_NAME,"Name =?",new String[]{name});
-    }
+
     public void addData(String id, String name, String phone, String avatar,int viewtype){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -96,5 +93,6 @@ public class Database extends SQLiteOpenHelper {
 
         return Observable.just(cursor);
     }
+
 
 }

@@ -2,17 +2,17 @@
     <string name="app_name">Danh Bạ</string>
     <string name="tab_text_1">Trang chủ</string>
     <string name="tab_text_2">Thể thao </string>
-    <string name="tab_text_3">News US</string>
-    <string name="tab_text_4">日本語</string>
-    <string name="tab_text_5">Source News</string>
+    <string name="tab_text_3">Báo Mỹ</string>
+    <string name="tab_text_4">Báo Nhật</string>
+    <string name="tab_text_5">Tab 4</string>
     <string name="tab_text_6">Tab 5</string>
     <string name="tab_text_7">Tab 6</string>
     <string name="tab_text_8">Tab 7</string>
     <string name="tab_text_9">Tab 8</string>
     <string name="tab_text_10">Tab 9</string>
-    <string name="title_news_name">Title </string>
-    <string name="contact_name">Name</string>
-    <string name="contact_phone_number">Phone Number</string>
+    <string name="title_news_name">Tiêu đề</string>
+    <string name="contact_name">Tên</string>
+    <string name="contact_phone_number">Số điện thoại</string>
     <string name="contact_avatar">Avatar</string>
     <string name="contact_back">Trở lại</string>
     <string name="contact_ok">Đồng ý</string>
@@ -26,6 +26,5 @@
     <string name="take_piture">Chụp ảnh</string>
     <string name="choose_folder">Chọn từ máy</string>
     <string name="delelte_image">Xóa ảnh</string>
-
-
+    <string name="choose_language">Chọn ngôn ngữ</string>
 </resources>

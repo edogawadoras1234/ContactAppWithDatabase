@@ -2,10 +2,7 @@ package com.example.danhbadienthoai.ui.danhba;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,18 +32,15 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     Database database;
-    ArrayList<Contact> contactList;
     ContactAdapter contactAdapter;
     DanhbaPresenter danhbaPresenter;
+    ArrayList<Contact> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +62,8 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         if (response.getPermissionName().equals(READ_CONTACTS)) {
-//                            danhbaPresenter.onAddData();
-//                            danhbaPresenter.onLoadData();
-                            addContact();
-                            loaddata();
+                            danhbaPresenter.onAddData();
+                            danhbaPresenter.onLoadData();
                         }
                     }
 
@@ -98,11 +90,11 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             database = new Database(DanhbaActivity.this);
-            Toast.makeText(DanhbaActivity.this, "Delete Success: " + contactList.get(viewHolder.getBindingAdapterPosition()).getId(), Toast.LENGTH_SHORT).show();
-            database.DeleteData(contactList.get(viewHolder.getBindingAdapterPosition()).getId());
-            loaddata();
-//            contactList.remove(viewHolder.getBindingAdapterPosition());
-//            contactAdapter.notifyDataSetChanged();
+            Toast.makeText(DanhbaActivity.this, "Delete Success: " + arrayList.get(viewHolder.getBindingAdapterPosition()).getId(), Toast.LENGTH_SHORT).show();
+            database.DeleteData(arrayList.get(viewHolder.getBindingAdapterPosition()).getId());
+            //danhbaPresenter.onLoadData();
+            arrayList.remove(viewHolder.getBindingAdapterPosition());
+            contactAdapter.notifyDataSetChanged();
         }
     };
 
@@ -149,7 +141,6 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
         builder.setMessage("Bạn có muốn thoát không?");
         builder.setPositiveButton("Exit", (dialogInterface, i) -> System.exit(1));
         builder.setNegativeButton("Cancle", (dialogInterface, i) -> {
-
         });
         builder.show();
     }
@@ -163,10 +154,11 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
     @SuppressLint("CheckResult")
     @Override
     public void showLoadDataSuccessed(ArrayList<Contact> contactList) {
-        contactList = ContactUtils.sortList(contactList);
+        ContactUtils.sortList(contactList);
         contactList = ContactUtils.addAlpha(contactList);
         contactAdapter = new ContactAdapter(DanhbaActivity.this, contactList);
         recyclerView.setAdapter(contactAdapter);
+        arrayList = contactList;
     }
 
     @Override
@@ -177,41 +169,5 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
     @Override
     public void addData(String id, String name, String phone, String avatar) {
         danhbaPresenter.addData(id, name, phone, avatar);
-    }
-
-    String id1, name1, phone1, avatar1;
-
-    private void addContact() {
-        contactList = new ArrayList<>();
-        database = new Database(this);
-        Cursor cursor2 = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
-        while (cursor2.moveToNext()) {
-            id1 = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID));
-            name1 = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            phone1 = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            avatar1 = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI));
-            database.addData(id1, name1, phone1, avatar1, -1);
-            Contact contact = new Contact(id1, name1, phone1, avatar1, -1);
-            contactList.add(contact);
-        }
-    }
-
-    public void loaddata() {
-        database = new Database(DanhbaActivity.this);
-        contactList = new ArrayList<>();
-        ArrayList<Contact> arrayListSort;
-        Cursor cursor = database.readAllData();
-        if (cursor.getCount() == 0) {
-            Toast.makeText(DanhbaActivity.this, "No Data", Toast.LENGTH_SHORT).show();
-        } else {
-            while (cursor.moveToNext()) {
-                Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4));
-                contactList.add(contact);
-                ContactUtils.sortList(contactList);
-                arrayListSort = ContactUtils.addAlpha(contactList);
-                contactAdapter = new ContactAdapter(DanhbaActivity.this, arrayListSort);
-                recyclerView.setAdapter(contactAdapter);
-            }
-        }
     }
 }

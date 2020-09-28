@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainPresenter = new MainPresenter(this);
+        mainPresenter = new MainPresenter(this, this);
         ButterKnife.bind(this);
     }
 
@@ -44,6 +44,14 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
         mainPresenter.onClickBtnNews();
     }
 
+    @OnClick(R.id.image_japanese_language)
+        void OnClickJpLanguage(){
+        mainPresenter.onClickBtnJapanese();
+    }
+    @OnClick(R.id.image_vietnamese_language)
+    void onClickVnLanguage(){
+        mainPresenter.onClickBtnVietnamese();
+    }
 
     @Override
     public void intoContact() {
@@ -55,5 +63,16 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
     public void intoNews() {
         Intent intent = new Intent(MainActivity.this, NewsAppActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void languageVietnamese() {
+        Intent intent = new Intent(MainActivity.this, MainActivity.class);//load lại màn hình
+        startActivity(intent);
+    }
+
+    @Override
+    public void languageJapanese() {
+
     }
 }

@@ -4,4 +4,8 @@ public interface MainMvpPresenter extends MainMvpView {
     void onClickBtnContact();
 
     void onClickBtnNews();
+
+    void onClickBtnJapanese();
+
+    void onClickBtnVietnamese();
 }

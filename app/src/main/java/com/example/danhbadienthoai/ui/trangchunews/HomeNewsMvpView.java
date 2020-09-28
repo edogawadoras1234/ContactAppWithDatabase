@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface HomeNewsMvpView {
     void loadData(List<Article> articleList);
+    void loadDataScroll(List<Article> articleList);
 }
