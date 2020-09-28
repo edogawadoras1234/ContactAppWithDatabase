@@ -16,12 +16,7 @@ public class ContactUtils {
 
     //sắp xếp list
     public static ArrayList<Contact> sortList(ArrayList<Contact> contacts){
-        Collections.sort(contacts, new Comparator<Contact>() {
-            @Override
-            public int compare(Contact contact, Contact t1) {
-                return contact.getName().compareTo(t1.getName());
-            }
-        });
+        Collections.sort(contacts, (contact, t1) -> contact.getName().compareTo(t1.getName()));
         return contacts;
     }
 

@@ -198,18 +198,18 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
 
     public void loaddata() {
         database = new Database(DanhbaActivity.this);
-        ArrayList<Contact> contactArrayList = new ArrayList<>();
-        contactArrayList = new ArrayList<>();
+        contactList = new ArrayList<>();
+        ArrayList<Contact> arrayListSort;
         Cursor cursor = database.readAllData();
         if (cursor.getCount() == 0) {
             Toast.makeText(DanhbaActivity.this, "No Data", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()) {
                 Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4));
-                contactArrayList.add(contact);
-                contactList = ContactUtils.sortList(contactArrayList);
-                contactList = ContactUtils.addAlpha(contactArrayList);
-                contactAdapter = new ContactAdapter(DanhbaActivity.this, contactList);
+                contactList.add(contact);
+                ContactUtils.sortList(contactList);
+                arrayListSort = ContactUtils.addAlpha(contactList);
+                contactAdapter = new ContactAdapter(DanhbaActivity.this, arrayListSort);
                 recyclerView.setAdapter(contactAdapter);
             }
         }
