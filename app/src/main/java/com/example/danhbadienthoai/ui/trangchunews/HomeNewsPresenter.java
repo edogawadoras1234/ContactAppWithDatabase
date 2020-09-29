@@ -23,6 +23,7 @@ public class HomeNewsPresenter implements  HomeNewsMvpPresenter {
     public static final String API_KEY = "336c7a92c13b4970be0773e0b2cf5c67";
     ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+    String language = NewsUtils.getLanguage();
 
     public HomeNewsPresenter(HomeNewsMvpView homeNewsMvpView, HomeNewsFragment homeNewsFragment){
         this.homeNewsMvpView = homeNewsMvpView;
@@ -30,8 +31,6 @@ public class HomeNewsPresenter implements  HomeNewsMvpPresenter {
     }
     @Override
     public void onLoadData(String q) {
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        String language = NewsUtils.getLanguage();
         compositeDisposable.add(apiInterface.getQ2(q, language, "publishedAt", API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -59,8 +58,6 @@ public class HomeNewsPresenter implements  HomeNewsMvpPresenter {
 
     @Override
     public void onScrollData(String q) {
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        String language = NewsUtils.getLanguage();
         compositeDisposable.add(apiInterface.getQ2(q, language, "publishedAt", API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
