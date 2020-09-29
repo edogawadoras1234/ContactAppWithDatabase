@@ -82,6 +82,7 @@ public class Database extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
     public Observable<Cursor> readAllData2(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();

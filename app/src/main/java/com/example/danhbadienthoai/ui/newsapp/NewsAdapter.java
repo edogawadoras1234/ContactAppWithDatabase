@@ -104,10 +104,10 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 //            return VIEW_TYPE_2;
 //        }
 //        return VIEW_TYPE_1;
-            if (position %5 ==0 ) {
-                return VIEW_TYPE_2;
-            }
-            return VIEW_TYPE_1;
+        if (position % 5 == 0) {
+            return VIEW_TYPE_2;
+        }
+        return VIEW_TYPE_1;
     }
 
     @Override
@@ -141,5 +141,4 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         }
     }
-
 }
