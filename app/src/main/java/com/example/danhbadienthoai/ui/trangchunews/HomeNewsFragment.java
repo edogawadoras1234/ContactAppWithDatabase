@@ -9,10 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.danhbadienthoai.data.db.model.Article;
@@ -27,10 +29,10 @@ import java.util.List;
 public class HomeNewsFragment extends Fragment implements HomeNewsMvpView {
     NewsAdapter newsAdapter;
     RecyclerView recyclerView;
-    SwipeRefreshLayout swipeRefreshLayout;
     HomeNewsPresenter homeNewsPresenter;
     LinearLayoutManager layoutManager;
     private List<Article> articleArrayList = new ArrayList<>();
+    ProgressBar progressBar;
 
     int currentItems, totalItems, scrollOutItems;
     boolean isScrolling = false;
@@ -39,7 +41,7 @@ public class HomeNewsFragment extends Fragment implements HomeNewsMvpView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trang_chu_news, container, false);
-
+        progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.rv_news);
         //Tối ưu hoá dữ liệu trong adapter
         recyclerView.setHasFixedSize(true);
@@ -54,12 +56,6 @@ public class HomeNewsFragment extends Fragment implements HomeNewsMvpView {
         recyclerView.setItemAnimator(itemAnimator);
 
         homeNewsPresenter = new HomeNewsPresenter(this, this);
-
-        swipeRefreshLayout = view.findViewById(R.id.news_swipe);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            Toast.makeText(getContext(), "Refresh", Toast.LENGTH_SHORT).show();
-            swipeRefreshLayout.setRefreshing(false);
-        });
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -79,11 +75,11 @@ public class HomeNewsFragment extends Fragment implements HomeNewsMvpView {
 
                 if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
                     isScrolling = false;
-                    homeNewsPresenter.onScrollData("jack");
+                    abc();
                 }
             }
         });
-        homeNewsPresenter.onLoadData("money");
+        homeNewsPresenter.onLoadData("jack");
         return view;
     }
 
@@ -96,8 +92,22 @@ public class HomeNewsFragment extends Fragment implements HomeNewsMvpView {
 
     @Override
     public void loadDataScroll(List<Article> articleList) {
+        progressBar.setVisibility(View.VISIBLE);
         articleArrayList.addAll(articleList);
         newsAdapter.notifyDataSetChanged();
+    }
+
+    private void abc(){
+        progressBar.setVisibility(View.VISIBLE);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                homeNewsPresenter.onScrollData("covid");
+                progressBar.setVisibility(View.GONE);
+            }
+        }, 2000);
+
     }
 
 }

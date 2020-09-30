@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 
 import com.example.danhbadienthoai.data.db.model.Contact;
 
+import java.util.ArrayList;
+
 import io.reactivex.Observable;
 
 
@@ -30,12 +32,6 @@ public class Database extends SQLiteOpenHelper {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
         this.context = context;
 
-    }
-
-
-    public Integer DeleteData(String id){
-        SQLiteDatabase database = this.getWritableDatabase();
-        return database.delete(TABLE_NAME,"Id =?",new String[]{id});
     }
 
     @Override
@@ -63,7 +59,7 @@ public class Database extends SQLiteOpenHelper {
         cv.put(COLUMN_PHONE, phone);
         cv.put(COLUMN_AVATAR, avatar);
         cv.put(COLUMN_VIEWTYPE,viewtype);
-        long  result = db.insert(TABLE_NAME, null, cv);
+        db.insert(TABLE_NAME, null, cv);
     }
 
     public void UpdateData(String name, String phone, String avatar,int viewtype,String id){
@@ -72,6 +68,13 @@ public class Database extends SQLiteOpenHelper {
                 +"', Phone = '"+ phone + "', Avatar = '" + avatar + "', ViewType = '"+ viewtype + "' Where Id = '" + id + "'";
         db.execSQL(query);
     }
+
+    public void DeleteData(String id){
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.delete(TABLE_NAME, "Id =?", new String[]{id});
+    }
+
+    @Deprecated
     public Cursor readAllData(){
         String query = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -83,17 +86,24 @@ public class Database extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Observable<Cursor> readAllData2(){
-        String query = "SELECT * FROM " + TABLE_NAME;
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        Cursor cursor = null;
-        if (db != null){
-            cursor = db.rawQuery(query,null);
+    public Observable<ArrayList<Contact>> loadDataContact() {
+        String sql = "select * from " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Contact> storeContacts = new ArrayList<>();
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(0);
+                String name= cursor.getString(1);
+                String phno = cursor.getString(2);
+                String avatar = cursor.getString(3);
+                int viewType = -1;
+                storeContacts.add(new Contact(id, name, phno,avatar, viewType));
+            }
+            while (cursor.moveToNext());
         }
-
-        return Observable.just(cursor);
+        cursor.close();
+        return Observable.just(storeContacts);
     }
-
 
 }

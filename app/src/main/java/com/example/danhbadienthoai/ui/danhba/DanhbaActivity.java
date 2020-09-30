@@ -90,10 +90,11 @@ public class DanhbaActivity extends AppCompatActivity implements DanhbaMvpView {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             database = new Database(DanhbaActivity.this);
-            Toast.makeText(DanhbaActivity.this, "Delete Success: " + arrayList.get(viewHolder.getBindingAdapterPosition()).getId(), Toast.LENGTH_SHORT).show();
-            database.DeleteData(arrayList.get(viewHolder.getBindingAdapterPosition()).getId());
+            String id = arrayList.get(viewHolder.getAdapterPosition()).getId();
+            Toast.makeText(DanhbaActivity.this, "Delete Success: " + id, Toast.LENGTH_SHORT).show();
+            database.DeleteData(id);
             //danhbaPresenter.onLoadData();
-            arrayList.remove(viewHolder.getBindingAdapterPosition());
+            arrayList.remove(Integer.valueOf(id));
             contactAdapter.notifyDataSetChanged();
         }
     };

@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.load.HttpException;
 import com.example.danhbadienthoai.data.db.model.Article;
+import com.example.danhbadienthoai.data.db.model.News;
 import com.example.danhbadienthoai.data.network.ApiClient;
 import com.example.danhbadienthoai.data.network.ApiInterface;
 import com.example.danhbadienthoai.utils.NewsUtils;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Response;
 
@@ -34,7 +36,12 @@ public class SportsNewsPresenter implements SportsNewsMvpPresenter {
         compositeDisposable.add(apiInterface.getQ2("sport", language, "publishedAt", API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(news -> sportsNewsMvpView.loadToRecyclerView(news.getArticles()), throwable -> {
+                .subscribe(new Consumer<News>() {
+                    @Override
+                    public void accept(News news) throws Exception {
+                        sportsNewsMvpView.loadToRecyclerView(news.getArticles());
+                    }
+                }, throwable -> {
                     if (throwable instanceof HttpException) {
                         String errorCode;
                         Response response = null;

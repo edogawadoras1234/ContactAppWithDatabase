@@ -3,6 +3,7 @@ package com.example.danhbadienthoai.ui.danhba;
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.widget.Toast;
 
 import com.example.danhbadienthoai.data.db.Database;
 import com.example.danhbadienthoai.data.db.model.Contact;
@@ -49,30 +50,21 @@ public class DanhbaPresenter implements DanhbaMvpPresenter {
             contactList.add(contact);
             danhbaMvpView.addData(id, name, phone, avatar);
         }
-
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void onLoadData() {
         database = new Database(danhbaActivity);
-        contactList = new ArrayList<>();
-        database.readAllData2().subscribe(new Consumer<Cursor>() {
-            @Override
-            public void accept(Cursor cursor) {
-                if (cursor.getCount() == 0) {
-                    danhbaMvpView.showLoadDataFailed();
-                } else {
-                    while (cursor.moveToNext()) {
-                        Contact contact = new Contact(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4));
-                        contactList.add(contact);
+        database.loadDataContact()
+                .subscribe(contacts -> {
+                    if (contacts.size() > 0) {
                         danhbaMvpView.showLoadDataSuccessed(contactList);
+                    } else {
+                        danhbaMvpView.showLoadDataFailed();
                     }
-                }
-            };
-        });
+                });
     }
-
 
     @Override
     public void showDiaglog() {
