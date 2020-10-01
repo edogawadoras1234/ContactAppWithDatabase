@@ -4,12 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.UngDungDocBao;
-import com.example.danhbadienthoai.ui.danhba.danhba;
+import com.example.danhbadienthoai.ui.newsapp.NewsAppActivity;
+import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends AppCompatActivity implements MainMvpView {
 
@@ -19,40 +29,50 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button button = (Button) findViewById(R.id.btnintocontact);
-        Button btn_new = (Button) findViewById(R.id.btn_ungdung_docbao);
 
-        mainPresenter = new MainPresenter(this);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainPresenter.onClickBtnContact();
-            }
-        });
-        btn_new.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainPresenter.onClickBtnNews();
-            }
-        });
-
-
+        mainPresenter = new MainPresenter(this, this);
+        ButterKnife.bind(this);
     }
 
-    @Override
-    public void openMainActivity() {
+    @OnClick(R.id.button_app_contact)
+    void onClickAppContact() {
+        mainPresenter.onClickBtnContact();
+    }
 
+    @OnClick(R.id.button_app_news)
+    void onClickAppNews() {
+        mainPresenter.onClickBtnNews();
+    }
+
+    @OnClick(R.id.image_japanese_language)
+        void OnClickJpLanguage(){
+        mainPresenter.onClickBtnJapanese();
+    }
+    @OnClick(R.id.image_vietnamese_language)
+    void onClickVnLanguage(){
+        mainPresenter.onClickBtnVietnamese();
     }
 
     @Override
     public void intoContact() {
-        Intent intent = new Intent(MainActivity.this, danhba.class);
+        Intent intent = new Intent(MainActivity.this, DanhbaActivity.class);
         startActivity(intent);
     }
 
     @Override
     public void intoNews() {
-        Intent intent = new Intent(MainActivity.this, UngDungDocBao.class);
+        Intent intent = new Intent(MainActivity.this, NewsAppActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void languageVietnamese() {
+        Intent intent = new Intent(MainActivity.this, MainActivity.class);//load lại màn hình
+        startActivity(intent);
+    }
+
+    @Override
+    public void languageJapanese() {
+
     }
 }

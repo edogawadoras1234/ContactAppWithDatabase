@@ -8,53 +8,58 @@
 
 
     <Button
-        android:id="@+id/btncancle"
+        android:id="@+id/button_cancle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="49dp"
-        android:text="Back"
+        android:text="@string/contact_back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/edtphone"
+        android:id="@+id/edit_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="31dp"
         android:ems="10"
-        android:hint="Phone Number"
+        android:hint="@string/contact_phone_number"
+        android:importantForAutofill="no"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/edtname"
-        app:layout_constraintTop_toBottomOf="@+id/edtname" />
+        app:layout_constraintStart_toStartOf="@+id/edit_name"
+        app:layout_constraintTop_toBottomOf="@+id/edit_name"
+        tools:ignore="TextFields" />
 
     <EditText
-        android:id="@+id/edtavata"
+        android:id="@+id/edit_avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="Avatar"
-        app:layout_constraintStart_toStartOf="@+id/edtphone"
-        app:layout_constraintTop_toBottomOf="@+id/edtphone" />
+        android:hint="@string/contact_avatar"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="@+id/edit_phone"
+        app:layout_constraintTop_toBottomOf="@+id/edit_phone" />
 
     <EditText
-        android:id="@+id/edtname"
+        android:id="@+id/edit_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="74dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="Name"
+        android:hint="@string/contact_name"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnadd"
+        android:id="@+id/button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
-        android:text="Add"
+        android:text="@string/contact_ok"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,11 +9,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chỉnh sửa"
-        android:textSize="30dp"
+        android:text="@string/contact_change"
+        android:textSize="30sp"
         android:padding="20dp"
-        android:textStyle="bold"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textStyle="bold" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,11 +23,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:padding="10dp"
-            android:src="@drawable/icon_person"
+            android:src="@drawable/ic_person"
             android:id="@+id/img_change_avatar"
             android:layout_width="200dp"
-            android:layout_height="200dp"
-            />
+            android:layout_height="200dp"/>
 
     </LinearLayout>
     <LinearLayout
@@ -37,25 +35,32 @@
         android:orientation="vertical"
         android:gravity="center">
         <EditText
-            android:id="@+id/edt_name_change"
+            android:id="@+id/edit_name_change"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Name" />
+            android:hint="@string/contact_name"
+            android:autofillHints=""
+            android:inputType="text" />
 
         <EditText
-            android:id="@+id/edt_phone_change"
+            android:id="@+id/edit_phone_change"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Phone Number" />
+            android:hint="@string/contact_phone_number"
+            android:autofillHints=""
+            android:inputType="number"
+            tools:ignore="TextFields" />
 
         <EditText
-            android:id="@+id/edt_avatar_change"
+            android:id="@+id/edit_avatar_change"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="Avatar" />
+            android:hint="@string/contact_avatar"
+            android:autofillHints=""
+            android:inputType="text" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,12 +70,14 @@
             android:id="@+id/btn_change_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đồng ý" />
+            android:text="@string/contact_ok"
+            tools:ignore="ButtonStyle" />
 
         <Button
-            android:id="@+id/btn_cancle_change"
+            android:id="@+id/button_cancle_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Huỷ" />
+            android:text="@string/contact_back"
+            tools:ignore="ButtonStyle" />
     </LinearLayout>
 </LinearLayout>
