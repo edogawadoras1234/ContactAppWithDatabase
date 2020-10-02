@@ -21,7 +21,15 @@ public interface ApiInterface {
             @Query("country") String country,
             @Query("apiKey") String apiKey
     );
-
+    @GET("everything")
+    Call<News> getQ3(
+            @Query("q") String q,
+            @Query("language") String language,
+            @Query("sortBy") String sortBy,
+            @Query("apiKey") String apiKey,
+            @Query("pageSize") int pageSize,
+            @Query("page") int pageIndex
+    );
     //Get bang RxAndroid
     @GET("top-headlines")
     Observable<News> getCountry2(
@@ -33,6 +41,8 @@ public interface ApiInterface {
             @Query("q") String q,
             @Query("language") String language,
             @Query("sortBy") String sortBy,
-            @Query("apiKey") String apiKey
+            @Query("apiKey") String apiKey,
+            @Query("pageSize") int pageSize,
+            @Query("page") int pageIndex
     );
 }

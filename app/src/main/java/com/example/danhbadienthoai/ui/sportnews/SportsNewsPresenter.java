@@ -24,7 +24,7 @@ public class SportsNewsPresenter implements SportsNewsMvpPresenter {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
     public static final String API_KEY = "336c7a92c13b4970be0773e0b2cf5c67";
-
+    int START_PAGE = 1;
     public SportsNewsPresenter(SportsNewsMvpView sportsNewsMvpView, SportsNewsFragment sportsNewsFragment) {
         this.sportsNewsMvpView = sportsNewsMvpView;
         this.sportsNewsFragment = sportsNewsFragment;
@@ -32,35 +32,35 @@ public class SportsNewsPresenter implements SportsNewsMvpPresenter {
 
     @Override
     public void onLoadData() {
-        String language = NewsUtils.getLanguage();
-        compositeDisposable.add(apiInterface.getQ2("sport", language, "publishedAt", API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<News>() {
-                    @Override
-                    public void accept(News news) throws Exception {
-                        sportsNewsMvpView.loadToRecyclerView(news.getArticles());
-                    }
-                }, throwable -> {
-                    if (throwable instanceof HttpException) {
-                        String errorCode;
-                        Response response = null;
-                        switch (response.code()) {
-                            case 404:
-                                errorCode = "404 not found";
-                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
-                                break;
-                            case 500:
-                                errorCode = "500 server broken";
-                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
-                                break;
-                            default:
-                                errorCode = "unknown error";
-                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                    }
-                }));
+//        String language = NewsUtils.getLanguage();
+//        compositeDisposable.add(apiInterface.getQ2("sport", language, "publishedAt", API_KEY, START_PAGE)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Consumer<News>() {
+//                    @Override
+//                    public void accept(News news) throws Exception {
+//                        sportsNewsMvpView.loadToRecyclerView(news.getArticles());
+//                    }
+//                }, throwable -> {
+//                    if (throwable instanceof HttpException) {
+//                        String errorCode;
+//                        Response response = null;
+//                        switch (response.code()) {
+//                            case 404:
+//                                errorCode = "404 not found";
+//                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
+//                                break;
+//                            case 500:
+//                                errorCode = "500 server broken";
+//                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
+//                                break;
+//                            default:
+//                                errorCode = "unknown error";
+//                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
+//                                break;
+//                        }
+//                    }
+//                }));
     }
 
     @Override
