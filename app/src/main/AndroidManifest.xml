@@ -57,8 +57,11 @@
         <activity android:name=".ui.searchnew.SearchNewsActivity"
             android:theme="@style/Theme.Design.NoActionBar"
             android:parentActivityName=".ui.newsapp.NewsAppActivity">
-
         </activity>
+
+        <activity android:name=".ui.music.MusicActivity"
+            android:parentActivityName=".ui.main.MainActivity"/>
+
     </application>
 
 </manifest>

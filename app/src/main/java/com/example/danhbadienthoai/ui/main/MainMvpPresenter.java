@@ -8,4 +8,6 @@ public interface MainMvpPresenter extends MainMvpView {
     void onClickBtnJapanese();
 
     void onClickBtnVietnamese();
+
+    void onClickBtnMusic();
 }

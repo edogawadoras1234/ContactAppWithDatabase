@@ -16,7 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Response;
+import retrofit2.Response;
 
 public class UsNewsPresenter implements UsNewsMvpPresenter {
     UsNewsMvpView usNewsMvpView;
@@ -33,31 +33,31 @@ public class UsNewsPresenter implements UsNewsMvpPresenter {
 
     @Override
     public void onLoadJson() {
-        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-
-        compositeDisposable.add(apiInterface.getCountry2("us", API_KEY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(news -> usNewsMvpView.loadToRecyclerView(news.getArticles()), throwable -> {
-                    if (throwable instanceof HttpException) {
-                        String errorCode;
-                        Response response = null;
-                        switch (response.code()) {
-                            case 404:
-                                errorCode = "404 not found";
-                                Toast.makeText(usNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
-                                break;
-                            case 500:
-                                errorCode = "500 server broken";
-                                Toast.makeText(usNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
-                                break;
-                            default:
-                                errorCode = "unknown error";
-                                Toast.makeText(usNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                    }
-                }));
+//        apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+//        compositeDisposable.add(apiInterface.getCountry2("us", API_KEY)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(news -> usNewsMvpView.loadToRecyclerView(news.getArticles()), throwable -> {
+//                    if (throwable instanceof HttpException) {
+//                        String errorCode;
+//                        retrofit2.HttpException httpException = (retrofit2.HttpException) throwable;
+//                        Response<?> response = httpException.response();
+//                        switch (response.code()) {
+//                            case 400:
+//                                errorCode = "Bad Request. The request was unacceptable, often due to a missing or misconfigured parameter";
+//                                Toast.makeText(usNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
+//                                break;
+//                            case 429:
+//                                errorCode = "Too Many Requests. You made too many requests within a window of time and have been rate limited. Back off for a while";
+//                                Toast.makeText(usNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
+//                                break;
+//                            default:
+//                                errorCode = "Server Error. Something went wrong on our side";
+//                                Toast.makeText(usNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
+//                                break;
+//                        }
+//                    }
+//                }));
     }
 
     @Override

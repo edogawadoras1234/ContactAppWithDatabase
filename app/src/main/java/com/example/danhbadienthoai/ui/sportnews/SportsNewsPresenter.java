@@ -2,7 +2,6 @@ package com.example.danhbadienthoai.ui.sportnews;
 
 import android.widget.Toast;
 
-import com.bumptech.glide.load.HttpException;
 import com.example.danhbadienthoai.data.db.model.Article;
 import com.example.danhbadienthoai.data.db.model.News;
 import com.example.danhbadienthoai.data.network.ApiClient;
@@ -15,7 +14,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Response;
+import retrofit2.HttpException;
+import retrofit2.Response;
 
 public class SportsNewsPresenter implements SportsNewsMvpPresenter {
 
@@ -32,35 +32,36 @@ public class SportsNewsPresenter implements SportsNewsMvpPresenter {
 
     @Override
     public void onLoadData() {
-//        String language = NewsUtils.getLanguage();
-//        compositeDisposable.add(apiInterface.getQ2("sport", language, "publishedAt", API_KEY, START_PAGE)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Consumer<News>() {
-//                    @Override
-//                    public void accept(News news) throws Exception {
-//                        sportsNewsMvpView.loadToRecyclerView(news.getArticles());
-//                    }
-//                }, throwable -> {
-//                    if (throwable instanceof HttpException) {
-//                        String errorCode;
-//                        Response response = null;
-//                        switch (response.code()) {
-//                            case 404:
-//                                errorCode = "404 not found";
-//                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
-//                                break;
-//                            case 500:
-//                                errorCode = "500 server broken";
-//                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
-//                                break;
-//                            default:
-//                                errorCode = "unknown error";
-//                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
-//                                break;
-//                        }
-//                    }
-//                }));
+        String language = NewsUtils.getLanguage();
+        compositeDisposable.add(apiInterface.getQ2("sport", language, "publishedAt", API_KEY, 10,1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<News>() {
+                    @Override
+                    public void accept(News news) {
+                        sportsNewsMvpView.loadToRecyclerView(news.getArticles());
+                    }
+                }, throwable -> {
+                    if (throwable instanceof HttpException) {
+                        String errorCode;
+                        HttpException httpException = (HttpException) throwable;
+                        Response<?> response = httpException.response();
+                        switch (response.code()) {
+                            case 400:
+                                errorCode = "Bad Request. The request was unacceptable, often due to a missing or misconfigured parameter";
+                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
+                                break;
+                            case 429:
+                                errorCode = "Too Many Requests. You made too many requests within a window of time and have been rate limited. Back off for a while";
+                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                errorCode = "Server Error. Something went wrong on our side";
+                                Toast.makeText(sportsNewsFragment.getContext(), " " + errorCode, Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                }));
     }
 
     @Override

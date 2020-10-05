@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.danhbadienthoai.R;
+import com.example.danhbadienthoai.ui.music.MusicActivity;
 import com.example.danhbadienthoai.ui.newsapp.NewsAppActivity;
 import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
 
@@ -52,6 +53,11 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
     void onClickVnLanguage(){
         mainPresenter.onClickBtnVietnamese();
     }
+    @OnClick(R.id.button_app_music)
+        void OnClickAppMusic(){
+        mainPresenter.onClickBtnMusic();
+
+    }
 
     @Override
     public void intoContact() {
@@ -74,5 +80,11 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
     @Override
     public void languageJapanese() {
 
+    }
+
+    @Override
+    public void intoMusic() {
+        Intent intent = new Intent(MainActivity.this, MusicActivity.class);
+        startActivity(intent);
     }
 }

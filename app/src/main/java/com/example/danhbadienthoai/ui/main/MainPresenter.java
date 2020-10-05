@@ -49,6 +49,11 @@ public class MainPresenter implements MainMvpPresenter {
         mainMvpView.languageVietnamese();
     }
 
+    @Override
+    public void onClickBtnMusic() {
+        mainMvpView.intoMusic();
+    }
+
 
     @Override
     public void intoContact() {
@@ -67,6 +72,11 @@ public class MainPresenter implements MainMvpPresenter {
 
     @Override
     public void languageJapanese() {
+
+    }
+
+    @Override
+    public void intoMusic() {
 
     }
 }

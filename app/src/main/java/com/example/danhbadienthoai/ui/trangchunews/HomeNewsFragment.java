@@ -56,8 +56,10 @@ public class HomeNewsFragment extends Fragment implements HomeNewsMvpView {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 page++;
-                Toast.makeText(getContext(), "Scroll Page: " + page, Toast.LENGTH_SHORT).show();
                 homeNewsPresenter.onScrollData("jack", LIMIT, page);
+//                if (totalItemsCount == ) {
+//                    Toast.makeText(getContext(), "No More To Load", Toast.LENGTH_SHORT).show();
+//                }
                 Log.i("Offset khi scroll", "offset = " + (articleArrayList.size() + 1));
             }
         };
@@ -70,7 +72,6 @@ public class HomeNewsFragment extends Fragment implements HomeNewsMvpView {
 
     @Override
     public void loadData(List<Article> articleList) {
-        Toast.makeText(getContext(), "" + articleList.size(), Toast.LENGTH_SHORT).show();
         newsAdapter = new NewsAdapter(articleList, getContext());
         articleArrayList = articleList;
         recyclerView.setAdapter(newsAdapter);

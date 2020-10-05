@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.danhbadienthoai.data.db.model.Article;
 import com.example.danhbadienthoai.R;
+import com.example.danhbadienthoai.data.db.model.Article;
 import com.example.danhbadienthoai.ui.newsapp.NewsAdapter;
 
 import java.util.List;

@@ -8,4 +8,6 @@ public interface MainMvpView {
     void languageVietnamese();
 
     void languageJapanese();
+
+    void intoMusic();
 }

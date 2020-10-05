@@ -5,16 +5,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.load.HttpException;
 import com.example.danhbadienthoai.data.db.model.Article;
-import com.example.danhbadienthoai.data.db.model.News;
 import com.example.danhbadienthoai.data.network.ApiClient;
 import com.example.danhbadienthoai.data.network.ApiInterface;
 import com.example.danhbadienthoai.utils.NewsUtils;
+
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Response;
 
@@ -34,21 +32,30 @@ public class HomeNewsPresenter implements HomeNewsMvpPresenter {
 
     @Override
     public void onLoadData(String q, int limit, int offset) {
-        compositeDisposable.add(apiInterface.getQ2(q, language, "publishedAt", API_KEY, limit,offset)
+        compositeDisposable.add(apiInterface.getQ2(q, language, "publishedAt", API_KEY, limit, offset)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<News>() {
-                    @Override
-                    public void accept(News news) throws HttpException {
-                        Log.i("Total Resuilt", " " + news.getTotalResults());
-                        Toast.makeText(homeNewsFragment.getContext(), "Total Resuilt: " + news.getTotalResults(), Toast.LENGTH_SHORT).show();
-                        homeNewsMvpView.loadData(news.getArticles());
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable e) {
-                        if (e instanceof HttpException) {
-
+                .subscribe(news -> {
+                    Log.i("Total Resuilt", " " + news.getTotalResults());
+                    homeNewsMvpView.loadData(news.getArticles());
+                }, e -> {
+                    if (e instanceof HttpException) {
+                        String errorCode;
+                        retrofit2.HttpException httpException = (retrofit2.HttpException) e;
+                        retrofit2.Response<?> response = httpException.response();
+                        switch (response.code()) {
+                            case 400:
+                                errorCode = "Bad Request. The request was unacceptable, often due to a missing or misconfigured parameter";
+                                Toast.makeText(homeNewsFragment.getContext(), "" + errorCode, Toast.LENGTH_SHORT).show();
+                                break;
+                            case 429:
+                                errorCode = "Too Many Requests. You made too many requests within a window of time and have been rate limited. Back off for a while";
+                                Toast.makeText(homeNewsFragment.getContext(), "" + errorCode, Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                errorCode = "Server Error. Something went wrong on our side";
+                                Toast.makeText(homeNewsFragment.getContext(), "" + errorCode, Toast.LENGTH_SHORT).show();
+                                break;
                         }
                     }
                 }));
