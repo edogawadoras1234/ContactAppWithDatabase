@@ -31,6 +31,6 @@
     <string name="image_descreption">Image Descreption</string>
     <string name="time_start">00:00:00</string>
     <string name="time_total">00:00:00</string>
-    <string name="song_title">Song Title</string>
-    <string name="song_author">Song Author</string>
+    <string name="song_title">Tên bài nhạc</string>
+    <string name="song_author">Ca sĩ</string>
 </resources>
