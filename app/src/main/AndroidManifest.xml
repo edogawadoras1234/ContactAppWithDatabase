@@ -29,7 +29,8 @@
 <!--        <activity android:name=".ui.main.MainActivity">-->
 <!--        </activity>-->
 
-        <activity android:name=".ui.main.MainActivity">
+        <activity android:name=".ui.main.MainActivity"
+            android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,6 +64,7 @@
         </activity>
 
         <activity android:name=".ui.music.MusicActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:parentActivityName=".ui.main.MainActivity"/>
 
         <service android:name=".service.MusicService"

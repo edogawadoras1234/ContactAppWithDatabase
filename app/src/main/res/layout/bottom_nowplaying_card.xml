@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/include_bottom_nowplaying">
+    android:id="@+id/include_bottom_nowplaying"
+    android:layout_marginTop="320dp">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -19,6 +20,7 @@
             android:layout_height="40dp"
             android:layout_margin="10dp"
             android:background="@drawable/ic_music"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/image_descreption"
             tools:ignore="ButtonStyle" />
 
@@ -32,22 +34,24 @@
                 android:id="@+id/text_title_song_playing_card"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:text="@string/song_title" />
 
             <TextView
                 android:id="@+id/text_author_song_playing_card"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
                 android:text="@string/song_author" />
 
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/image_play_playing_card"
+            android:id="@+id/image_pause_playing_card"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="10dp"
-            android:background="@drawable/ic_play"
+            android:background="@drawable/ic_pause"
             android:contentDescription="@string/image_descreption"
             tools:ignore="ButtonStyle" />
 

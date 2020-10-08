@@ -1,13 +1,11 @@
-package com.example.danhbadienthoai;
+package com.example.danhbadienthoai.utils;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import io.reactivex.annotations.NonNull;
-
-import static androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE;
+import org.jetbrains.annotations.NotNull;
 
 
 public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
@@ -28,12 +26,12 @@ public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollLi
     public RecyclerViewScrollListener(LinearLayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
     }
-
+    @Deprecated
     public RecyclerViewScrollListener(GridLayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
         visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
     }
-
+    @Deprecated
     public RecyclerViewScrollListener(StaggeredGridLayoutManager layoutManager) {
         this.mLayoutManager = layoutManager;
         visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
@@ -56,7 +54,7 @@ public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollLi
     // We are given a few useful parameters to help us work out if we need to load some more data,
     // but first we check if we are waiting for the previous load to finish.
     @Override
-    public void onScrolled(RecyclerView view, int dx, int dy) {
+    public void onScrolled(@NotNull RecyclerView view, int dx, int dy) {
         int lastVisibleItemPosition = 0;
         int totalItemCount = mLayoutManager.getItemCount();
 
@@ -99,6 +97,7 @@ public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollLi
     }
 
     // Call this method whenever performing new searches
+    @Deprecated
     public void resetState() {
         this.currentPage = this.startingPageIndex;
         this.previousTotalItemCount = 0;

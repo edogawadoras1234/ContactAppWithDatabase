@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.danhbadienthoai.R;
-import com.example.danhbadienthoai.RecyclerViewScrollListener;
+import com.example.danhbadienthoai.utils.RecyclerViewScrollListener;
 import com.example.danhbadienthoai.data.db.model.Article;
 import com.example.danhbadienthoai.ui.newsapp.NewsAdapter;
 

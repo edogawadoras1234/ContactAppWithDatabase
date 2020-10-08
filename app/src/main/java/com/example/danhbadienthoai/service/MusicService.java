@@ -19,32 +19,101 @@ import com.example.danhbadienthoai.ui.music.MusicActivity;
 
 
 public class MusicService extends Service {
+
+    private static final String TAG = "HelloService";
+    public static final MediaPlayer mediaPlayer = new MediaPlayer();
     private static final String CHANNEL_ID = "Kenh Thong Bao";
     private static final int NOTIFICATION_ID = 1;
-    private static final String TAG = "HelloService";
-    MediaPlayer mediaPlayer;
     public static final String ACTION_PLAY = "PLAY";
     public static final String ACTION_PREVIOUS = "PREVIOUS";
     public static final String ACTION_NEXT = "NEXT";
+    public static String TITLE_SONG;
+    public static String AUTHOR_SONG;
+    public static String IMAGE_SONG;
 
     @Override
     public void onCreate() {
+        super.onCreate();
+        onPlayMusic("https://data.chiasenhac.com/down2/2121/4/2120992/128/Thien%20Dang%20-%20Wowy_%20JoliPoli.mp3");
+        mediaPlayer.setOnPreparedListener(MediaPlayer::start);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        String action = intent.getAction();
+        if (action != null) {
+            switch (action) {
+                case ACTION_PLAY:
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.pause();
+                        stopForeground(true);
+                    } else {
+                        mediaPlayer.setOnPreparedListener(MediaPlayer::start);
+                        mediaPlayer.start();
+                        startForeground(NOTIFICATION_ID, getNotification());
+                    }
+                    TITLE_SONG = "Thien Dang";
+                    AUTHOR_SONG = "Wowy";
+                    IMAGE_SONG = "https://vignette.wikia.nocookie.net/caseclosed/images/8/80/Infobox_-_Conan_Edogawa.png/revision/latest?cb=20190205090116";
+                    break;
+
+                case ACTION_PREVIOUS:
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.reset();
+                    }
+                    TITLE_SONG = "Good Times";
+                    AUTHOR_SONG = "Instrumental";
+                    IMAGE_SONG = "https://cf.shopee.vn/file/77ad5ed740fdd4ae05d13a36f840f7b8";
+                    mediaPlayer.setOnPreparedListener(MediaPlayer::start);
+                    onPlayMusic("http://www.infinityandroid.com/music/good_times.mp3");
+                    break;
+
+                case ACTION_NEXT:
+                    if (mediaPlayer.isPlaying()) {
+                        mediaPlayer.reset();
+                    }
+                    TITLE_SONG = "Thien Dang";
+                    AUTHOR_SONG = "Wowy";
+                    IMAGE_SONG = "https://vignette.wikia.nocookie.net/caseclosed/images/8/80/Infobox_-_Conan_Edogawa.png/revision/latest?cb=20190205090116";
+                    mediaPlayer.setOnPreparedListener(MediaPlayer::start);
+                    onPlayMusic("https://data.chiasenhac.com/down2/2121/4/2120992/128/Thien%20Dang%20-%20Wowy_%20JoliPoli.mp3");
+                    break;
+            }
+        }
+        return START_NOT_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent arg0) {
+        return null;
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.i(TAG, "Service onDestroy");
+    }
+
+    private void onPlayMusic(String url) {
+        try {
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepareAsync();
+        } catch (Exception e) {
+            Toast.makeText(this, "Error" + e, Toast.LENGTH_SHORT).show();
+        }
+    }
+    public Notification getNotification() {
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "My Channel", NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription("This is Music Channel");
         NotificationManager manager = getSystemService(NotificationManager.class);
         manager.createNotificationChannel(channel);
-        Log.i(TAG, "Service onCreate");
-        mediaPlayer = new MediaPlayer();
 
-        //NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        //Tao event click vao notificate de intent ra main activity
         Intent i = new Intent(this, MusicActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, 0);
 
         Intent intent = new Intent(MusicService.ACTION_NEXT, null, this, MusicService.class);
         PendingIntent pdIntentNext = PendingIntent.getBroadcast(this, 0, intent, 0);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+        return new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_music)
                 .setContentTitle("Nhac Dang Mo")//Title cho Notifi
                 .setContentText("Nhac dang mo bai nao do")//Content cho Notifi
@@ -57,96 +126,5 @@ public class MusicService extends Service {
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle())//hien thi icon cho Notifi
                 .setShowWhen(false)//khong cho xo xuong thong bao
                 .build();
-        //notificationManager.notify(NOTIFICATION_ID, notification); //Thông báo có thể gạt bỏ
-        startForeground(NOTIFICATION_ID, notification);//Thông báo không thể gạt bỏ
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        String action = intent.getAction();
-        if (action != null) {
-            switch (action) {
-                case ACTION_PLAY:
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.pause();
-                        stopService(new Intent(this, MusicService.class));
-                    } else {
-                        Intent firstIntent = new Intent(this, MusicService.class);
-                        startService(firstIntent);
-                        mediaPlayer.start();
-                    }
-                    break;
-
-                case ACTION_PREVIOUS:
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.reset();
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setOnPreparedListener(MediaPlayer::start);
-
-                        try {
-                            mediaPlayer.setDataSource("https://data2.chiasenhac.com/stream2/1727/3/1726451-d9a03b01/128/Mot%20Dieu%20-%20Wowy.mp3");
-                            mediaPlayer.prepareAsync();
-                        } catch (Exception e) {
-                            Toast.makeText(this, "Error" + e, Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setOnPreparedListener(MediaPlayer::start);
-                        try {
-                            mediaPlayer.setDataSource("https://data2.chiasenhac.com/stream2/1727/3/1726451-d9a03b01/128/Mot%20Dieu%20-%20Wowy.mp3");
-                            mediaPlayer.prepareAsync();
-                        } catch (Exception e) {
-                            Toast.makeText(this, "Error" + e, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    break;
-
-                case ACTION_NEXT:
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.reset();
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setOnPreparedListener(MediaPlayer::start);
-                        try {
-                            mediaPlayer.setDataSource("http://www.infinityandroid.com/music/good_times.mp3");
-                            mediaPlayer.prepareAsync();
-                        } catch (Exception e) {
-                            Toast.makeText(this, "Error" + e, Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setOnPreparedListener(MediaPlayer::start);
-                        try {
-                            mediaPlayer.setDataSource("http://www.infinityandroid.com/music/good_times.mp3");
-                            mediaPlayer.prepareAsync();
-                        } catch (Exception e) {
-                            Toast.makeText(this, "Error" + e, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    break;
-            }
-        }
-
-        return START_NOT_STICKY;
-    }
-
-    @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
-    }
-
-    @Override
-    public void onDestroy() {
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-        Log.i(TAG, "Service onDestroy");
-    }
-
-    public void createNotifi() {
-
-        Log.i(TAG, "Service onStartCommand");
-
     }
 }

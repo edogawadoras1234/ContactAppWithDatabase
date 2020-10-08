@@ -1,10 +1,10 @@
 package com.example.danhbadienthoai.ui.music;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.service.MusicBroadcastReceiver;
 import com.example.danhbadienthoai.service.MusicService;
@@ -20,6 +21,7 @@ import com.example.danhbadienthoai.utils.MusicUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class MusicActivity extends AppCompatActivity implements MusicMvpView {
 
@@ -36,7 +38,12 @@ public class MusicActivity extends AppCompatActivity implements MusicMvpView {
     ImageView img_play;
     @BindView(R.id.songProgressBar)
     SeekBar seekBar;
+    @BindView(R.id.image_music)
+    ImageView img_music;
+    @BindView(R.id.image_blur)
+    ImageView img_blur;
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +53,33 @@ public class MusicActivity extends AppCompatActivity implements MusicMvpView {
         MusicBroadcastReceiver musicBroadcastReceiver = new MusicBroadcastReceiver();
         IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(musicBroadcastReceiver, filter);
+        musicPresenter = new MusicPresenter(this, this);
+        mRunnable.run();
 
-        Intent firstIntent = new Intent(this, MusicService.class);
-        startService(firstIntent);
-//        musicPresenter = new MusicPresenter(this);
-//        musicPresenter.onMusicPlay("http://www.infinityandroid.com/music/good_times.mp3");
-//        musicPresenter.onIconPlay();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        txt_song_author.setText(MusicService.AUTHOR_SONG);
+        txt_song_title.setText(MusicService.TITLE_SONG);
+        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
+                .placeholder(R.drawable.ic_music_background).into(img_music);
+
+        Glide.with(getApplicationContext())
+                .asBitmap()
+                .load(MusicService.IMAGE_SONG) // or url
+                .placeholder(R.drawable.ic_music_background)
+                .transform(new BlurTransformation(25, 3))
+                .into(img_blur);
+
+        if (MusicService.mediaPlayer.isPlaying()){
+            img_play.setImageResource(R.drawable.ic_play);
+        }else
+        {
+            img_play.setImageResource(R.drawable.ic_pause);
+        }
     }
 
     @OnClick(R.id.button_suffer)
@@ -63,19 +91,48 @@ public class MusicActivity extends AppCompatActivity implements MusicMvpView {
     void onClickBtnPrevious() {
         Intent intent = new Intent(MusicService.ACTION_PREVIOUS, null, this, MusicService.class);
         startService(intent);
+        txt_song_author.setText(MusicService.AUTHOR_SONG);
+        txt_song_title.setText(MusicService.TITLE_SONG);
+        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
+                .placeholder(R.drawable.ic_music).into(img_music);
+
+        Glide.with(this)
+                .asBitmap()
+                .load(MusicService.IMAGE_SONG) // or url
+                .transform(new BlurTransformation(25, 3))
+                .into(img_blur);
     }
 
     @OnClick(R.id.image_play)
     void onClickBtnPlay() {
-        Intent intent = new Intent(MusicService.ACTION_PLAY, null, this, MusicService.class);
-        startService(intent);
-       // musicPresenter.onIconPlay();
+        musicPresenter.onMusicPlay();
+        musicPresenter.onIconPlay();
+        txt_song_author.setText(MusicService.AUTHOR_SONG);
+        txt_song_title.setText(MusicService.TITLE_SONG);
+        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
+                .placeholder(R.drawable.ic_music).into(img_music);
+
+        Glide.with(this)
+                .asBitmap()
+                .load(MusicService.IMAGE_SONG) // or url
+                .transform(new BlurTransformation(25, 3))
+                .into(img_blur);
     }
 
     @OnClick(R.id.button_next)
     void onClickBtnNext() {
+        txt_song_author.setText(MusicService.AUTHOR_SONG);
+        txt_song_title.setText(MusicService.TITLE_SONG);
         Intent intent = new Intent(MusicService.ACTION_NEXT, null, this, MusicService.class);
         startService(intent);
+        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
+                .placeholder(R.drawable.ic_music).into(img_music);
+
+        Glide.with(this)
+                .asBitmap()
+                .load(MusicService.IMAGE_SONG) // or url
+                .transform(new BlurTransformation(25, 3))
+                .into(img_blur);
     }
 
     @OnClick(R.id.button_list_music)
@@ -85,30 +142,49 @@ public class MusicActivity extends AppCompatActivity implements MusicMvpView {
 
     @Override
     public void playMusic() {
-      //  musicPresenter.onShowTimes();
+        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
+                .placeholder(R.drawable.ic_music).into(img_music);
+
+        Glide.with(this)
+                .asBitmap()
+                .load(MusicService.IMAGE_SONG) // or url
+                .transform(new BlurTransformation(25, 3))
+                .into(img_blur);
     }
 
     @Override
     public void showIconPlay() {
-        img_play.setImageResource(R.drawable.ic_play);
-    }
-
-    @Override
-    public void showIconPause() {
         img_play.setImageResource(R.drawable.ic_pause);
     }
 
     @Override
-    public void showTimes(int mCurrentPosition, int mTotalDuration) {
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            txt_duration.setText(MusicUtils.getTimeString(mTotalDuration));
-            seekBar.setMax(mTotalDuration);
-            txt_current_time.setText(MusicUtils.getTimeString(mCurrentPosition));
+    public void showIconPause() {
+        img_play.setImageResource(R.drawable.ic_play);
+    }
+
+    @Override
+    public void seekBar() {
+
+    }
+    private Handler mHandler = new Handler();
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            //set max value
+            int mDuration = MusicService.mediaPlayer .getDuration();
+            seekBar.setMax(mDuration);
+            //update total time text view
+            txt_duration.setText(MusicUtils.getTimeString(mDuration));
+            //set progress to current position
+            int mCurrentPosition = MusicService.mediaPlayer .getCurrentPosition();
             seekBar.setProgress(mCurrentPosition);
+            //update current time text view
+            txt_current_time.setText(MusicUtils.getTimeString(mCurrentPosition));
+            //handle drag on seekbar
             seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    musicPresenter.onSeekBar(progress);
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
                 }
 
                 @Override
@@ -117,31 +193,14 @@ public class MusicActivity extends AppCompatActivity implements MusicMvpView {
                 }
 
                 @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    if (fromUser) {
+                        MusicService.mediaPlayer .seekTo(progress);
+                    }
                 }
             });
-        }, 10);
-    }
-
-    @Override
-    public void resetMediaPlayer() {
-
-    }
-
-    @Override
-    public void startService() {
-        Intent firstIntent = new Intent(this, MusicService.class);
-        startService(firstIntent);
-    }
-
-    @Override
-    public void destroyService() {
-        stopService(new Intent(this, MusicService.class));
-    }
-
-    @Override
-    public void seekBar() {
-
-    }
+            //repeat above code every second
+            mHandler.postDelayed(this, 10);
+        }
+    };
 }

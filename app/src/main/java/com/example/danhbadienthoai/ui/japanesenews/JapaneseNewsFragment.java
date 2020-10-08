@@ -1,7 +1,6 @@
 package com.example.danhbadienthoai.ui.japanesenews;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.danhbadienthoai.RecyclerViewScrollListener;
+import com.example.danhbadienthoai.utils.RecyclerViewScrollListener;
 import com.example.danhbadienthoai.data.network.ApiClient;
 import com.example.danhbadienthoai.data.network.ApiInterface;
 import com.example.danhbadienthoai.data.db.model.Article;
