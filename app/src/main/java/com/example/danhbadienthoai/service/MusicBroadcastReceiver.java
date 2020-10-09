@@ -12,6 +12,7 @@ public class MusicBroadcastReceiver extends BroadcastReceiver {
     String TAG = "MusicBreadcastReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
+
         if (Objects.equals(intent.getAction(), Intent.ACTION_HEADSET_PLUG)) {
             int state = intent.getIntExtra("state", -1);
             switch (state) {

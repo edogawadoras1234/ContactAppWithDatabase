@@ -10,15 +10,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:padding="30dp"
-        android:layout_marginTop="80dp">
+        android:padding="30dp">
 
         <Button
             android:id="@+id/button_app_contact"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_margin="20dp"
             android:background="@drawable/ic_contact_background"
             android:gravity="center_vertical"
             tools:ignore="ButtonStyle"
@@ -29,6 +30,7 @@
             android:id="@+id/button_app_music"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_margin="20dp"
             android:background="@drawable/ic_music"
             tools:ignore="ButtonStyle"
             tools:layout_editor_absoluteX="64dp"
@@ -38,6 +40,7 @@
             android:id="@+id/button_app_news"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_margin="20dp"
             android:background="@drawable/ic_news"
             tools:ignore="ButtonStyle"
             tools:layout_editor_absoluteX="184dp"
@@ -54,10 +57,9 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#000"
             android:text="@string/choose_language"
-            android:textSize="20sp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="221dp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout

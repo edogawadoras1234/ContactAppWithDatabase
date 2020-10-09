@@ -1,8 +1,6 @@
 package com.example.danhbadienthoai.ui.music;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
 
 import com.example.danhbadienthoai.service.MusicService;
 
@@ -24,17 +22,12 @@ public class MusicPresenter implements MusicMvpPresenter {
 
     @Override
     public void onIconPlay() {
-        if (MusicService.mediaPlayer.isPlaying()) {
-            musicMvpView.showIconPlay();
-        } else {
-            musicMvpView.showIconPause();
-        }
+        musicMvpView.showIconPlay();
     }
 
     @Override
-    public void onSeekBar(int progress) {
-        MusicService.mediaPlayer.seekTo(progress);
-        musicMvpView.seekBar();
+    public void onInforSong() {
+        musicMvpView.showImage();
     }
 
     @Override
@@ -48,7 +41,7 @@ public class MusicPresenter implements MusicMvpPresenter {
     }
 
     @Override
-    public void showIconPause() {
+    public void showImage() {
 
     }
 

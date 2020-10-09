@@ -38,36 +38,24 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
         setContentView(R.layout.activity_main);
         mainPresenter = new MainPresenter(this, this);
         ButterKnife.bind(this);
+
         Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
                 .placeholder(R.drawable.ic_music_background).into(img_song_music);
-
-        txt_song_author.setText(MusicService.AUTHOR_SONG);
-        txt_song_title.setText(MusicService.TITLE_SONG);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (MusicService.mediaPlayer.isPlaying()){
-            imgPausePlay.setImageResource(R.drawable.ic_play);
+            imgPausePlay.setImageResource(R.drawable.ic_pause_blue);
         }else
         {
-            imgPausePlay.setImageResource(R.drawable.ic_pause);
+            imgPausePlay.setImageResource(R.drawable.ic_play_blue);
         }
         Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
                 .placeholder(R.drawable.ic_music_background).into(img_song_music);
         txt_song_author.setText(MusicService.AUTHOR_SONG);
         txt_song_title.setText(MusicService.TITLE_SONG);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     @OnClick(R.id.image_pause_playing_card)
@@ -75,10 +63,10 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
         Intent intent = new Intent(MusicService.ACTION_PLAY, null, this, MusicService.class);
         startService(intent);
         if (MusicService.mediaPlayer.isPlaying()){
-            imgPausePlay.setImageResource(R.drawable.ic_pause);
+            imgPausePlay.setImageResource(R.drawable.ic_play_blue);
         }else
         {
-           imgPausePlay.setImageResource(R.drawable.ic_play);
+          imgPausePlay.setImageResource(R.drawable.ic_pause_blue);
         }
     }
 
@@ -86,6 +74,13 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
     void onClickNext() {
         Intent intent = new Intent(MusicService.ACTION_NEXT, null, this, MusicService.class);
         startService(intent);
+
+        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
+                .placeholder(R.drawable.ic_music_background).into(img_song_music);
+        txt_song_author.setText(MusicService.AUTHOR_SONG);
+        txt_song_title.setText(MusicService.TITLE_SONG);
+
+        imgPausePlay.setImageResource(R.drawable.ic_pause_blue);
     }
 
     @OnClick(R.id.include_bar)

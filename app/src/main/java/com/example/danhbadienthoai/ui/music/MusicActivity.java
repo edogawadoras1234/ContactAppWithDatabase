@@ -49,36 +49,21 @@ public class MusicActivity extends AppCompatActivity implements MusicMvpView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         ButterKnife.bind(this);
-
         MusicBroadcastReceiver musicBroadcastReceiver = new MusicBroadcastReceiver();
         IntentFilter filter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(musicBroadcastReceiver, filter);
         musicPresenter = new MusicPresenter(this, this);
         mRunnable.run();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        txt_song_author.setText(MusicService.AUTHOR_SONG);
-        txt_song_title.setText(MusicService.TITLE_SONG);
-        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
-                .placeholder(R.drawable.ic_music_background).into(img_music);
-
-        Glide.with(getApplicationContext())
-                .asBitmap()
-                .load(MusicService.IMAGE_SONG) // or url
-                .placeholder(R.drawable.ic_music_background)
-                .transform(new BlurTransformation(25, 3))
-                .into(img_blur);
-
-        if (MusicService.mediaPlayer.isPlaying()){
-            img_play.setImageResource(R.drawable.ic_play);
-        }else
-        {
-            img_play.setImageResource(R.drawable.ic_pause);
+        musicPresenter.onInforSong();
+        if (MusicService.mediaPlayer.isPlaying()) {
+            img_play.setImageResource(R.drawable.ic_pause_blue);
+        } else {
+            img_play.setImageResource(R.drawable.ic_play_blue);
         }
     }
 
@@ -91,48 +76,20 @@ public class MusicActivity extends AppCompatActivity implements MusicMvpView {
     void onClickBtnPrevious() {
         Intent intent = new Intent(MusicService.ACTION_PREVIOUS, null, this, MusicService.class);
         startService(intent);
-        txt_song_author.setText(MusicService.AUTHOR_SONG);
-        txt_song_title.setText(MusicService.TITLE_SONG);
-        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
-                .placeholder(R.drawable.ic_music).into(img_music);
-
-        Glide.with(this)
-                .asBitmap()
-                .load(MusicService.IMAGE_SONG) // or url
-                .transform(new BlurTransformation(25, 3))
-                .into(img_blur);
+        musicPresenter.onInforSong();
     }
 
     @OnClick(R.id.image_play)
     void onClickBtnPlay() {
         musicPresenter.onMusicPlay();
         musicPresenter.onIconPlay();
-        txt_song_author.setText(MusicService.AUTHOR_SONG);
-        txt_song_title.setText(MusicService.TITLE_SONG);
-        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
-                .placeholder(R.drawable.ic_music).into(img_music);
-
-        Glide.with(this)
-                .asBitmap()
-                .load(MusicService.IMAGE_SONG) // or url
-                .transform(new BlurTransformation(25, 3))
-                .into(img_blur);
     }
 
     @OnClick(R.id.button_next)
     void onClickBtnNext() {
-        txt_song_author.setText(MusicService.AUTHOR_SONG);
-        txt_song_title.setText(MusicService.TITLE_SONG);
         Intent intent = new Intent(MusicService.ACTION_NEXT, null, this, MusicService.class);
         startService(intent);
-        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
-                .placeholder(R.drawable.ic_music).into(img_music);
-
-        Glide.with(this)
-                .asBitmap()
-                .load(MusicService.IMAGE_SONG) // or url
-                .transform(new BlurTransformation(25, 3))
-                .into(img_blur);
+        musicPresenter.onInforSong();
     }
 
     @OnClick(R.id.button_list_music)
@@ -142,6 +99,22 @@ public class MusicActivity extends AppCompatActivity implements MusicMvpView {
 
     @Override
     public void playMusic() {
+
+    }
+
+    @Override
+    public void showIconPlay() {
+        if (MusicService.mediaPlayer.isPlaying()) {
+            img_play.setImageResource(R.drawable.ic_play_blue);
+        } else {
+            img_play.setImageResource(R.drawable.ic_pause_blue);
+        }
+    }
+
+    @Override
+    public void showImage() {
+        txt_song_author.setText(MusicService.AUTHOR_SONG);
+        txt_song_title.setText(MusicService.TITLE_SONG);
         Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
                 .placeholder(R.drawable.ic_music).into(img_music);
 
@@ -153,30 +126,21 @@ public class MusicActivity extends AppCompatActivity implements MusicMvpView {
     }
 
     @Override
-    public void showIconPlay() {
-        img_play.setImageResource(R.drawable.ic_pause);
-    }
-
-    @Override
-    public void showIconPause() {
-        img_play.setImageResource(R.drawable.ic_play);
-    }
-
-    @Override
     public void seekBar() {
 
     }
+
     private Handler mHandler = new Handler();
     private Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
             //set max value
-            int mDuration = MusicService.mediaPlayer .getDuration();
+            int mDuration = MusicService.mediaPlayer.getDuration();
             seekBar.setMax(mDuration);
             //update total time text view
             txt_duration.setText(MusicUtils.getTimeString(mDuration));
             //set progress to current position
-            int mCurrentPosition = MusicService.mediaPlayer .getCurrentPosition();
+            int mCurrentPosition = MusicService.mediaPlayer.getCurrentPosition();
             seekBar.setProgress(mCurrentPosition);
             //update current time text view
             txt_current_time.setText(MusicUtils.getTimeString(mCurrentPosition));
@@ -195,7 +159,7 @@ public class MusicActivity extends AppCompatActivity implements MusicMvpView {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     if (fromUser) {
-                        MusicService.mediaPlayer .seekTo(progress);
+                        MusicService.mediaPlayer.seekTo(progress);
                     }
                 }
             });

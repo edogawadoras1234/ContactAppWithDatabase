@@ -5,5 +5,5 @@ public interface MusicMvpPresenter extends MusicMvpView {
 
     void onIconPlay();
 
-    void onSeekBar(int progress);
+    void onInforSong();
 }

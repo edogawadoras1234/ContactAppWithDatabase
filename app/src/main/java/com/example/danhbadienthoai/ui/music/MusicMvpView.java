@@ -5,7 +5,7 @@ public interface MusicMvpView {
 
     void showIconPlay();
 
-    void showIconPause();
+    void showImage();
 
     void seekBar();
 }
