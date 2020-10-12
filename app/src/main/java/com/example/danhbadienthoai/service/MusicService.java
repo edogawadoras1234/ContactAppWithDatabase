@@ -5,29 +5,28 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.IBinder;
-import android.util.Log;
+import android.provider.MediaStore;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
+import com.example.danhbadienthoai.CreateNotification;
 import com.example.danhbadienthoai.R;
+import com.example.danhbadienthoai.data.db.model.Songs;
 import com.example.danhbadienthoai.ui.music.MusicActivity;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MusicService extends Service {
-
-    private static final String TAG = "HelloService";
-    public static final MediaPlayer mediaPlayer = new MediaPlayer();
+    public static MediaPlayer mediaPlayer = new MediaPlayer();
     private static final String CHANNEL_ID = "Kenh Thong Bao";
     private static final int NOTIFICATION_ID = 1;
     public static final String ACTION_PLAY = "PLAY";
@@ -35,15 +34,18 @@ public class MusicService extends Service {
     public static final String ACTION_NEXT = "NEXT";
     public static String TITLE_SONG = "Good Times";
     public static String AUTHOR_SONG = "Instrumental";
-    public static String IMAGE_SONG = "https://cf.shopee.vn/file/77ad5ed740fdd4ae05d13a36f840f7b8";
+    public static byte[] IMAGE_SONG;
+    public static String LOCATION_SONG = "http://www.infinityandroid.com/music/good_times.mp3";
+    private int position = 0;
+    List<Songs> songs = new ArrayList<>();
+
     @Override
     public void onCreate() {
         super.onCreate();
-        onPlayMusic("http://www.infinityandroid.com/music/good_times.mp3");
+        onLoadListMusic();
+
+        onPlayMusic(LOCATION_SONG);
         mediaPlayer.setOnPreparedListener(MediaPlayer::start);
-        TITLE_SONG = "Good Times";
-        AUTHOR_SONG = "Instrumental";
-        IMAGE_SONG = "https://cf.shopee.vn/file/77ad5ed740fdd4ae05d13a36f840f7b8";
     }
 
     @Override
@@ -52,40 +54,28 @@ public class MusicService extends Service {
         if (action != null) {
             switch (action) {
                 case ACTION_PLAY:
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.pause();
-                        stopForeground(true);
-                    } else {
-                        mediaPlayer.start();
-                        startForeground(NOTIFICATION_ID, getNotification());
-                    }
+
                     break;
 
                 case ACTION_PREVIOUS:
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.reset();
-                    }
-                    TITLE_SONG = "Good Times";
-                    AUTHOR_SONG = "Instrumental";
-                    IMAGE_SONG = "https://cf.shopee.vn/file/77ad5ed740fdd4ae05d13a36f840f7b8";
-                    mediaPlayer.setOnPreparedListener(MediaPlayer::start);
-                    onPlayMusic("http://www.infinityandroid.com/music/good_times.mp3");
+
                     break;
 
                 case ACTION_NEXT:
-                    if (mediaPlayer.isPlaying()) {
-                        mediaPlayer.reset();
+                    if (position == songs.size()) {
+                        Toast.makeText(this, "Đã đến bài cuối cùng của danh sách", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (mediaPlayer.isPlaying()) {
+                            mediaPlayer.reset();
+                        }
+                        position++;
+                        CreateNotification.createNotification(this, songs.get(position),
+                                R.drawable.ic_pause_blue, position, songs.size() - 1);
+                        onPlayMusic(songs.get(position).getSongLocation());
                         mediaPlayer.setOnPreparedListener(MediaPlayer::start);
-                        onPlayMusic("https://data.chiasenhac.com/down2/2121/5/2120992/128/Thien%20Dang%20-%20Wowy_%20JoliPoli.mp3");
-                    }else{
-                        mediaPlayer.setOnPreparedListener(MediaPlayer::start);
-                        onPlayMusic("https://data.chiasenhac.com/down2/2121/5/2120992/128/Thien%20Dang%20-%20Wowy_%20JoliPoli.mp3");
                     }
-                    TITLE_SONG = "Thien Dang";
-                    AUTHOR_SONG = "Wowy";
-                    IMAGE_SONG = "https://vignette.wikia.nocookie.net/caseclosed/images/8/80/Infobox_-_Conan_Edogawa.png/revision/latest?cb=20190205090116";
                     break;
-            }//https://data.chiasenhac.com/down2/2121/5/2120992/128/Thien%20Dang%20-%20Wowy_%20JoliPoli.mp3
+            }
         }
         return START_NOT_STICKY;
     }
@@ -103,6 +93,13 @@ public class MusicService extends Service {
             Toast.makeText(this, "Error" + e, Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
+
     public Notification getNotification() {
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "My Channel", NotificationManager.IMPORTANCE_DEFAULT);
         channel.setDescription("This is Music Channel");
@@ -138,5 +135,24 @@ public class MusicService extends Service {
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle())//hien thi icon cho Notifi
                 .setShowWhen(false)//khong cho xo xuong thong bao
                 .build();
+    }
+
+    public void onLoadListMusic() {
+        ContentResolver contentResolver = getContentResolver();
+        Cursor cursor = contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    String songName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
+                    String songArtist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+                    String songImage = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
+                    String songLocation = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+                    Songs song = new Songs(songName, songArtist, songImage, songLocation);
+                    songs.add(song);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
     }
 }

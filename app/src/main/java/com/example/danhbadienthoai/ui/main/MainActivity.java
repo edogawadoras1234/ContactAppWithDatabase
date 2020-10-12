@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.danhbadienthoai.R;
 import com.example.danhbadienthoai.service.MusicService;
 import com.example.danhbadienthoai.ui.danhba.DanhbaActivity;
+import com.example.danhbadienthoai.ui.listmusic.ListMusicActivity;
 import com.example.danhbadienthoai.ui.music.MusicActivity;
 import com.example.danhbadienthoai.ui.newsapp.NewsAppActivity;
 
@@ -39,34 +40,30 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
         mainPresenter = new MainPresenter(this, this);
         ButterKnife.bind(this);
 
-        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
-                .placeholder(R.drawable.ic_music_background).into(img_song_music);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (MusicService.mediaPlayer.isPlaying()){
-            imgPausePlay.setImageResource(R.drawable.ic_pause_blue);
-        }else
-        {
-            imgPausePlay.setImageResource(R.drawable.ic_play_blue);
-        }
-        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
-                .placeholder(R.drawable.ic_music_background).into(img_song_music);
-        txt_song_author.setText(MusicService.AUTHOR_SONG);
-        txt_song_title.setText(MusicService.TITLE_SONG);
+//        if (MusicService.mediaPlayer.isPlaying()) {
+//            imgPausePlay.setImageResource(R.drawable.ic_pause_blue);
+//        } else {
+//            imgPausePlay.setImageResource(R.drawable.ic_play_blue);
+//        }
+//        Glide.with(getApplicationContext()).load(MusicService.IMAGE_SONG)
+//                .placeholder(R.drawable.ic_music_background).into(img_song_music);
+//        txt_song_author.setText(MusicService.AUTHOR_SONG);
+//        txt_song_title.setText(MusicService.TITLE_SONG);
     }
 
     @OnClick(R.id.image_pause_playing_card)
     void onClickPlay() {
         Intent intent = new Intent(MusicService.ACTION_PLAY, null, this, MusicService.class);
         startService(intent);
-        if (MusicService.mediaPlayer.isPlaying()){
+        if (MusicService.mediaPlayer.isPlaying()) {
             imgPausePlay.setImageResource(R.drawable.ic_play_blue);
-        }else
-        {
-          imgPausePlay.setImageResource(R.drawable.ic_pause_blue);
+        } else {
+            imgPausePlay.setImageResource(R.drawable.ic_pause_blue);
         }
     }
 
@@ -91,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements MainMvpView {
 
     @OnClick(R.id.button_list_music_playing_card)
     void onClickList() {
-
+        Intent intent = new Intent(this, ListMusicActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.button_app_contact)

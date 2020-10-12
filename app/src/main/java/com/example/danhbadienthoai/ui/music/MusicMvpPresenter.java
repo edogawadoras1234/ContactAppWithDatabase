@@ -1,9 +1,13 @@
 package com.example.danhbadienthoai.ui.music;
 
 public interface MusicMvpPresenter extends MusicMvpView {
-    void onMusicPlay();
+    void onTrackPrevious();
 
-    void onIconPlay();
+    void onTrackPlay();
 
-    void onInforSong();
+    void onTrackPause();
+
+    void onTrackNext();
+
+    void onPlayMusic(String url);
 }

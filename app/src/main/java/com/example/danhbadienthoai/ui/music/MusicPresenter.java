@@ -2,7 +2,7 @@ package com.example.danhbadienthoai.ui.music;
 
 import android.content.Intent;
 
-import com.example.danhbadienthoai.service.MusicService;
+//import com.example.danhbadienthoai.service.MusicService;
 
 public class MusicPresenter implements MusicMvpPresenter {
     MusicMvpView musicMvpView;
@@ -14,39 +14,52 @@ public class MusicPresenter implements MusicMvpPresenter {
     }
 
     @Override
-    public void onMusicPlay() {
-        Intent intent = new Intent(MusicService.ACTION_PLAY, null, musicActivity, MusicService.class);
-        musicActivity.startService(intent);
-        musicMvpView.playMusic();
+    public void onTrackPrevious() {
+        musicMvpView.controlPrevious();
     }
 
     @Override
-    public void onIconPlay() {
-        musicMvpView.showIconPlay();
+    public void onTrackPlay() {
+        musicMvpView.controlResume();
     }
 
     @Override
-    public void onInforSong() {
-        musicMvpView.showImage();
+    public void onTrackPause() {
+        musicMvpView.controlPause();
     }
 
     @Override
-    public void playMusic() {
+    public void onTrackNext() {
+        musicMvpView.controlNext();
+    }
+
+    @Override
+    public void onPlayMusic(String url) {
+        musicMvpView.controlPlayMusic(url);
+    }
+
+    @Override
+    public void controlPrevious() {
 
     }
 
     @Override
-    public void showIconPlay() {
+    public void controlNext() {
 
     }
 
     @Override
-    public void showImage() {
+    public void controlPause() {
 
     }
 
     @Override
-    public void seekBar() {
+    public void controlResume() {
+
+    }
+
+    @Override
+    public void controlPlayMusic(String url) {
 
     }
 }

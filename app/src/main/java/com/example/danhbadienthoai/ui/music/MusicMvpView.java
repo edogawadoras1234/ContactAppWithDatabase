@@ -1,11 +1,13 @@
 package com.example.danhbadienthoai.ui.music;
 
 public interface MusicMvpView {
-    void playMusic();
+    void controlPrevious();
 
-    void showIconPlay();
+    void controlNext();
 
-    void showImage();
+    void controlPause();
 
-    void seekBar();
+    void controlResume();
+
+    void controlPlayMusic(String url);
 }

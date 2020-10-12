@@ -3,11 +3,8 @@ package com.example.danhbadienthoai.utils;
 import com.example.danhbadienthoai.data.db.model.Contact;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class ContactUtils {
     public static final int VIEWTYPE_GROUP = 0;
@@ -15,9 +12,8 @@ public class ContactUtils {
     public static List<String> alphabet_available = new ArrayList<>();
 
     //sắp xếp list
-    public static ArrayList<Contact> sortList(ArrayList<Contact> contacts){
+    public static void sortList(ArrayList<Contact> contacts){
         Collections.sort(contacts, (contact, t1) -> contact.getName().compareTo(t1.getName()));
-        return contacts;
     }
 
     //Add chữ alpha lên đầu group
